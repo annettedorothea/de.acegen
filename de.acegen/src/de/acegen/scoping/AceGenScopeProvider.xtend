@@ -47,7 +47,7 @@ import de.acegen.aceGen.SelectByUniqueAttribute
 import de.acegen.aceGen.StateVerification
 import de.acegen.aceGen.ThenBlock
 import de.acegen.aceGen.WhenBlock
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.CommonExtension
 import java.util.ArrayList
 import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
@@ -65,7 +65,7 @@ import org.eclipse.xtext.scoping.impl.FilteringScope
 class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 
 	@Inject
-	extension ModelExtension
+	extension CommonExtension
 
 	override getScope(EObject context, EReference reference) {
 		if (context instanceof ClientWhenBlock && reference == AceGenPackage.Literals.INPUT_VALUE__INPUT) {

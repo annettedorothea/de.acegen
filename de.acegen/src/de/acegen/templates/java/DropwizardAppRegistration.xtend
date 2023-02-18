@@ -19,8 +19,8 @@ package de.acegen.templates.java
 
 import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.JavaHttpServerExtension
 import javax.inject.Inject
+import de.acegen.extensions.java.TypeExtension
 
 class DropwizardAppRegistration {
 
@@ -28,7 +28,7 @@ class DropwizardAppRegistration {
 	extension CommonExtension
 
 	@Inject
-	extension JavaHttpServerExtension
+	extension TypeExtension
 
 	@Inject AppRegistration appRegistration;
 
@@ -42,6 +42,7 @@ class DropwizardAppRegistration {
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.IDaoProvider;
 		import de.acegen.ViewProvider;
+		import de.acegen.Data;
 		
 		«IF aceOperations.size > 0»
 			import «name».resources.*;

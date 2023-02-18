@@ -20,26 +20,23 @@ package de.acegen.templates.java.commands
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.JavaHttpServerExtension
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.java.TypeExtension
 import javax.inject.Inject
 
 class Command {
 
 	@Inject
-	extension JavaHttpServerExtension
-
-	@Inject
-	extension ModelExtension
-
-	@Inject
 	extension CommonExtension
+	
+	@Inject
+	extension TypeExtension
 	
 	def generateAbstractCommandFile(HttpServerAceWrite it, HttpServer java) '''
 		«copyright»
 		
-		package «java.getName».commands;
+		package «java.commandPackage»;
 		
+		import de.acegen.Data;
 		import de.acegen.Command;
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.IDaoProvider;
@@ -47,28 +44,28 @@ class Command {
 		import de.acegen.PersistenceHandle;
 		import de.acegen.Event;
 		
-		«getModel.dataImport»
+		import «model.modelClassNameWithPackage»;
 		
 		@SuppressWarnings("unused")
-		public abstract class «abstractCommandName» extends Command<«getModel.dataParamType»> {
+		public abstract class «abstractCommandName» extends Command<«model.modelClassNameWithPackage»> {
 		
 			public «abstractCommandName»(IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
 				super("«java.getName».commands.«commandName»", daoProvider, viewProvider, appConfiguration);
 			}
 		
 			«FOR outcome : outcomes»
-				protected void add«outcome.getName.toFirstUpper»Outcome(«getModel.dataParamType» data) {
+				protected void add«outcome.getName.toFirstUpper»Outcome(«model.dataWithGenericModel» data) {
 					data.addOutcome("«outcome.getName»");
 				}
 			«ENDFOR»
 			
 			@Override
-			public void addEventsToTimeline(«getModel.dataParamType» data, PersistenceHandle timelineHandle) {
+			public void addEventsToTimeline(«model.dataWithGenericModel» data, PersistenceHandle timelineHandle) {
 				if (appConfiguration.getConfig().writeTimeline()) {
 					«FOR outcome : outcomes»
 						«IF outcome.listeners.size > 0»
 							if (data.hasOutcome("«outcome.getName»")){
-								daoProvider.getAceDao().addEventToTimeline("«eventNameWithPackage(outcome)»", data, timelineHandle);
+								daoProvider.getAceDao().addEventToTimeline("«eventName(outcome)»", data, timelineHandle);
 							}
 						«ENDIF»
 					«ENDFOR»
@@ -76,11 +73,12 @@ class Command {
 			}
 			
 			@Override
-			public void publishEvents(«model.dataParamType» data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
+			public void publishEvents(«model.dataWithGenericModel» data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
+				data.freeze();
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.size > 0»
 						if (data.hasOutcome("«outcome.getName»")){
-							new Event<«model.dataParamType»>("«eventNameWithPackage(outcome)»", viewProvider).publish(data.deepCopy(), handle, timelineHandle);
+							new Event<«model.modelClassNameWithPackage»>("«eventName(outcome)»", viewProvider).publish(data, handle, timelineHandle);
 						}
 					«ENDIF»
 				«ENDFOR»
@@ -96,7 +94,7 @@ class Command {
 	def generateInitialCommandFile(HttpServerAceWrite it, HttpServer java) '''
 		«copyright»
 		
-		package «java.getName».commands;
+		package «java.commandPackage»;
 		
 		import de.acegen.ViewProvider;
 		import de.acegen.IDaoProvider;
@@ -106,7 +104,7 @@ class Command {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		«getModel.dataImport»
+		import «model.modelClassNameWithPackage»
 		
 		public class «commandName» extends «abstractCommandName» {
 		
@@ -118,7 +116,7 @@ class Command {
 			}
 		
 			@Override
-			protected «model.dataParamType» executeCommand(«model.dataParamType» data, PersistenceHandle readonlyHandle) {
+			protected «model.dataWithGenericModel» executeCommand(«model.dataWithGenericModel» data, PersistenceHandle readonlyHandle) {
 				«IF outcomes.size > 0»
 					this.add«outcomes.get(0).getName.toFirstUpper»Outcome(data);
 				«ENDIF»
@@ -139,7 +137,7 @@ class Command {
 		
 		import com.fasterxml.jackson.databind.ObjectMapper;
 		
-		public abstract class Command<T extends IDataContainer> implements ICommand<T> {
+		public abstract class Command<T extends AbstractModel> implements ICommand<T> {
 		
 			private String commandName;
 			protected ObjectMapper mapper;
@@ -156,9 +154,9 @@ class Command {
 				this.appConfiguration = appConfiguration;
 			}
 		
-			protected abstract T executeCommand(T data, PersistenceHandle readonlyHandle);
+			protected abstract Data<T> executeCommand(Data<T> data, PersistenceHandle readonlyHandle);
 		
-			public T execute(T data, PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle) {
+			public Data<T> execute(Data<T> data, PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle) {
 				if (appConfiguration.getConfig().writeTimeline()) {
 					daoProvider.getAceDao().addCommandToTimeline(this.getCommandName(), data, timelineHandle);
 				}
@@ -178,6 +176,7 @@ class Command {
 			}
 		
 		}		
+
 		
 		«sdg»
 		
@@ -188,16 +187,16 @@ class Command {
 		
 		package de.acegen;
 		
-		public interface ICommand<T extends IDataContainer> {
+		public interface ICommand<T extends AbstractModel> {
 		
 			String getCommandName();
-
-			T execute(T data, PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle);
 		
-			void addEventsToTimeline(T data, PersistenceHandle timelineHandle);
-
-			void publishEvents(T data, PersistenceHandle handle, PersistenceHandle timelineHandle);
-
+			Data<T> execute(Data<T> data, PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle);
+		
+			void addEventsToTimeline(Data<T> data, PersistenceHandle timelineHandle);
+		
+			void publishEvents(Data<T> data, PersistenceHandle handle, PersistenceHandle timelineHandle);
+		
 		}
 		
 		

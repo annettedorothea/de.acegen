@@ -40,7 +40,7 @@ public class EventConsumer {
     _builder.append("public interface EventConsumer {");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void consumeEvent(IDataContainer data, PersistenceHandle handle);");
+    _builder.append("public void consumeEvent(Data<?> data, PersistenceHandle handle);");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();

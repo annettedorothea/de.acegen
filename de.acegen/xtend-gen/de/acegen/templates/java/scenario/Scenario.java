@@ -18,6 +18,8 @@ package de.acegen.templates.java.scenario;
 import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeAndValue;
+import de.acegen.aceGen.AttributeParamRef;
+import de.acegen.aceGen.BooleanType;
 import de.acegen.aceGen.Count;
 import de.acegen.aceGen.CustomCall;
 import de.acegen.aceGen.DataDefinition;
@@ -26,10 +28,15 @@ import de.acegen.aceGen.Given;
 import de.acegen.aceGen.GivenRef;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
+import de.acegen.aceGen.JsonArray;
+import de.acegen.aceGen.JsonDateTime;
 import de.acegen.aceGen.JsonMember;
 import de.acegen.aceGen.JsonObject;
 import de.acegen.aceGen.JsonObjectAce;
+import de.acegen.aceGen.JsonValue;
+import de.acegen.aceGen.LongType;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.NullType;
 import de.acegen.aceGen.PersistenceVerification;
 import de.acegen.aceGen.PersistenceVerificationExpression;
 import de.acegen.aceGen.PrimitiveValue;
@@ -41,16 +48,19 @@ import de.acegen.aceGen.WhenBlock;
 import de.acegen.aceGen.WhenThen;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AttributeExtension;
-import de.acegen.extensions.java.JavaHttpServerExtension;
-import de.acegen.extensions.java.ModelExtension;
+import de.acegen.extensions.java.TypeExtension;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.CollectionExtensions;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
@@ -59,15 +69,11 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public class Scenario {
   @Inject
   @Extension
-  private ModelExtension _modelExtension;
+  private TypeExtension _typeExtension;
 
   @Inject
   @Extension
   private AttributeExtension _attributeExtension;
-
-  @Inject
-  @Extension
-  private JavaHttpServerExtension _javaHttpServerExtension;
 
   @Inject
   @Extension
@@ -83,6 +89,16 @@ public class Scenario {
     int _index = this.index;
     this.index = (_index + 1);
   }
+
+  private String stringLineBreak = new Function0<String>() {
+    public String apply() {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append(",\" + ");
+      _builder.newLine();
+      _builder.append("\"");
+      return _builder.toString();
+    }
+  }.apply();
 
   public CharSequence generateScenario(final de.acegen.aceGen.Scenario it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
@@ -102,7 +118,7 @@ public class Scenario {
       EList<WhenThen> _whenThen = it.getWhenThen();
       for(final WhenThen whenThenItem : _whenThen) {
         _builder.append("import ");
-        String _responseDataNameWithPackage = this._javaHttpServerExtension.responseDataNameWithPackage(whenThenItem.getWhenBlock().getAction());
+        String _responseDataNameWithPackage = this._typeExtension.responseDataNameWithPackage(whenThenItem.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage);
         _builder.append(";");
         _builder.newLineIfNotEmpty();
@@ -138,7 +154,7 @@ public class Scenario {
               int _size = whenThenItem_1.getWhenBlock().getAction().getResponse().size();
               boolean _greaterThan = (_size > 0);
               if (_greaterThan) {
-                String _responseDataNameWithPackage_1 = this._javaHttpServerExtension.responseDataNameWithPackage(whenThenItem_1.getWhenBlock().getAction());
+                String _responseDataNameWithPackage_1 = this._typeExtension.responseDataNameWithPackage(whenThenItem_1.getWhenBlock().getAction());
                 _builder.append(_responseDataNameWithPackage_1, "\t");
                 _builder.append(" response");
               }
@@ -224,6 +240,11 @@ public class Scenario {
     _builder.append("import de.acegen.SquishyDataProvider;");
     _builder.newLine();
     _builder.append("import de.acegen.HttpResponse;");
+    _builder.newLine();
+    _builder.append("import de.acegen.Data;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.core.type.TypeReference;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"unused\")");
@@ -351,7 +372,7 @@ public class Scenario {
               int _size = whenThenItem_2.getWhenBlock().getAction().getResponse().size();
               boolean _greaterThan = (_size > 0);
               if (_greaterThan) {
-                String _responseDataNameWithPackage = this._javaHttpServerExtension.responseDataNameWithPackage(whenThenItem_2.getWhenBlock().getAction());
+                String _responseDataNameWithPackage = this._typeExtension.responseDataNameWithPackage(whenThenItem_2.getWhenBlock().getAction());
                 _builder.append(_responseDataNameWithPackage, "\t");
                 _builder.append(" response");
               }
@@ -430,7 +451,7 @@ public class Scenario {
       int _size = it.getWhenBlock().getAction().getResponse().size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
-        String _responseDataNameWithPackage = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        String _responseDataNameWithPackage = this._typeExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage, "\t");
       } else {
         _builder.append("Object");
@@ -447,7 +468,7 @@ public class Scenario {
       int _size_1 = it.getWhenBlock().getAction().getResponse().size();
       boolean _greaterThan_1 = (_size_1 > 0);
       if (_greaterThan_1) {
-        String _responseDataNameWithPackage_1 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        String _responseDataNameWithPackage_1 = this._typeExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage_1, "\t");
         _builder.append(" actualResponse_");
         _builder.append(index, "\t");
@@ -502,7 +523,7 @@ public class Scenario {
       int _size = it.getWhenBlock().getAction().getResponse().size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
-        String _responseDataNameWithPackage = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        String _responseDataNameWithPackage = this._typeExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage);
       } else {
         _builder.append("Object");
@@ -522,7 +543,7 @@ public class Scenario {
       boolean _tripleNotEquals = (_uuid != null);
       if (_tripleNotEquals) {
         _builder.append("\"");
-        CharSequence _valueFromString = this._attributeExtension.valueFromString(it.getWhenBlock().getDataDefinition().getUuid());
+        CharSequence _valueFromString = this.valueFromString(it.getWhenBlock().getDataDefinition().getUuid());
         _builder.append(_valueFromString, "\t");
         _builder.append("\"");
       } else {
@@ -545,7 +566,7 @@ public class Scenario {
       int _size_1 = it.getWhenBlock().getAction().getResponse().size();
       boolean _greaterThan_1 = (_size_1 > 0);
       if (_greaterThan_1) {
-        String _responseDataNameWithPackage_1 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        String _responseDataNameWithPackage_1 = this._typeExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage_1, "\t");
       } else {
         _builder.append("Object");
@@ -584,7 +605,7 @@ public class Scenario {
       int _size_2 = it.getWhenBlock().getAction().getResponse().size();
       boolean _greaterThan_2 = (_size_2 > 0);
       if (_greaterThan_2) {
-        String _responseDataNameWithPackage_2 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        String _responseDataNameWithPackage_2 = this._typeExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage_2);
       } else {
         _builder.append("void");
@@ -597,7 +618,7 @@ public class Scenario {
       int _size_3 = it.getWhenBlock().getAction().getResponse().size();
       boolean _greaterThan_3 = (_size_3 > 0);
       if (_greaterThan_3) {
-        String _responseDataNameWithPackage_3 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        String _responseDataNameWithPackage_3 = this._typeExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage_3);
       } else {
         _builder.append("Object");
@@ -674,7 +695,7 @@ public class Scenario {
       boolean _greaterThan_4 = (_size_4 > 0);
       if (_greaterThan_4) {
         _builder.append("\t");
-        String _responseDataNameWithPackage_4 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        String _responseDataNameWithPackage_4 = this._typeExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage_4, "\t");
         _builder.append(" actual = null;");
         _builder.newLineIfNotEmpty();
@@ -780,8 +801,8 @@ public class Scenario {
           if (_tripleNotEquals_2) {
             _builder.append("\t");
             _builder.append("\t");
-            String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(it.getWhenBlock().getAction().getModel());
-            _builder.append(_dataNameWithPackage, "\t\t");
+            String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(it.getWhenBlock().getAction().getModel());
+            _builder.append(_modelClassNameWithPackage, "\t\t");
             _builder.append(" expectedData = ");
             CharSequence _objectMapperCallExpectedData = this.objectMapperCallExpectedData(it.getThenBlock().getResponse().getData(), it.getWhenBlock().getAction().getModel());
             _builder.append(_objectMapperCallExpectedData, "\t\t");
@@ -792,10 +813,10 @@ public class Scenario {
             _builder.newLine();
             _builder.append("\t");
             _builder.append("\t");
-            String _responseDataNameWithPackage_5 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+            String _responseDataNameWithPackage_5 = this._typeExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
             _builder.append(_responseDataNameWithPackage_5, "\t\t");
             _builder.append(" expected = new ");
-            String _responseDataNameWithPackage_6 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+            String _responseDataNameWithPackage_6 = this._typeExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
             _builder.append(_responseDataNameWithPackage_6, "\t\t");
             _builder.append("(expectedData);");
             _builder.newLineIfNotEmpty();
@@ -884,7 +905,7 @@ public class Scenario {
             } else {
               _builder.appendImmediate(", ", "\t");
             }
-            Object _primitiveValueFrom = this._attributeExtension.primitiveValueFrom(value);
+            Object _primitiveValueFrom = this.primitiveValueFrom(value);
             _builder.append(_primitiveValueFrom, "\t");
           }
         }
@@ -908,7 +929,7 @@ public class Scenario {
             } else {
               _builder.appendImmediate(", ", "");
             }
-            Object _primitiveValueFrom_1 = this._attributeExtension.primitiveValueFrom(value_1);
+            Object _primitiveValueFrom_1 = this.primitiveValueFrom(value_1);
             _builder.append(_primitiveValueFrom_1);
           }
         }
@@ -938,7 +959,7 @@ public class Scenario {
           boolean _tripleNotEquals = (_uuid != null);
           if (_tripleNotEquals) {
             _builder.append("\"");
-            CharSequence _valueFromString = this._attributeExtension.valueFromString(whenThenItem.getWhenBlock().getDataDefinition().getUuid());
+            CharSequence _valueFromString = this.valueFromString(whenThenItem.getWhenBlock().getDataDefinition().getUuid());
             _builder.append(_valueFromString, "\t");
             _builder.append("\"");
           } else {
@@ -961,7 +982,7 @@ public class Scenario {
           int _size = whenThenItem.getWhenBlock().getAction().getResponse().size();
           boolean _greaterThan = (_size > 0);
           if (_greaterThan) {
-            String _responseDataNameWithPackage = this._javaHttpServerExtension.responseDataNameWithPackage(whenThenItem.getWhenBlock().getAction());
+            String _responseDataNameWithPackage = this._typeExtension.responseDataNameWithPackage(whenThenItem.getWhenBlock().getAction());
             _builder.append(_responseDataNameWithPackage, "\t");
           } else {
             _builder.append("Object");
@@ -1024,7 +1045,7 @@ public class Scenario {
         {
           if (((whenThenItem.getWhenBlock().getExtractions().size() > 0) && (whenThenItem.getWhenBlock().getAction().getResponse().size() > 0))) {
             _builder.append("\t");
-            String _responseDataNameWithPackage_1 = this._javaHttpServerExtension.responseDataNameWithPackage(whenThenItem.getWhenBlock().getAction());
+            String _responseDataNameWithPackage_1 = this._typeExtension.responseDataNameWithPackage(whenThenItem.getWhenBlock().getAction());
             _builder.append(_responseDataNameWithPackage_1, "\t");
             _builder.append(" responseEntity_");
             _builder.append(this.index, "\t");
@@ -1116,16 +1137,16 @@ public class Scenario {
 
   private CharSequence _persistenceVerification(final SelectByUniqueAttribute it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
-    String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(model);
-    _builder.append(_interfaceWithPackage);
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(model);
+    _builder.append(_modelClassNameWithPackage);
     _builder.append(" actual = daoProvider.get");
-    String _modelDao = this._modelExtension.modelDao(model);
+    String _modelDao = this._typeExtension.modelDao(model);
     _builder.append(_modelDao);
     _builder.append("().selectBy");
     String _firstUpper = StringExtensions.toFirstUpper(it.getAttributeAndValue().getAttribute().getName());
     _builder.append(_firstUpper);
     _builder.append("(handle, ");
-    Object _primitiveValueFrom = this._attributeExtension.primitiveValueFrom(it.getAttributeAndValue().getValue());
+    Object _primitiveValueFrom = this.primitiveValueFrom(it.getAttributeAndValue().getValue());
     _builder.append(_primitiveValueFrom);
     _builder.append(");");
     _builder.newLineIfNotEmpty();
@@ -1134,8 +1155,8 @@ public class Scenario {
       JsonObject _object = it.getExpected().getObject();
       boolean _tripleNotEquals = (_object != null);
       if (_tripleNotEquals) {
-        String _interfaceWithPackage_1 = this._modelExtension.interfaceWithPackage(model);
-        _builder.append(_interfaceWithPackage_1);
+        String _modelClassNameWithPackage_1 = this._typeExtension.modelClassNameWithPackage(model);
+        _builder.append(_modelClassNameWithPackage_1);
         _builder.append(" expected = ");
         CharSequence _objectMapperCallExpectedPersistenceData = this.objectMapperCallExpectedPersistenceData(it.getExpected().getObject(), model);
         _builder.append(_objectMapperCallExpectedPersistenceData);
@@ -1162,14 +1183,14 @@ public class Scenario {
 
   private CharSequence _persistenceVerification(final SelectByPrimaryKeys it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
-    String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(model);
-    _builder.append(_interfaceWithPackage);
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(model);
+    _builder.append(_modelClassNameWithPackage);
     _builder.append(" actual = daoProvider.get");
-    String _modelDao = this._modelExtension.modelDao(model);
+    String _modelDao = this._typeExtension.modelDao(model);
     _builder.append(_modelDao);
     _builder.append("().selectByPrimaryKey(handle, ");
     {
-      List<Attribute> _allPrimaryKeyAttributes = this._modelExtension.allPrimaryKeyAttributes(model);
+      List<Attribute> _allPrimaryKeyAttributes = this._commonExtension.allPrimaryKeyAttributes(model);
       boolean _hasElements = false;
       for(final Attribute attribute : _allPrimaryKeyAttributes) {
         if (!_hasElements) {
@@ -1177,7 +1198,7 @@ public class Scenario {
         } else {
           _builder.appendImmediate(", ", "");
         }
-        Object _primitiveValueFrom = this._attributeExtension.primitiveValueFrom(this.findForPrimaryKey(attribute, it.getAttributeAndValues()).getValue());
+        Object _primitiveValueFrom = this.primitiveValueFrom(this.findForPrimaryKey(attribute, it.getAttributeAndValues()).getValue());
         _builder.append(_primitiveValueFrom);
       }
     }
@@ -1188,8 +1209,8 @@ public class Scenario {
       JsonObject _object = it.getExpected().getObject();
       boolean _tripleNotEquals = (_object != null);
       if (_tripleNotEquals) {
-        String _interfaceWithPackage_1 = this._modelExtension.interfaceWithPackage(model);
-        _builder.append(_interfaceWithPackage_1);
+        String _modelClassNameWithPackage_1 = this._typeExtension.modelClassNameWithPackage(model);
+        _builder.append(_modelClassNameWithPackage_1);
         _builder.append(" expected = ");
         CharSequence _objectMapperCallExpectedPersistenceData = this.objectMapperCallExpectedPersistenceData(it.getExpected().getObject(), model);
         _builder.append(_objectMapperCallExpectedPersistenceData);
@@ -1225,14 +1246,14 @@ public class Scenario {
         String _name = attributeValue.getAttribute().getName();
         _builder.append(_name);
         _builder.append("\", ");
-        Object _primitiveValueFrom = this._attributeExtension.primitiveValueFrom(attributeValue.getValue());
+        Object _primitiveValueFrom = this.primitiveValueFrom(attributeValue.getValue());
         _builder.append(_primitiveValueFrom);
         _builder.append(");");
         _builder.newLineIfNotEmpty();
       }
     }
     _builder.append("int actual = daoProvider.get");
-    String _modelDao = this._modelExtension.modelDao(model);
+    String _modelDao = this._typeExtension.modelDao(model);
     _builder.append(_modelDao);
     _builder.append("().filterAndCountBy(handle, filterMap);");
     _builder.newLineIfNotEmpty();
@@ -1320,7 +1341,7 @@ public class Scenario {
                 String _name = attributeDefinition.getAttribute().getName();
                 _builder.append(_name);
                 _builder.append("\",\t\"");
-                CharSequence _squishyValueFrom = this._attributeExtension.squishyValueFrom(attributeDefinition.getValue());
+                CharSequence _squishyValueFrom = this.squishyValueFrom(attributeDefinition.getValue());
                 _builder.append(_squishyValueFrom);
                 _builder.append("\");");
                 _builder.newLineIfNotEmpty();
@@ -1339,7 +1360,7 @@ public class Scenario {
       int _size = it.getAction().getPayload().size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
-        String _payloadDataNameWithPackage = this._javaHttpServerExtension.payloadDataNameWithPackage(it.getAction());
+        String _payloadDataNameWithPackage = this._typeExtension.payloadDataNameWithPackage(it.getAction());
         _builder.append(_payloadDataNameWithPackage);
         _builder.append(" payload_");
         _builder.append(this.index);
@@ -1350,14 +1371,29 @@ public class Scenario {
         _builder.newLineIfNotEmpty();
       }
     }
-    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(it.getAction().getModel());
-    _builder.append(_dataNameWithPackage);
-    _builder.append(" data_");
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(it.getAction().getModel());
+    _builder.append(_modelClassNameWithPackage);
+    _builder.append(" model_");
     _builder.append(this.index);
     _builder.append(" = ");
     CharSequence _objectMapperCall = this.objectMapperCall(it.getDataDefinition().getData(), it.getAction().getModel());
     _builder.append(_objectMapperCall);
     _builder.append(";");
+    _builder.newLineIfNotEmpty();
+    String _dataWithGenericModel = this._typeExtension.dataWithGenericModel(it.getAction().getModel());
+    _builder.append(_dataWithGenericModel);
+    _builder.append(" data_");
+    _builder.append(this.index);
+    _builder.append(" = new ");
+    String _dataWithGenericModel_1 = this._typeExtension.dataWithGenericModel(it.getAction().getModel());
+    _builder.append(_dataWithGenericModel_1);
+    _builder.append("(uuid);");
+    _builder.newLineIfNotEmpty();
+    _builder.append("data_");
+    _builder.append(this.index);
+    _builder.append(".setModel(model_");
+    _builder.append(this.index);
+    _builder.append(");");
     _builder.newLineIfNotEmpty();
     return _builder;
   }
@@ -1369,7 +1405,8 @@ public class Scenario {
       if (((it != null) && (it.getMembers() != null))) {
         _builder.append("{\" +");
         _builder.newLineIfNotEmpty();
-        _builder.append("\"\\\"uuid\\\" : \\\"\" + uuid + \"\\\"");
+        _builder.append("\t");
+        _builder.append("\"");
         {
           final Function1<JsonMember, Boolean> _function = new Function1<JsonMember, Boolean>() {
             public Boolean apply(final JsonMember it_1) {
@@ -1382,28 +1419,25 @@ public class Scenario {
           for(final JsonMember member : _filter) {
             if (!_hasElements) {
               _hasElements = true;
-              _builder.append(this._attributeExtension.stringLineBreak);
             } else {
-              _builder.appendImmediate(this._attributeExtension.stringLineBreak, "");
+              _builder.appendImmediate(this.stringLineBreak, "\t");
             }
             _builder.append("\\\"");
             String _name = member.getAttribute().getName();
-            _builder.append(_name);
+            _builder.append(_name, "\t");
             _builder.append("\\\" : ");
-            CharSequence _valueFrom = this._attributeExtension.valueFrom(member.getValue());
-            _builder.append(_valueFrom);
+            CharSequence _valueFrom = this.valueFrom(member.getValue());
+            _builder.append(_valueFrom, "\t");
           }
         }
         _builder.append("} ");
       } else {
-        _builder.append("{ \\\"uuid\\\" : \\\"\" + uuid + \"\\\"}");
+        _builder.append("{ }");
       }
     }
-    _builder.append("\",");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
-    _builder.append(_dataNameWithPackage, "\t\t");
+    _builder.append("\", ");
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(model);
+    _builder.append(_modelClassNameWithPackage);
     _builder.append(".class)");
     return _builder;
   }
@@ -1411,26 +1445,21 @@ public class Scenario {
   private CharSequence _objectMapperCall(final StringType it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
-    CharSequence _valueFrom = this._attributeExtension.valueFrom(it.getString());
+    CharSequence _valueFrom = this.valueFrom(it.getString());
     _builder.append(_valueFrom);
-    _builder.append("\",");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
-    _builder.append(_dataNameWithPackage, "\t\t");
+    _builder.append("\", ");
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(model);
+    _builder.append(_modelClassNameWithPackage);
     _builder.append(".class)");
     return _builder;
   }
 
   private CharSequence _objectMapperCall(final Void it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("objectMapper.readValue(\"{\" +");
-    _builder.newLine();
-    _builder.append("\"\\\"uuid\\\" : \\\"\" + uuid + \"\\\" }\",");
-    _builder.newLine();
-    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
-    _builder.append(_dataNameWithPackage);
-    _builder.append(".class)");
+    _builder.append("new ");
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(model);
+    _builder.append(_modelClassNameWithPackage);
+    _builder.append("()");
     return _builder;
   }
 
@@ -1461,13 +1490,13 @@ public class Scenario {
             if (!_hasElements) {
               _hasElements = true;
             } else {
-              _builder.appendImmediate(this._attributeExtension.stringLineBreak, "\t");
+              _builder.appendImmediate(this.stringLineBreak, "\t");
             }
             _builder.append("\\\"");
             String _name = member.getAttribute().getName();
             _builder.append(_name, "\t");
             _builder.append("\\\" : ");
-            CharSequence _valueFrom = this._attributeExtension.valueFrom(member.getValue());
+            CharSequence _valueFrom = this.valueFrom(member.getValue());
             _builder.append(_valueFrom, "\t");
           }
         }
@@ -1479,7 +1508,7 @@ public class Scenario {
     _builder.append("\",");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    String _payloadDataNameWithPackage = this._javaHttpServerExtension.payloadDataNameWithPackage(action);
+    String _payloadDataNameWithPackage = this._typeExtension.payloadDataNameWithPackage(action);
     _builder.append(_payloadDataNameWithPackage, "\t\t");
     _builder.append(".class)");
     return _builder;
@@ -1488,12 +1517,12 @@ public class Scenario {
   private CharSequence _objectMapperCallPayload(final StringType it, final HttpServerAce action) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
-    CharSequence _valueFrom = this._attributeExtension.valueFrom(it.getString());
+    CharSequence _valueFrom = this.valueFrom(it.getString());
     _builder.append(_valueFrom);
     _builder.append("\",");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    String _payloadDataNameWithPackage = this._javaHttpServerExtension.payloadDataNameWithPackage(action);
+    String _payloadDataNameWithPackage = this._typeExtension.payloadDataNameWithPackage(action);
     _builder.append(_payloadDataNameWithPackage, "\t\t");
     _builder.append(".class)");
     return _builder;
@@ -1503,7 +1532,7 @@ public class Scenario {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"{}\",");
     _builder.newLine();
-    String _payloadDataNameWithPackage = this._javaHttpServerExtension.payloadDataNameWithPackage(action);
+    String _payloadDataNameWithPackage = this._typeExtension.payloadDataNameWithPackage(action);
     _builder.append(_payloadDataNameWithPackage);
     _builder.append(".class)");
     return _builder;
@@ -1517,11 +1546,7 @@ public class Scenario {
         _builder.append("{\" +");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
-        _builder.append("\"\\\"uuid\\\" : \\\"");
-        EObject _eContainer = it.eContainer();
-        String _uuid = ((DataDefinition) _eContainer).getUuid();
-        _builder.append(_uuid, "\t");
-        _builder.append("\\\"");
+        _builder.append("\"");
         {
           final Function1<JsonMember, Boolean> _function = new Function1<JsonMember, Boolean>() {
             public Boolean apply(final JsonMember it_1) {
@@ -1534,15 +1559,14 @@ public class Scenario {
           for(final JsonMember member : _filter) {
             if (!_hasElements) {
               _hasElements = true;
-              _builder.append(this._attributeExtension.stringLineBreak, "\t");
             } else {
-              _builder.appendImmediate(this._attributeExtension.stringLineBreak, "\t");
+              _builder.appendImmediate(this.stringLineBreak, "\t");
             }
             _builder.append("\\\"");
             String _name = member.getAttribute().getName();
             _builder.append(_name, "\t");
             _builder.append("\\\" : ");
-            CharSequence _valueFrom = this._attributeExtension.valueFrom(member.getValue());
+            CharSequence _valueFrom = this.valueFrom(member.getValue());
             _builder.append(_valueFrom, "\t");
           }
         }
@@ -1551,10 +1575,9 @@ public class Scenario {
         _builder.append("{}");
       }
     }
-    _builder.append("\",");
-    _builder.newLineIfNotEmpty();
-    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
-    _builder.append(_dataNameWithPackage);
+    _builder.append("\", ");
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(model);
+    _builder.append(_modelClassNameWithPackage);
     _builder.append(".class)");
     return _builder;
   }
@@ -1562,13 +1585,12 @@ public class Scenario {
   private CharSequence _objectMapperCallExpectedData(final StringType it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
-    CharSequence _valueFrom = this._attributeExtension.valueFrom(it.getString());
+    CharSequence _valueFrom = this.valueFrom(it.getString());
     _builder.append(_valueFrom);
-    _builder.append("\",");
-    _builder.newLineIfNotEmpty();
-    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
-    _builder.append(_dataNameWithPackage);
-    _builder.append(".class)");
+    _builder.append("\", new TypeReference<Data<");
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(model);
+    _builder.append(_modelClassNameWithPackage);
+    _builder.append(">>() {})");
     return _builder;
   }
 
@@ -1588,13 +1610,13 @@ public class Scenario {
             if (!_hasElements) {
               _hasElements = true;
             } else {
-              _builder.appendImmediate(this._attributeExtension.stringLineBreak, "\t");
+              _builder.appendImmediate(this.stringLineBreak, "\t");
             }
             _builder.append("\\\"");
             String _name = member.getAttribute().getName();
             _builder.append(_name, "\t");
             _builder.append("\\\" : ");
-            CharSequence _valueFrom = this._attributeExtension.valueFrom(member.getValue());
+            CharSequence _valueFrom = this.valueFrom(member.getValue());
             _builder.append(_valueFrom, "\t");
           }
         }
@@ -1605,7 +1627,7 @@ public class Scenario {
     }
     _builder.append("\",");
     _builder.newLineIfNotEmpty();
-    String _modelClassNameWithPackage = this._modelExtension.modelClassNameWithPackage(model);
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(model);
     _builder.append(_modelClassNameWithPackage);
     _builder.append(".class)");
     return _builder;
@@ -1614,11 +1636,11 @@ public class Scenario {
   private CharSequence _objectMapperCallExpectedPersistenceData(final StringType it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
-    CharSequence _valueFrom = this._attributeExtension.valueFrom(it.getString());
+    CharSequence _valueFrom = this.valueFrom(it.getString());
     _builder.append(_valueFrom);
     _builder.append("\",");
     _builder.newLineIfNotEmpty();
-    String _modelClassNameWithPackage = this._modelExtension.modelClassNameWithPackage(model);
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(model);
     _builder.append(_modelClassNameWithPackage);
     _builder.append(".class)");
     return _builder;
@@ -1628,7 +1650,7 @@ public class Scenario {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"{}\",");
     _builder.newLine();
-    String _modelClassNameWithPackage = this._modelExtension.modelClassNameWithPackage(model);
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(model);
     _builder.append(_modelClassNameWithPackage);
     _builder.append(".class)");
     return _builder;
@@ -1649,7 +1671,8 @@ public class Scenario {
         StringConcatenation _builder_1 = new StringConcatenation();
         _builder_1.append("data_");
         _builder_1.append(this.index);
-        String _urlWithPathParams = this._javaHttpServerExtension.urlWithPathParams(_action, _builder_1.toString(), false);
+        _builder_1.append(".getModel()");
+        String _urlWithPathParams = this.urlWithPathParams(_action, _builder_1.toString(), false);
         _builder.append(_urlWithPathParams, "\t");
         _builder.append("\", ");
         _builder.newLineIfNotEmpty();
@@ -1690,7 +1713,7 @@ public class Scenario {
           int _size_1 = it.getAction().getResponse().size();
           boolean _greaterThan_1 = (_size_1 > 0);
           if (_greaterThan_1) {
-            String _responseDataNameWithPackage = this._javaHttpServerExtension.responseDataNameWithPackage(it.getAction());
+            String _responseDataNameWithPackage = this._typeExtension.responseDataNameWithPackage(it.getAction());
             _builder.append(_responseDataNameWithPackage, "\t");
             _builder.append(".class");
           } else {
@@ -1712,7 +1735,8 @@ public class Scenario {
           StringConcatenation _builder_2 = new StringConcatenation();
           _builder_2.append("data_");
           _builder_2.append(this.index);
-          String _urlWithPathParams_1 = this._javaHttpServerExtension.urlWithPathParams(_action_1, _builder_2.toString(), true);
+          _builder_2.append(".getModel()");
+          String _urlWithPathParams_1 = this.urlWithPathParams(_action_1, _builder_2.toString(), true);
           _builder.append(_urlWithPathParams_1, "\t");
           _builder.append("\", ");
           _builder.newLineIfNotEmpty();
@@ -1753,7 +1777,7 @@ public class Scenario {
             int _size_3 = it.getAction().getResponse().size();
             boolean _greaterThan_3 = (_size_3 > 0);
             if (_greaterThan_3) {
-              String _responseDataNameWithPackage_1 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getAction());
+              String _responseDataNameWithPackage_1 = this._typeExtension.responseDataNameWithPackage(it.getAction());
               _builder.append(_responseDataNameWithPackage_1, "\t");
               _builder.append(".class");
             } else {
@@ -1775,7 +1799,8 @@ public class Scenario {
             StringConcatenation _builder_3 = new StringConcatenation();
             _builder_3.append("data_");
             _builder_3.append(this.index);
-            String _urlWithPathParams_2 = this._javaHttpServerExtension.urlWithPathParams(_action_2, _builder_3.toString(), true);
+            _builder_3.append(".getModel()");
+            String _urlWithPathParams_2 = this.urlWithPathParams(_action_2, _builder_3.toString(), true);
             _builder.append(_urlWithPathParams_2, "\t");
             _builder.append("\", ");
             _builder.newLineIfNotEmpty();
@@ -1803,7 +1828,7 @@ public class Scenario {
               int _size_4 = it.getAction().getResponse().size();
               boolean _greaterThan_4 = (_size_4 > 0);
               if (_greaterThan_4) {
-                String _responseDataNameWithPackage_2 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getAction());
+                String _responseDataNameWithPackage_2 = this._typeExtension.responseDataNameWithPackage(it.getAction());
                 _builder.append(_responseDataNameWithPackage_2, "\t");
                 _builder.append(".class");
               } else {
@@ -1822,7 +1847,8 @@ public class Scenario {
             StringConcatenation _builder_4 = new StringConcatenation();
             _builder_4.append("data_");
             _builder_4.append(this.index);
-            String _urlWithPathParams_3 = this._javaHttpServerExtension.urlWithPathParams(_action_3, _builder_4.toString(), true);
+            _builder_4.append(".getModel()");
+            String _urlWithPathParams_3 = this.urlWithPathParams(_action_3, _builder_4.toString(), true);
             _builder.append(_urlWithPathParams_3, "\t");
             _builder.append("\", ");
             _builder.newLineIfNotEmpty();
@@ -1850,7 +1876,7 @@ public class Scenario {
               int _size_5 = it.getAction().getResponse().size();
               boolean _greaterThan_5 = (_size_5 > 0);
               if (_greaterThan_5) {
-                String _responseDataNameWithPackage_3 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getAction());
+                String _responseDataNameWithPackage_3 = this._typeExtension.responseDataNameWithPackage(it.getAction());
                 _builder.append(_responseDataNameWithPackage_3, "\t");
                 _builder.append(".class");
               } else {
@@ -1866,6 +1892,362 @@ public class Scenario {
     }
     _builder.newLine();
     return _builder;
+  }
+
+  private String urlWithPathParams(final HttpServerAce it, final String dataVarName, final boolean generateQueryParams) {
+    int _size = it.getPathParams().size();
+    boolean _equals = (_size == 0);
+    if (_equals) {
+      String _url = it.getUrl();
+      StringConcatenation _builder = new StringConcatenation();
+      {
+        if (generateQueryParams) {
+          {
+            EList<AttributeParamRef> _queryParams = it.getQueryParams();
+            boolean _hasElements = false;
+            for(final AttributeParamRef queryParam : _queryParams) {
+              if (!_hasElements) {
+                _hasElements = true;
+                _builder.append("?");
+              } else {
+                _builder.appendImmediate("&", "");
+              }
+              String _name = queryParam.getAttribute().getName();
+              _builder.append(_name);
+              _builder.append("=\" + ");
+              {
+                String _type = queryParam.getAttribute().getType();
+                boolean _equals_1 = Objects.equal(_type, "String");
+                if (_equals_1) {
+                  StringConcatenation _builder_1 = new StringConcatenation();
+                  _builder_1.append(dataVarName);
+                  _builder_1.append(".");
+                  String _terName = this._attributeExtension.getterName(queryParam.getAttribute());
+                  _builder_1.append(_terName);
+                  _builder_1.append("()");
+                  String _urlEncodedValue = this.urlEncodedValue(_builder_1.toString());
+                  _builder.append(_urlEncodedValue);
+                } else {
+                  _builder.append(dataVarName);
+                  _builder.append(".");
+                  String _terName_1 = this._attributeExtension.getterName(queryParam.getAttribute());
+                  _builder.append(_terName_1);
+                  _builder.append("()");
+                }
+              }
+              _builder.append(" + \"");
+            }
+          }
+        }
+      }
+      String retUrl = (_url + _builder);
+      return retUrl;
+    }
+    final String[] split1 = it.getUrl().split("\\{");
+    ArrayList<String> urlElements = new ArrayList<String>();
+    for (final String split : split1) {
+      {
+        final String[] split2 = split.split("\\}");
+        CollectionExtensions.<String>addAll(urlElements, split2);
+      }
+    }
+    String urlWithPathParam = "";
+    for (int i = 0; (i < urlElements.size()); i++) {
+      if (((i % 2) == 0)) {
+        String _urlWithPathParam = urlWithPathParam;
+        String _get = urlElements.get(i);
+        urlWithPathParam = (_urlWithPathParam + _get);
+      } else {
+        String _urlWithPathParam_1 = urlWithPathParam;
+        StringConcatenation _builder_2 = new StringConcatenation();
+        _builder_2.append("\" + ");
+        StringConcatenation _builder_3 = new StringConcatenation();
+        _builder_3.append(dataVarName);
+        _builder_3.append(".get");
+        String _firstUpper = StringExtensions.toFirstUpper(urlElements.get(i));
+        _builder_3.append(_firstUpper);
+        _builder_3.append("()");
+        String _urlEncodedValue_1 = this.urlEncodedValue(_builder_3.toString());
+        _builder_2.append(_urlEncodedValue_1);
+        _builder_2.append(" + \"");
+        urlWithPathParam = (_urlWithPathParam_1 + _builder_2);
+      }
+    }
+    String _urlWithPathParam = urlWithPathParam;
+    StringConcatenation _builder_2 = new StringConcatenation();
+    {
+      if (generateQueryParams) {
+        {
+          EList<AttributeParamRef> _queryParams_1 = it.getQueryParams();
+          boolean _hasElements_1 = false;
+          for(final AttributeParamRef queryParam_1 : _queryParams_1) {
+            if (!_hasElements_1) {
+              _hasElements_1 = true;
+              _builder_2.append("?");
+            } else {
+              _builder_2.appendImmediate("&", "");
+            }
+            String _name_1 = queryParam_1.getAttribute().getName();
+            _builder_2.append(_name_1);
+            _builder_2.append("=\" + ");
+            StringConcatenation _builder_3 = new StringConcatenation();
+            _builder_3.append(dataVarName);
+            _builder_3.append(".");
+            String _terName_2 = this._attributeExtension.getterName(queryParam_1.getAttribute());
+            _builder_3.append(_terName_2);
+            _builder_3.append("()");
+            String _urlEncodedValue_1 = this.urlEncodedValue(_builder_3.toString());
+            _builder_2.append(_urlEncodedValue_1);
+            _builder_2.append(" + \"");
+          }
+        }
+      }
+    }
+    urlWithPathParam = (_urlWithPathParam + _builder_2);
+    return urlWithPathParam;
+  }
+
+  private String urlEncodedValue(final String valueVar) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("(");
+    _builder.append(valueVar);
+    _builder.append(" != null ? URLEncoder.encode(");
+    _builder.append(valueVar);
+    _builder.append(", StandardCharsets.UTF_8.toString()) : \"\")");
+    return _builder.toString();
+  }
+
+  private Object primitiveValueFrom(final PrimitiveValue it) {
+    String _string = it.getString();
+    boolean _tripleNotEquals = (_string != null);
+    if (_tripleNotEquals) {
+      String returnString = it.getString();
+      boolean _contains = it.getString().contains("${testId}");
+      if (_contains) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("\" + this.getTestId() + \"");
+        returnString = returnString.replace("${testId}", _builder);
+      } else {
+        boolean _contains_1 = it.getString().contains("${");
+        if (_contains_1) {
+          final int beginIndex = it.getString().indexOf("${");
+          final int endIndex = it.getString().indexOf("}");
+          final String templateString = it.getString().substring(beginIndex, (endIndex + 1));
+          final String templateStringName = it.getString().substring((beginIndex + 2), endIndex);
+          StringConcatenation _builder_1 = new StringConcatenation();
+          _builder_1.append("\" + this.extractedValues.get(\"");
+          _builder_1.append(templateStringName);
+          _builder_1.append("\").toString() + \"");
+          returnString = returnString.replace(templateString, _builder_1);
+        }
+      }
+      StringConcatenation _builder_2 = new StringConcatenation();
+      _builder_2.append("\"");
+      _builder_2.append(returnString);
+      _builder_2.append("\"");
+      return _builder_2.toString();
+    }
+    boolean _isMinus = it.isMinus();
+    if (_isMinus) {
+      int _long = it.getLong();
+      return Integer.valueOf((_long * (-1)));
+    }
+    return Integer.valueOf(it.getLong());
+  }
+
+  private LocalDateTime dateTimeParse(final String dateString, final String pattern) {
+    try {
+      return LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern(pattern));
+    } catch (final Throwable _t) {
+      if (_t instanceof Exception) {
+        return null;
+      } else {
+        throw Exceptions.sneakyThrow(_t);
+      }
+    }
+  }
+
+  private CharSequence _valueFrom(final JsonObjectAce it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      if ((((it != null) && (it.getMembers() != null)) && (it.getMembers().size() > 0))) {
+        _builder.append("{ ");
+        {
+          EList<JsonMember> _members = it.getMembers();
+          boolean _hasElements = false;
+          for(final JsonMember member : _members) {
+            if (!_hasElements) {
+              _hasElements = true;
+            } else {
+              _builder.appendImmediate(this.stringLineBreak, "");
+            }
+            _builder.append("\\\"");
+            String _name = member.getAttribute().getName();
+            _builder.append(_name);
+            _builder.append("\\\" : ");
+            CharSequence _valueFrom = this.valueFrom(member.getValue());
+            _builder.append(_valueFrom);
+          }
+        }
+        _builder.append("}");
+      } else {
+        _builder.append("{}");
+      }
+    }
+    return _builder;
+  }
+
+  private CharSequence _valueFrom(final String it) {
+    return this.valueFromString(it);
+  }
+
+  private CharSequence _valueFrom(final JsonValue it) {
+    if ((it instanceof StringType)) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("\\\"");
+      CharSequence _valueFromString = this.valueFromString(((StringType)it).getString());
+      _builder.append(_valueFromString);
+      _builder.append("\\\"");
+      return _builder;
+    } else {
+      if ((it instanceof BooleanType)) {
+        return ((BooleanType)it).getBoolean();
+      } else {
+        if ((it instanceof NullType)) {
+          return "null";
+        } else {
+          if ((it instanceof LongType)) {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            {
+              boolean _isMinus = ((LongType)it).isMinus();
+              if (_isMinus) {
+                _builder_1.append("-");
+              }
+            }
+            int _long = ((LongType)it).getLong();
+            _builder_1.append(_long);
+            return _builder_1;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  private CharSequence _squishyValueFrom(final JsonObjectAce it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("null");
+    return _builder;
+  }
+
+  private CharSequence _squishyValueFrom(final String it) {
+    return this.valueFromString(it);
+  }
+
+  private CharSequence _squishyValueFrom(final JsonValue it) {
+    if ((it instanceof StringType)) {
+      StringConcatenation _builder = new StringConcatenation();
+      CharSequence _valueFromString = this.valueFromString(((StringType)it).getString());
+      _builder.append(_valueFromString);
+      return _builder;
+    } else {
+      if ((it instanceof BooleanType)) {
+        return ((BooleanType)it).getBoolean();
+      } else {
+        if ((it instanceof NullType)) {
+          return "null";
+        } else {
+          if ((it instanceof LongType)) {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            int _long = ((LongType)it).getLong();
+            _builder_1.append(_long);
+            return _builder_1;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  private CharSequence valueFromString(final String it) {
+    String returnString = it;
+    boolean _contains = it.contains("${random}");
+    if (_contains) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("\" + this.randomString() + \"");
+      returnString = returnString.replace("${random}", _builder);
+    }
+    boolean _contains_1 = it.contains("${testId}");
+    if (_contains_1) {
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("\" + this.getTestId() + \"");
+      returnString = returnString.replace("${testId}", _builder_1);
+    }
+    while (returnString.contains("${")) {
+      {
+        final int beginIndex = returnString.indexOf("${");
+        final int endIndex = returnString.indexOf("}");
+        final String templateString = returnString.substring(beginIndex, (endIndex + 1));
+        final String templateStringName = returnString.substring((beginIndex + 2), endIndex);
+        StringConcatenation _builder_2 = new StringConcatenation();
+        _builder_2.append("\" + this.extractedValues.get(\"");
+        _builder_2.append(templateStringName);
+        _builder_2.append("\").toString() + \"");
+        returnString = returnString.replace(templateString, _builder_2);
+      }
+    }
+    StringConcatenation _builder_2 = new StringConcatenation();
+    _builder_2.append(returnString);
+    return _builder_2;
+  }
+
+  private CharSequence _valueFrom(final JsonArray it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      if ((((it != null) && (it.getValues() != null)) && (it.getValues().size() > 0))) {
+        _builder.append("[ ");
+        {
+          EList<JsonValue> _values = it.getValues();
+          boolean _hasElements = false;
+          for(final JsonValue value : _values) {
+            if (!_hasElements) {
+              _hasElements = true;
+            } else {
+              _builder.appendImmediate(this.stringLineBreak, "");
+            }
+            CharSequence _valueFrom = this.valueFrom(value);
+            _builder.append(_valueFrom);
+          }
+        }
+        _builder.append("]");
+      } else {
+        _builder.append("[]");
+      }
+    }
+    return _builder;
+  }
+
+  private CharSequence _valueFrom(final JsonDateTime it) {
+    boolean _contains = it.getDateTime().contains("${");
+    if (_contains) {
+      final int beginIndex = it.getDateTime().indexOf("${");
+      final int endIndex = it.getDateTime().indexOf("}");
+      final String templateStringName = it.getDateTime().substring((beginIndex + 2), endIndex);
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("\\\"\" + LocalDateTime.parse(this.extractedValues.get(\"");
+      _builder.append(templateStringName);
+      _builder.append("\").toString(), DateTimeFormatter.ofPattern(\"");
+      String _pattern = it.getPattern();
+      _builder.append(_pattern);
+      _builder.append("\"))  + \"\\\"");
+      return _builder;
+    }
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("\\\"");
+    LocalDateTime _dateTimeParse = this.dateTimeParse(it.getDateTime(), it.getPattern());
+    _builder_1.append(_dateTimeParse);
+    _builder_1.append("\\\"");
+    return _builder_1;
   }
 
   private CharSequence givenItem(final Given it, final HttpServer java) {
@@ -1939,6 +2321,36 @@ public class Scenario {
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(it, model).toString());
+    }
+  }
+
+  private CharSequence valueFrom(final Object it) {
+    if (it instanceof JsonObjectAce) {
+      return _valueFrom((JsonObjectAce)it);
+    } else if (it instanceof JsonArray) {
+      return _valueFrom((JsonArray)it);
+    } else if (it instanceof JsonDateTime) {
+      return _valueFrom((JsonDateTime)it);
+    } else if (it instanceof JsonValue) {
+      return _valueFrom((JsonValue)it);
+    } else if (it instanceof String) {
+      return _valueFrom((String)it);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it).toString());
+    }
+  }
+
+  private CharSequence squishyValueFrom(final Object it) {
+    if (it instanceof JsonObjectAce) {
+      return _squishyValueFrom((JsonObjectAce)it);
+    } else if (it instanceof JsonValue) {
+      return _squishyValueFrom((JsonValue)it);
+    } else if (it instanceof String) {
+      return _squishyValueFrom((String)it);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it).toString());
     }
   }
 }

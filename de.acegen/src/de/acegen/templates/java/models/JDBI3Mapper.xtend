@@ -17,29 +17,25 @@
 
 package de.acegen.templates.java.models
 
+import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.HttpServer
-import de.acegen.aceGen.Model
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.AttributeExtension
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.java.TypeExtension
 import javax.inject.Inject
 
 class JDBI3Mapper {
 
 	@Inject
-	extension ModelExtension
-	
-	@Inject
-	extension AttributeExtension
+	extension TypeExtension
 	
 	@Inject
 	extension CommonExtension
 	
 
-	def generate(Model it, HttpServer httpServer) '''
+	def generate(de.acegen.aceGen.Model it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «httpServer.name».models;
+		package «modelPackageName»;
 		
 		import java.sql.ResultSet;
 		import java.sql.SQLException;
@@ -48,9 +44,9 @@ class JDBI3Mapper {
 		
 		import de.acegen.AbstractMapper;
 		
-		public class «modelMapper» extends AbstractMapper<«modelName»> {
+		public class «modelMapper» extends AbstractMapper<«modelClassName»> {
 			
-			public «modelName» map(ResultSet r, StatementContext ctx) throws SQLException {
+			public «modelClassName» map(ResultSet r, StatementContext ctx) throws SQLException {
 				return new «modelClassName»(
 					«FOR attribute : allAttributes SEPARATOR ','»
 						«attribute.mapperInit»
@@ -108,6 +104,15 @@ class JDBI3Mapper {
 		«sdg»
 		
 	'''
-	
+	private def String mapperInit(Attribute it) {
+		if (type !== null) {
+			return '''«IF isList»null«ELSEIF type == 'DateTime'»this.mapToDateTime(r, "«name»")«ELSEIF type == 'FormData'»null«ELSE»this.mapTo«javaType»(r, "«name»")«ENDIF»'''
+		}
+		if (model !== null) {
+			return '''null''';
+		}
+	}
+
+		
 	
 }

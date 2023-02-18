@@ -17,7 +17,7 @@ package de.acegen.generator.java;
 
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Model;
-import de.acegen.extensions.java.JavaHttpServerExtension;
+import de.acegen.extensions.java.TypeExtension;
 import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.templates.java.models.Liquibase;
 import javax.inject.Inject;
@@ -29,7 +29,7 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class LiquibaseGenerator {
   @Inject
   @Extension
-  private JavaHttpServerExtension _javaHttpServerExtension;
+  private TypeExtension _typeExtension;
 
   @Inject
   private Liquibase liquibase;
@@ -41,7 +41,7 @@ public class LiquibaseGenerator {
       if (_isPersistent) {
         boolean _isLiquibase = httpServer.isLiquibase();
         if (_isLiquibase) {
-          String _packageFolder = this._javaHttpServerExtension.packageFolder(httpServer);
+          String _packageFolder = this._typeExtension.packageFolder(httpServer);
           String _plus = (_packageFolder + "/");
           String _name = modelAce.getName();
           String _plus_1 = (_plus + _name);

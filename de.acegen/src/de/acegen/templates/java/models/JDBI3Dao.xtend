@@ -17,20 +17,20 @@
 
 package de.acegen.templates.java.models
 
+import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.HttpServer
-import de.acegen.aceGen.Model
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AttributeExtension
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.java.TypeExtension
 import javax.inject.Inject
 
 class JDBI3Dao {
 	
 	@Inject
-	extension ModelExtension
+	extension AttributeExtension
 	
 	@Inject
-	extension AttributeExtension
+	extension TypeExtension
 	
 	@Inject
 	extension CommonExtension
@@ -86,7 +86,7 @@ class JDBI3Dao {
 		
 	'''
 
-	def generateAbstractJdbiDao(Model it, HttpServer httpServer) '''
+	def generateAbstractJdbiDao(de.acegen.aceGen.Model it, HttpServer httpServer) '''
 		«copyright»
 		
 		package «httpServer.name».models;
@@ -102,33 +102,32 @@ class JDBI3Dao {
 		@SuppressWarnings("all")
 		public class «abstractModelDao» extends AbstractDao {
 			
-			public void insert(PersistenceHandle handle, «modelName» «modelParam») {
-				Update statement = handle.getHandle().createUpdate("INSERT INTO «table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(attribute)»«ENDFOR»)");
+			public void insert(PersistenceHandle handle, «modelClassNameWithPackage» «modelParamName») {
+				Update statement = handle.getHandle().createUpdate("INSERT INTO «tableName» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(attribute)»«ENDFOR»)");
 				«FOR attribute : attributes»
-					statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
+					statement.bind("«attribute.name.toLowerCase»", «modelParamName».«attribute.getterName»());
 				«ENDFOR»
 				statement.execute();
 			}
 			
 			
 			«FOR attribute : allUniqueAttributes»
-				public void updateBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «modelName» «modelParam») {
-					Update statement = handle.getHandle().createUpdate("UPDATE «table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
+				public void updateBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «modelClassNameWithPackage» «modelParamName») {
+					Update statement = handle.getHandle().createUpdate("UPDATE «tableName» SET «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
 					«FOR attr : attributes»
-						statement.bind("«attr.name.toLowerCase»", «modelGetAttribute(attr)»);
+						statement.bind("«attr.name.toLowerCase»", «modelParamName».«attr.getterName»());
 					«ENDFOR»
-					statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)» );
 					statement.execute();
 				}
 
 				public void deleteBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name») {
-					Update statement = handle.getHandle().createUpdate("DELETE FROM «table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
+					Update statement = handle.getHandle().createUpdate("DELETE FROM «tableName» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
 					statement.bind("«attribute.name.toLowerCase»", «attribute.name»);
 					statement.execute();
 				}
 
-				public «modelName» selectBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name») {
-					Optional<«modelName»> optional = handle.getHandle().createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»")
+				public «modelClassNameWithPackage» selectBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name») {
+					Optional<«modelClassNameWithPackage»> optional = handle.getHandle().createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «tableName» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»")
 						.bind("«attribute.name.toLowerCase»", «attribute.name»)
 						.map(new «modelMapper»())
 						.findFirst();
@@ -137,8 +136,8 @@ class JDBI3Dao {
 			«ENDFOR»
 			
 			«IF allPrimaryKeyAttributes.length > 0»
-				public «modelName» selectByPrimaryKey(PersistenceHandle handle, «FOR attribute : allPrimaryKeyAttributes SEPARATOR ', '»«attribute.javaType» «attribute.name»«ENDFOR») {
-					Optional<«modelName»> optional = handle.getHandle().createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «table» WHERE «FOR attribute : allPrimaryKeyAttributes SEPARATOR ' AND '»«attribute.name.toLowerCase» = :«attribute.name.toLowerCase»«ENDFOR»")
+				public «modelClassNameWithPackage» selectByPrimaryKey(PersistenceHandle handle, «FOR attribute : allPrimaryKeyAttributes SEPARATOR ', '»«attribute.javaType» «attribute.name»«ENDFOR») {
+					Optional<«modelClassNameWithPackage»> optional = handle.getHandle().createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «tableName» WHERE «FOR attribute : allPrimaryKeyAttributes SEPARATOR ' AND '»«attribute.name.toLowerCase» = :«attribute.name.toLowerCase»«ENDFOR»")
 						«FOR attribute : allPrimaryKeyAttributes»
 							.bind("«attribute.name.toLowerCase»", «attribute.name»)
 						«ENDFOR»
@@ -149,7 +148,7 @@ class JDBI3Dao {
 			«ENDIF»
 			
 			public int filterAndCountBy(PersistenceHandle handle, Map<String, String> filterMap) {
-				String sql = "SELECT count(*) FROM «table»";
+				String sql = "SELECT count(*) FROM «tableName»";
 				if (filterMap != null) {
 					int i = 0;
 					for(String key : filterMap.keySet()) {
@@ -164,14 +163,14 @@ class JDBI3Dao {
 				return handle.getHandle().createQuery(sql).mapTo(Integer.class).first();
 			}
 
-			public List<«modelName»> selectAll(PersistenceHandle handle) {
-				return handle.getHandle().createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «table»")
+			public List<«modelClassNameWithPackage»> selectAll(PersistenceHandle handle) {
+				return handle.getHandle().createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «tableName»")
 					.map(new «modelMapper»())
 					.list();
 			}
 
 			public void truncate(PersistenceHandle handle) {
-				Update statement = handle.getHandle().createUpdate("TRUNCATE TABLE «table» CASCADE");
+				Update statement = handle.getHandle().createUpdate("TRUNCATE TABLE «tableName» CASCADE");
 				statement.execute();
 			}
 
@@ -181,7 +180,7 @@ class JDBI3Dao {
 		
 	'''
 
-	def generateJdbiDao(Model it, HttpServer httpServer) '''
+	def generateJdbiDao(de.acegen.aceGen.Model it, HttpServer httpServer) '''
 		«copyright»
 		
 		package «httpServer.getName».models;
@@ -193,6 +192,9 @@ class JDBI3Dao {
 		«sdg»
 		
 	'''
+	
+	def String modelAttributeSqlValue(de.acegen.aceGen.Model it, Attribute attribute) 
+	''':«attribute.name.toLowerCase»'''
 	
 	
 	

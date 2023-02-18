@@ -18,7 +18,7 @@
 package de.acegen.generator.java
 
 import de.acegen.aceGen.HttpServer
-import de.acegen.extensions.java.JavaHttpServerExtension
+import de.acegen.extensions.java.TypeExtension
 import de.acegen.generator.ACEOutputConfigurationProvider
 import de.acegen.templates.java.models.Liquibase
 import javax.inject.Inject
@@ -27,7 +27,7 @@ import org.eclipse.xtext.generator.IFileSystemAccess2
 class LiquibaseGenerator {
 
 	@Inject
-	extension JavaHttpServerExtension
+	extension TypeExtension
 
 	@Inject
 	Liquibase liquibase;

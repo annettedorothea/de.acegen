@@ -23,8 +23,7 @@ import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.HttpServerViewFunction;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.JavaHttpServerExtension;
-import de.acegen.extensions.java.ModelExtension;
+import de.acegen.extensions.java.TypeExtension;
 import de.acegen.extensions.java.ViewExtension;
 import java.util.Arrays;
 import javax.inject.Inject;
@@ -37,19 +36,15 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class AppRegistration {
   @Inject
   @Extension
-  private ModelExtension _modelExtension;
-
-  @Inject
-  @Extension
-  private JavaHttpServerExtension _javaHttpServerExtension;
-
-  @Inject
-  @Extension
   private ViewExtension _viewExtension;
 
   @Inject
   @Extension
   private CommonExtension _commonExtension;
+
+  @Inject
+  @Extension
+  private TypeExtension _typeExtension;
 
   public CharSequence generateAppRegistration(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
@@ -69,6 +64,9 @@ public class AppRegistration {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("import de.acegen.ViewProvider;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("import de.acegen.Data;");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("import io.dropwizard.setup.Environment;");
@@ -200,12 +198,9 @@ public class AppRegistration {
     final HttpServerView view = ((HttpServerView) _eContainer);
     _builder.newLineIfNotEmpty();
     _builder.append("viewProvider.addConsumer(\"");
-    String _name = java.getName();
-    _builder.append(_name);
-    _builder.append(".events.");
-    String _eventName = this._javaHttpServerExtension.eventName(aceOperation, outcome);
+    String _eventName = this._typeExtension.eventName(aceOperation, outcome);
     _builder.append(_eventName);
-    _builder.append("\", (dataContainer, handle) -> {");
+    _builder.append("\", (data, handle) -> {");
     _builder.newLineIfNotEmpty();
     {
       boolean _isQueued = view.isQueued();
@@ -218,9 +213,9 @@ public class AppRegistration {
         String _viewFunctionWithViewNameAsVariable = this._viewExtension.viewFunctionWithViewNameAsVariable(listener);
         _builder.append(_viewFunctionWithViewNameAsVariable, "\t");
         _builder.append("((");
-        String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(listener.getModel());
-        _builder.append(_dataNameWithPackage, "\t");
-        _builder.append(") dataContainer, handle));");
+        String _dataWithGenericModel = this._typeExtension.dataWithGenericModel(listener.getModel());
+        _builder.append(_dataWithGenericModel, "\t");
+        _builder.append(") data, handle));");
         _builder.newLineIfNotEmpty();
       } else {
         _builder.append("\t");
@@ -228,9 +223,9 @@ public class AppRegistration {
         String _viewFunctionWithViewNameAsVariable_1 = this._viewExtension.viewFunctionWithViewNameAsVariable(listener);
         _builder.append(_viewFunctionWithViewNameAsVariable_1, "\t");
         _builder.append("((");
-        String _dataNameWithPackage_1 = this._modelExtension.dataNameWithPackage(listener.getModel());
-        _builder.append(_dataNameWithPackage_1, "\t");
-        _builder.append(") dataContainer, handle);");
+        String _dataWithGenericModel_1 = this._typeExtension.dataWithGenericModel(listener.getModel());
+        _builder.append(_dataWithGenericModel_1, "\t");
+        _builder.append(") data, handle);");
         _builder.newLineIfNotEmpty();
       }
     }

@@ -22,10 +22,10 @@ package de.acegen.templates.es6
 import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.HttpClientAce
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.HttpServerExtension
 import de.acegen.extensions.es6.AceExtension
 import de.acegen.extensions.es6.Es6Extension
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.java.AttributeExtension
+import de.acegen.extensions.java.EcoreExtension
 import javax.inject.Inject
 
 class CommandTemplate {
@@ -39,10 +39,10 @@ class CommandTemplate {
 	extension Es6Extension
 	
 	@Inject
-	extension HttpServerExtension
+	extension EcoreExtension
 
 	@Inject
-	extension ModelExtension
+	extension AttributeExtension
 	
 	def boolean hasEventOutcome(HttpClientAce it) {
 		for(outcome: outcomes) {

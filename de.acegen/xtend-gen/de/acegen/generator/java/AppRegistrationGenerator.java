@@ -16,7 +16,7 @@
 package de.acegen.generator.java;
 
 import de.acegen.aceGen.HttpServer;
-import de.acegen.extensions.java.JavaHttpServerExtension;
+import de.acegen.extensions.java.TypeExtension;
 import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.templates.java.AppRegistration;
 import javax.inject.Inject;
@@ -30,13 +30,13 @@ public class AppRegistrationGenerator {
 
   @Inject
   @Extension
-  private JavaHttpServerExtension _javaHttpServerExtension;
+  private TypeExtension _typeExtension;
 
   public void doGenerate(final HttpServer httpServer, final IFileSystemAccess2 fsa) {
     int _size = httpServer.getAceOperations().size();
     boolean _greaterThan = (_size > 0);
     if (_greaterThan) {
-      String _packageFolder = this._javaHttpServerExtension.packageFolder(httpServer);
+      String _packageFolder = this._typeExtension.packageFolder(httpServer);
       String _plus = (_packageFolder + "/AppRegistration.java");
       fsa.generateFile(_plus, 
         ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 

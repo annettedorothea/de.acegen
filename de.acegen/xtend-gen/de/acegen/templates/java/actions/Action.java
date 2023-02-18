@@ -22,25 +22,15 @@ import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AttributeExtension;
-import de.acegen.extensions.java.JavaHttpServerExtension;
-import de.acegen.extensions.java.ModelExtension;
+import de.acegen.extensions.java.TypeExtension;
 import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
 public class Action {
-  @Inject
-  @Extension
-  private ModelExtension _modelExtension;
-
-  @Inject
-  @Extension
-  private JavaHttpServerExtension _javaHttpServerExtension;
-
   @Inject
   @Extension
   private AttributeExtension _attributeExtension;
@@ -49,6 +39,10 @@ public class Action {
   @Extension
   private CommonExtension _commonExtension;
 
+  @Inject
+  @Extension
+  private TypeExtension _typeExtension;
+
   protected CharSequence _generateAbstractActionFile(final HttpServerAceWrite it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -56,13 +50,15 @@ public class Action {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("package ");
-    String _name = httpServer.getName();
-    _builder.append(_name);
-    _builder.append(".actions;");
+    String _actionPackageName = this._typeExtension.actionPackageName(httpServer);
+    _builder.append(_actionPackageName);
+    _builder.append(";");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
+    _builder.newLine();
+    _builder.append("import de.acegen.Data;");
     _builder.newLine();
     _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
@@ -79,11 +75,8 @@ public class Action {
     _builder.append("import de.acegen.WriteAction;");
     _builder.newLine();
     _builder.newLine();
-    String _dataImport = this._modelExtension.dataImport(it.getModel());
-    _builder.append(_dataImport);
-    _builder.newLineIfNotEmpty();
     _builder.append("import ");
-    String _commandNameWithPackage = this._javaHttpServerExtension.commandNameWithPackage(it);
+    String _commandNameWithPackage = this._typeExtension.commandNameWithPackage(it);
     _builder.append(_commandNameWithPackage);
     _builder.append(";");
     _builder.newLineIfNotEmpty();
@@ -94,17 +87,17 @@ public class Action {
     _builder.newLine();
     _builder.newLine();
     _builder.append("public abstract class ");
-    String _abstractActionName = this._javaHttpServerExtension.abstractActionName(it);
+    String _abstractActionName = this._typeExtension.abstractActionName(it);
     _builder.append(_abstractActionName);
     _builder.append(" extends WriteAction<");
-    String _dataParamType = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType);
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(it.getModel());
+    _builder.append(_modelClassNameWithPackage);
     _builder.append("> {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("static final Logger LOG = LoggerFactory.getLogger(");
-    String _abstractActionName_1 = this._javaHttpServerExtension.abstractActionName(it);
+    String _abstractActionName_1 = this._typeExtension.abstractActionName(it);
     _builder.append(_abstractActionName_1, "\t");
     _builder.append(".class);");
     _builder.newLineIfNotEmpty();
@@ -115,7 +108,7 @@ public class Action {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
-    String _actionNameWithPackage = this._javaHttpServerExtension.actionNameWithPackage(it);
+    String _actionNameWithPackage = this._typeExtension.actionNameWithPackage(it);
     _builder.append(_actionNameWithPackage, "\t\t");
     _builder.append("\", persistenceConnection, appConfiguration, daoProvider, viewProvider);");
     _builder.newLineIfNotEmpty();
@@ -128,13 +121,13 @@ public class Action {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ICommand<");
-    String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_1, "\t");
+    String _modelClassNameWithPackage_1 = this._typeExtension.modelClassNameWithPackage(it.getModel());
+    _builder.append(_modelClassNameWithPackage_1, "\t");
     _builder.append("> getCommand() {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("return new ");
-    String _commandName = this._javaHttpServerExtension.commandName(it);
+    String _commandName = this._typeExtension.commandName(it);
     _builder.append(_commandName, "\t\t");
     _builder.append("(daoProvider, viewProvider, this.appConfiguration);");
     _builder.newLineIfNotEmpty();
@@ -151,11 +144,11 @@ public class Action {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _dataParamType_2 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_2, "\t");
+    String _dataWithGenericModel = this._typeExtension.dataWithGenericModel(it.getModel());
+    _builder.append(_dataWithGenericModel, "\t");
     _builder.append(" initActionData(");
-    String _dataParamType_3 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_3, "\t");
+    String _dataWithGenericModel_1 = this._typeExtension.dataWithGenericModel(it.getModel());
+    _builder.append(_dataWithGenericModel_1, "\t");
     _builder.append(" data) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -183,9 +176,9 @@ public class Action {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("package ");
-    String _name = httpServer.getName();
-    _builder.append(_name);
-    _builder.append(".actions;");
+    String _actionPackageName = this._typeExtension.actionPackageName(httpServer);
+    _builder.append(_actionPackageName);
+    _builder.append(";");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("import java.time.LocalDateTime;");
@@ -199,11 +192,11 @@ public class Action {
     _builder.append("import org.apache.commons.lang3.StringUtils;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("import de.acegen.Data;");
+    _builder.newLine();
     _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
     _builder.append("import de.acegen.IDaoProvider;");
-    _builder.newLine();
-    _builder.append("import de.acegen.IDataContainer;");
     _builder.newLine();
     _builder.append("import de.acegen.ViewProvider;");
     _builder.newLine();
@@ -218,27 +211,20 @@ public class Action {
     _builder.append("import de.acegen.SquishyDataProvider;");
     _builder.newLine();
     _builder.newLine();
-    String _dataImport = this._modelExtension.dataImport(it.getModel());
-    _builder.append(_dataImport);
-    _builder.newLineIfNotEmpty();
-    String _dataClassImport = this._modelExtension.dataClassImport(it.getModel());
-    _builder.append(_dataClassImport);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
     _builder.append("@SuppressWarnings(\"unused\")");
     _builder.newLine();
     _builder.append("public abstract class ");
-    String _abstractActionName = this._javaHttpServerExtension.abstractActionName(it);
+    String _abstractActionName = this._typeExtension.abstractActionName(it);
     _builder.append(_abstractActionName);
     _builder.append(" extends ReadAction<");
-    String _dataParamType = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType);
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(it.getModel());
+    _builder.append(_modelClassNameWithPackage);
     _builder.append("> {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("static final Logger LOG = LoggerFactory.getLogger(");
-    String _abstractActionName_1 = this._javaHttpServerExtension.abstractActionName(it);
+    String _abstractActionName_1 = this._typeExtension.abstractActionName(it);
     _builder.append(_abstractActionName_1, "\t");
     _builder.append(".class);");
     _builder.newLineIfNotEmpty();
@@ -250,7 +236,7 @@ public class Action {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
-    String _actionNameWithPackage = this._javaHttpServerExtension.actionNameWithPackage(it);
+    String _actionNameWithPackage = this._typeExtension.actionNameWithPackage(it);
     _builder.append(_actionNameWithPackage, "\t\t");
     _builder.append("\", persistenceConnection, appConfiguration, daoProvider, viewProvider);");
     _builder.newLineIfNotEmpty();
@@ -260,11 +246,11 @@ public class Action {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected abstract ");
-    String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_1, "\t");
+    String _dataWithGenericModel = this._typeExtension.dataWithGenericModel(it.getModel());
+    _builder.append(_dataWithGenericModel, "\t");
     _builder.append(" loadDataForGetRequest(");
-    String _dataParamType_2 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_2, "\t");
+    String _dataWithGenericModel_1 = this._typeExtension.dataWithGenericModel(it.getModel());
+    _builder.append(_dataWithGenericModel_1, "\t");
     _builder.append(" data, PersistenceHandle readonlyHandle);");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -275,11 +261,11 @@ public class Action {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _dataParamType_3 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_3, "\t");
+    String _dataWithGenericModel_2 = this._typeExtension.dataWithGenericModel(it.getModel());
+    _builder.append(_dataWithGenericModel_2, "\t");
     _builder.append(" initActionData(");
-    String _dataParamType_4 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_4, "\t");
+    String _dataWithGenericModel_3 = this._typeExtension.dataWithGenericModel(it.getModel());
+    _builder.append(_dataWithGenericModel_3, "\t");
     _builder.append(" data) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -306,9 +292,9 @@ public class Action {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("package ");
-    String _name = httpServer.getName();
-    _builder.append(_name);
-    _builder.append(".actions;");
+    String _actionPackageName = this._typeExtension.actionPackageName(httpServer);
+    _builder.append(_actionPackageName);
+    _builder.append(";");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("import de.acegen.CustomAppConfiguration;");
@@ -327,9 +313,11 @@ public class Action {
       }
     }
     {
-      if (((this._modelExtension.allSquishyAttributes(it.getModel()).size() > 0) || it.getType().equals("GET"))) {
-        String _dataImport = this._modelExtension.dataImport(it.getModel());
-        _builder.append(_dataImport);
+      if (((this._commonExtension.allSquishyAttributes(it.getModel()).size() > 0) || it.getType().equals("GET"))) {
+        _builder.append("import ");
+        String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(it.getModel());
+        _builder.append(_modelClassNameWithPackage);
+        _builder.append(";");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -340,24 +328,24 @@ public class Action {
     _builder.newLine();
     _builder.newLine();
     _builder.append("public class ");
-    String _actionName = this._javaHttpServerExtension.actionName(it);
+    String _actionName = this._typeExtension.actionName(it);
     _builder.append(_actionName);
     _builder.append(" extends ");
-    String _abstractActionName = this._javaHttpServerExtension.abstractActionName(it);
+    String _abstractActionName = this._typeExtension.abstractActionName(it);
     _builder.append(_abstractActionName);
     _builder.append(" {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("static final Logger LOG = LoggerFactory.getLogger(");
-    String _actionName_1 = this._javaHttpServerExtension.actionName(it);
+    String _actionName_1 = this._typeExtension.actionName(it);
     _builder.append(_actionName_1, "\t");
     _builder.append(".class);");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _actionName_2 = this._javaHttpServerExtension.actionName(it);
+    String _actionName_2 = this._typeExtension.actionName(it);
     _builder.append(_actionName_2, "\t");
     _builder.append("(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ");
     _builder.newLineIfNotEmpty();
@@ -380,38 +368,26 @@ public class Action {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("protected ");
-        String _dataParamType = this._modelExtension.dataParamType(it.getModel());
-        _builder.append(_dataParamType, "\t");
+        String _dataWithGenericModel = this._typeExtension.dataWithGenericModel(it.getModel());
+        _builder.append(_dataWithGenericModel, "\t");
         _builder.append(" loadDataForGetRequest(");
-        String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
-        _builder.append(_dataParamType_1, "\t");
+        String _dataWithGenericModel_1 = this._typeExtension.dataWithGenericModel(it.getModel());
+        _builder.append(_dataWithGenericModel_1, "\t");
         _builder.append(" data, PersistenceHandle readonlyHandle) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
-        String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getModel());
-        _builder.append(_interfaceWithPackage, "\t\t");
+        String _modelClassNameWithPackage_1 = this._typeExtension.modelClassNameWithPackage(it.getModel());
+        _builder.append(_modelClassNameWithPackage_1, "\t\t");
         _builder.append(" testData = ");
-        String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(it.getModel());
-        _builder.append(_dataNameWithPackage, "\t\t");
+        String _modelClassNameWithPackage_2 = this._typeExtension.modelClassNameWithPackage(it.getModel());
+        _builder.append(_modelClassNameWithPackage_2, "\t\t");
         _builder.append(".generateTestData();");
         _builder.newLineIfNotEmpty();
-        {
-          EList<Attribute> _attributes = it.getModel().getAttributes();
-          for(final Attribute attribute : _attributes) {
-            _builder.append("\t");
-            _builder.append("\t");
-            _builder.append("data.");
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("testData.");
-            String _terCall = this._attributeExtension.getterCall(attribute);
-            _builder_1.append(_terCall);
-            String _setterCall = this._attributeExtension.setterCall(attribute, _builder_1.toString());
-            _builder.append(_setterCall, "\t\t");
-            _builder.append(";");
-            _builder.newLineIfNotEmpty();
-          }
-        }
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("data.setModel(testData);");
+        _builder.newLine();
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("return data;");
@@ -424,26 +400,26 @@ public class Action {
     _builder.append("\t");
     _builder.newLine();
     {
-      int _size = this._modelExtension.allSquishyAttributes(it.getModel()).size();
+      int _size = this._commonExtension.allSquishyAttributes(it.getModel()).size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
         _builder.append("\t");
         _builder.append("public ");
-        String _dataParamType_2 = this._modelExtension.dataParamType(it.getModel());
-        _builder.append(_dataParamType_2, "\t");
+        String _dataWithGenericModel_2 = this._typeExtension.dataWithGenericModel(it.getModel());
+        _builder.append(_dataWithGenericModel_2, "\t");
         _builder.append(" initActionData(");
-        String _dataParamType_3 = this._modelExtension.dataParamType(it.getModel());
-        _builder.append(_dataParamType_3, "\t");
+        String _dataWithGenericModel_3 = this._typeExtension.dataWithGenericModel(it.getModel());
+        _builder.append(_dataWithGenericModel_3, "\t");
         _builder.append(" data) {");
         _builder.newLineIfNotEmpty();
         {
-          List<Attribute> _allSquishyAttributes = this._modelExtension.allSquishyAttributes(it.getModel());
-          for(final Attribute attribute_1 : _allSquishyAttributes) {
+          List<Attribute> _allSquishyAttributes = this._commonExtension.allSquishyAttributes(it.getModel());
+          for(final Attribute attribute : _allSquishyAttributes) {
             _builder.append("\t");
             _builder.append("\t");
             _builder.append("// ");
-            String _name_1 = attribute_1.getName();
-            _builder.append(_name_1, "\t\t");
+            String _name = attribute.getName();
+            _builder.append(_name, "\t\t");
             _builder.newLineIfNotEmpty();
           }
         }
@@ -476,7 +452,7 @@ public class Action {
     _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("public abstract class Action<T extends IDataContainer> implements IAction<T> {");
+    _builder.append("public abstract class Action<T extends AbstractModel> implements IAction<T> {");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
@@ -556,7 +532,7 @@ public class Action {
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("public abstract class ReadAction<T extends IDataContainer> extends Action<T> {");
+    _builder.append("public abstract class ReadAction<T extends AbstractModel> extends Action<T> {");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
@@ -598,16 +574,16 @@ public class Action {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract T loadDataForGetRequest(T data, PersistenceHandle readonlyHandle);");
+    _builder.append("protected abstract Data<T> loadDataForGetRequest(Data<T> data, PersistenceHandle readonlyHandle);");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract T initActionDataFromSquishyDataProvider(T data);");
+    _builder.append("protected abstract Data<T> initActionDataFromSquishyDataProvider(Data<T> data);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public T apply(T data) {");
+    _builder.append("public Data<T> apply(Data<T> data) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);");
@@ -651,6 +627,9 @@ public class Action {
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("data.freezeSystemTime();");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("data = this.loadDataForGetRequest(data, databaseHandle.getReadonlyHandle());");
@@ -703,7 +682,7 @@ public class Action {
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("public abstract class WriteAction<T extends IDataContainer> extends Action<T> {");
+    _builder.append("public abstract class WriteAction<T extends AbstractModel> extends Action<T> {");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
@@ -751,7 +730,7 @@ public class Action {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract T initActionDataFromSquishyDataProvider(T data);");
+    _builder.append("protected abstract Data<T> initActionDataFromSquishyDataProvider(Data<T> data);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
@@ -759,7 +738,7 @@ public class Action {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public T apply(T data) {");
+    _builder.append("public Data<T> apply(Data<T> data) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);");
@@ -802,6 +781,9 @@ public class Action {
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("data.freezeSystemTime();");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.newLine();
@@ -876,7 +858,7 @@ public class Action {
     _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("public interface IAction<T> {");
+    _builder.append("public interface IAction<T extends AbstractModel> {");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
@@ -885,12 +867,12 @@ public class Action {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("T apply(T data);");
+    _builder.append("Data<T> apply(Data<T> data);");
     _builder.newLine();
     _builder.append("    ");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("T initActionData(T data);");
+    _builder.append("Data<T> initActionData(Data<T> data);");
     _builder.newLine();
     _builder.append("    ");
     _builder.newLine();
@@ -908,7 +890,7 @@ public class Action {
   private CharSequence constructor(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("public ");
-    String _abstractActionName = this._javaHttpServerExtension.abstractActionName(it);
+    String _abstractActionName = this._typeExtension.abstractActionName(it);
     _builder.append(_abstractActionName);
     _builder.append("(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, ");
     _builder.newLineIfNotEmpty();
@@ -923,11 +905,11 @@ public class Action {
     _builder.append("@Override");
     _builder.newLine();
     _builder.append("protected ");
-    String _dataParamType = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType);
+    String _dataWithGenericModel = this._typeExtension.dataWithGenericModel(it.getModel());
+    _builder.append(_dataWithGenericModel);
     _builder.append(" initActionDataFromSquishyDataProvider(");
-    String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_1);
+    String _dataWithGenericModel_1 = this._typeExtension.dataWithGenericModel(it.getModel());
+    _builder.append(_dataWithGenericModel_1);
     _builder.append(" data) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -943,24 +925,24 @@ public class Action {
     _builder.append("}");
     _builder.newLine();
     {
-      List<Attribute> _allAttributes = this._modelExtension.allAttributes(it.getModel());
+      List<Attribute> _allAttributes = this._commonExtension.allAttributes(it.getModel());
       for(final Attribute attribute : _allAttributes) {
         {
           boolean _isSquishy = attribute.isSquishy();
           if (_isSquishy) {
             _builder.append("\t");
             _builder.append("String ");
-            String _name = attribute.getName();
-            _builder.append(_name, "\t");
+            String _propertyName = this._attributeExtension.propertyName(attribute);
+            _builder.append(_propertyName, "\t");
             _builder.append("Object = SquishyDataProvider.consumeValue(data.getUuid(), \"");
-            String _name_1 = attribute.getName();
-            _builder.append(_name_1, "\t");
+            String _propertyName_1 = this._attributeExtension.propertyName(attribute);
+            _builder.append(_propertyName_1, "\t");
             _builder.append("\");");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("if (");
-            String _name_2 = attribute.getName();
-            _builder.append(_name_2, "\t");
+            String _propertyName_2 = this._attributeExtension.propertyName(attribute);
+            _builder.append(_propertyName_2, "\t");
             _builder.append("Object != null) {");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
@@ -969,25 +951,28 @@ public class Action {
             _builder.newLine();
             _builder.append("\t");
             _builder.append("\t\t");
-            String _javaType = this._attributeExtension.javaType(attribute);
+            String _javaType = this._typeExtension.javaType(attribute);
             _builder.append(_javaType, "\t\t\t");
             _builder.append(" ");
-            String _name_3 = attribute.getName();
-            _builder.append(_name_3, "\t\t\t");
+            String _propertyName_3 = this._attributeExtension.propertyName(attribute);
+            _builder.append(_propertyName_3, "\t\t\t");
             _builder.append(" = (");
-            String _javaType_1 = this._attributeExtension.javaType(attribute);
+            String _javaType_1 = this._typeExtension.javaType(attribute);
             _builder.append(_javaType_1, "\t\t\t");
             _builder.append(")");
-            String _name_4 = attribute.getName();
-            _builder.append(_name_4, "\t\t\t");
+            String _propertyName_4 = this._attributeExtension.propertyName(attribute);
+            _builder.append(_propertyName_4, "\t\t\t");
             _builder.append("Object;");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("\t\t");
-            _builder.append("data.");
-            String _setterCall = this._attributeExtension.setterCall(attribute, attribute.getName());
-            _builder.append(_setterCall, "\t\t\t");
-            _builder.append(";");
+            _builder.append("data.getModel().");
+            String _setterName = this._attributeExtension.setterName(attribute);
+            _builder.append(_setterName, "\t\t\t");
+            _builder.append("(");
+            String _propertyName_5 = this._attributeExtension.propertyName(attribute);
+            _builder.append(_propertyName_5, "\t\t\t");
+            _builder.append(");");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("\t");
@@ -996,11 +981,11 @@ public class Action {
             _builder.append("\t");
             _builder.append("\t\t");
             _builder.append("LOG.warn(\"");
-            String _name_5 = attribute.getName();
-            _builder.append(_name_5, "\t\t\t");
+            String _propertyName_6 = this._attributeExtension.propertyName(attribute);
+            _builder.append(_propertyName_6, "\t\t\t");
             _builder.append(" is declared as squishy and failed to parse {} from SquishyDataProvider.\", ");
-            String _name_6 = attribute.getName();
-            _builder.append(_name_6, "\t\t\t");
+            String _propertyName_7 = this._attributeExtension.propertyName(attribute);
+            _builder.append(_propertyName_7, "\t\t\t");
             _builder.append("Object);");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
@@ -1013,8 +998,8 @@ public class Action {
             _builder.append("\t");
             _builder.append("\t");
             _builder.append("LOG.warn(\"");
-            String _name_7 = attribute.getName();
-            _builder.append(_name_7, "\t\t");
+            String _propertyName_8 = this._attributeExtension.propertyName(attribute);
+            _builder.append(_propertyName_8, "\t\t");
             _builder.append(" is declared as squishy but no value was found in SquishyDataProvider.\");");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");

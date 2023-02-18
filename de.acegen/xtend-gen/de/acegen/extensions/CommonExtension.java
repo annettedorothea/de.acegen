@@ -15,6 +15,11 @@
  */
 package de.acegen.extensions;
 
+import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.Model;
+import java.util.ArrayList;
+import java.util.List;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 
 @SuppressWarnings("all")
@@ -44,5 +49,81 @@ public class CommonExtension {
     _builder.newLine();
     _builder.newLine();
     return _builder.toString();
+  }
+
+  public List<Attribute> allAttributes(final Model it) {
+    final ArrayList<Attribute> attrs = new ArrayList<Attribute>();
+    this.allAttributesRec(it, attrs);
+    return attrs;
+  }
+
+  public void allAttributesRec(final Model it, final List<Attribute> attrs) {
+    EList<Attribute> _attributes = it.getAttributes();
+    for (final Attribute attribute : _attributes) {
+      boolean _containsAttribute = this.containsAttribute(attrs, attribute);
+      boolean _not = (!_containsAttribute);
+      if (_not) {
+        attrs.add(attribute);
+      }
+    }
+    EList<Model> _superModels = it.getSuperModels();
+    for (final Model superModel : _superModels) {
+      this.allAttributesRec(superModel, attrs);
+    }
+  }
+
+  public boolean containsAttribute(final List<Attribute> it, final Attribute attribute) {
+    int _size = it.size();
+    boolean _equals = (_size == 0);
+    if (_equals) {
+      return false;
+    } else {
+      for (final Attribute attr : it) {
+        if ((((attr.getName() != null) && (attribute.getName() != null)) && attr.getName().equals(attribute.getName()))) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  public List<Attribute> allSquishyAttributes(final Model it) {
+    ArrayList<Attribute> list = new ArrayList<Attribute>();
+    if ((it == null)) {
+      return list;
+    }
+    ArrayList<Attribute> allAttributes = new ArrayList<Attribute>();
+    this.allAttributesRec(it, allAttributes);
+    for (final Attribute attribute : allAttributes) {
+      boolean _isSquishy = attribute.isSquishy();
+      if (_isSquishy) {
+        list.add(attribute);
+      }
+    }
+    return list;
+  }
+
+  public List<Attribute> allUniqueAttributes(final Model it) {
+    ArrayList<Attribute> list = new ArrayList<Attribute>();
+    EList<Attribute> _attributes = it.getAttributes();
+    for (final Attribute attribute : _attributes) {
+      boolean _isUnique = attribute.isUnique();
+      if (_isUnique) {
+        list.add(attribute);
+      }
+    }
+    return list;
+  }
+
+  public List<Attribute> allPrimaryKeyAttributes(final Model it) {
+    ArrayList<Attribute> list = new ArrayList<Attribute>();
+    EList<Attribute> _attributes = it.getAttributes();
+    for (final Attribute attribute : _attributes) {
+      boolean _isPrimaryKey = attribute.isPrimaryKey();
+      if (_isPrimaryKey) {
+        list.add(attribute);
+      }
+    }
+    return list;
   }
 }

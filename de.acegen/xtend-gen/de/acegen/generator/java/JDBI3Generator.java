@@ -17,8 +17,7 @@ package de.acegen.generator.java;
 
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Model;
-import de.acegen.extensions.java.JavaHttpServerExtension;
-import de.acegen.extensions.java.ModelExtension;
+import de.acegen.extensions.java.TypeExtension;
 import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.templates.java.models.JDBI3Dao;
 import de.acegen.templates.java.models.JDBI3Mapper;
@@ -37,11 +36,7 @@ public class JDBI3Generator {
 
   @Inject
   @Extension
-  private JavaHttpServerExtension _javaHttpServerExtension;
-
-  @Inject
-  @Extension
-  private ModelExtension _modelExtension;
+  private TypeExtension _typeExtension;
 
   public void doGenerate(final HttpServer httpServer, final IFileSystemAccess2 fsa) {
     fsa.generateFile("de/acegen/AbstractDao.java", 
@@ -51,26 +46,26 @@ public class JDBI3Generator {
     EList<Model> _models = httpServer.getModels();
     for (final Model modelAce : _models) {
       {
-        String _packageFolder = this._javaHttpServerExtension.packageFolder(httpServer);
+        String _packageFolder = this._typeExtension.packageFolder(httpServer);
         String _plus = (_packageFolder + "/models/");
-        String _modelMapper = this._modelExtension.modelMapper(modelAce);
+        String _modelMapper = this._typeExtension.modelMapper(modelAce);
         String _plus_1 = (_plus + _modelMapper);
         String _plus_2 = (_plus_1 + ".java");
         fsa.generateFile(_plus_2, 
           ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.jdbi3Mapper.generate(modelAce, httpServer));
         boolean _isPersistent = modelAce.isPersistent();
         if (_isPersistent) {
-          String _packageFolder_1 = this._javaHttpServerExtension.packageFolder(httpServer);
+          String _packageFolder_1 = this._typeExtension.packageFolder(httpServer);
           String _plus_3 = (_packageFolder_1 + "/models/");
-          String _abstractModelDao = this._modelExtension.abstractModelDao(modelAce);
+          String _abstractModelDao = this._typeExtension.abstractModelDao(modelAce);
           String _plus_4 = (_plus_3 + _abstractModelDao);
           String _plus_5 = (_plus_4 + ".java");
           fsa.generateFile(_plus_5, 
             ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
             this.jdbi3Dao.generateAbstractJdbiDao(modelAce, httpServer));
-          String _packageFolder_2 = this._javaHttpServerExtension.packageFolder(httpServer);
+          String _packageFolder_2 = this._typeExtension.packageFolder(httpServer);
           String _plus_6 = (_packageFolder_2 + "/models/");
-          String _modelDao = this._modelExtension.modelDao(modelAce);
+          String _modelDao = this._typeExtension.modelDao(modelAce);
           String _plus_7 = (_plus_6 + _modelDao);
           String _plus_8 = (_plus_7 + ".java");
           fsa.generateFile(_plus_8, 

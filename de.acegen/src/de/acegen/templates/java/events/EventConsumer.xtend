@@ -32,7 +32,7 @@ class EventConsumer {
 		
 		@FunctionalInterface
 		public interface EventConsumer {
-			public void consumeEvent(IDataContainer data, PersistenceHandle handle);
+			public void consumeEvent(Data<?> data, PersistenceHandle handle);
 		}
 		
 		«sdg»

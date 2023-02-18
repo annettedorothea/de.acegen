@@ -54,7 +54,7 @@ class AuthUser {
 			}
 		
 			«FOR attribute : attributes»
-				«attribute.getter(false)»
+				«attribute.getter»
 				
 			«ENDFOR»
 			public String getName() {

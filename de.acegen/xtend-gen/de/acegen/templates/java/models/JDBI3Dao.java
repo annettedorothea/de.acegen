@@ -20,7 +20,7 @@ import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Model;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AttributeExtension;
-import de.acegen.extensions.java.ModelExtension;
+import de.acegen.extensions.java.TypeExtension;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -33,11 +33,11 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public class JDBI3Dao {
   @Inject
   @Extension
-  private ModelExtension _modelExtension;
+  private AttributeExtension _attributeExtension;
 
   @Inject
   @Extension
-  private AttributeExtension _attributeExtension;
+  private TypeExtension _typeExtension;
 
   @Inject
   @Extension
@@ -195,7 +195,7 @@ public class JDBI3Dao {
     _builder.append("@SuppressWarnings(\"all\")");
     _builder.newLine();
     _builder.append("public class ");
-    String _abstractModelDao = this._modelExtension.abstractModelDao(it);
+    String _abstractModelDao = this._typeExtension.abstractModelDao(it);
     _builder.append(_abstractModelDao);
     _builder.append(" extends AbstractDao {");
     _builder.newLineIfNotEmpty();
@@ -203,17 +203,17 @@ public class JDBI3Dao {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public void insert(PersistenceHandle handle, ");
-    String _modelName = this._modelExtension.modelName(it);
-    _builder.append(_modelName, "\t");
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(it);
+    _builder.append(_modelClassNameWithPackage, "\t");
     _builder.append(" ");
-    String _modelParam = this._modelExtension.modelParam(it);
-    _builder.append(_modelParam, "\t");
+    String _modelParamName = this._typeExtension.modelParamName(it);
+    _builder.append(_modelParamName, "\t");
     _builder.append(") {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("Update statement = handle.getHandle().createUpdate(\"INSERT INTO ");
-    String _table = this._modelExtension.table(it);
-    _builder.append(_table, "\t\t");
+    String _tableName = this._typeExtension.tableName(it);
+    _builder.append(_tableName, "\t\t");
     _builder.append(" (");
     {
       EList<Attribute> _attributes = it.getAttributes();
@@ -238,7 +238,7 @@ public class JDBI3Dao {
         } else {
           _builder.appendImmediate(", ", "\t\t");
         }
-        String _modelAttributeSqlValue = this._modelExtension.modelAttributeSqlValue(it, attribute_1);
+        String _modelAttributeSqlValue = this.modelAttributeSqlValue(it, attribute_1);
         _builder.append(_modelAttributeSqlValue, "\t\t");
       }
     }
@@ -252,9 +252,12 @@ public class JDBI3Dao {
         String _lowerCase_1 = attribute_2.getName().toLowerCase();
         _builder.append(_lowerCase_1, "\t\t");
         _builder.append("\", ");
-        String _modelGetAttribute = this._modelExtension.modelGetAttribute(it, attribute_2);
-        _builder.append(_modelGetAttribute, "\t\t");
-        _builder.append(");");
+        String _modelParamName_1 = this._typeExtension.modelParamName(it);
+        _builder.append(_modelParamName_1, "\t\t");
+        _builder.append(".");
+        String _terName = this._attributeExtension.getterName(attribute_2);
+        _builder.append(_terName, "\t\t");
+        _builder.append("());");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -269,25 +272,25 @@ public class JDBI3Dao {
     _builder.append("\t");
     _builder.newLine();
     {
-      List<Attribute> _allUniqueAttributes = this._modelExtension.allUniqueAttributes(it);
+      List<Attribute> _allUniqueAttributes = this._commonExtension.allUniqueAttributes(it);
       for(final Attribute attribute_3 : _allUniqueAttributes) {
         _builder.append("\t");
         _builder.append("public void updateBy");
         String _firstUpper = StringExtensions.toFirstUpper(attribute_3.getName());
         _builder.append(_firstUpper, "\t");
         _builder.append("(PersistenceHandle handle, ");
-        String _modelName_1 = this._modelExtension.modelName(it);
-        _builder.append(_modelName_1, "\t");
+        String _modelClassNameWithPackage_1 = this._typeExtension.modelClassNameWithPackage(it);
+        _builder.append(_modelClassNameWithPackage_1, "\t");
         _builder.append(" ");
-        String _modelParam_1 = this._modelExtension.modelParam(it);
-        _builder.append(_modelParam_1, "\t");
+        String _modelParamName_2 = this._typeExtension.modelParamName(it);
+        _builder.append(_modelParamName_2, "\t");
         _builder.append(") {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("Update statement = handle.getHandle().createUpdate(\"UPDATE ");
-        String _table_1 = this._modelExtension.table(it);
-        _builder.append(_table_1, "\t\t");
+        String _tableName_1 = this._typeExtension.tableName(it);
+        _builder.append(_tableName_1, "\t\t");
         _builder.append(" SET ");
         {
           EList<Attribute> _attributes_3 = it.getAttributes();
@@ -322,22 +325,15 @@ public class JDBI3Dao {
             String _lowerCase_6 = attr_1.getName().toLowerCase();
             _builder.append(_lowerCase_6, "\t\t");
             _builder.append("\", ");
-            String _modelGetAttribute_1 = this._modelExtension.modelGetAttribute(it, attr_1);
-            _builder.append(_modelGetAttribute_1, "\t\t");
-            _builder.append(");");
+            String _modelParamName_3 = this._typeExtension.modelParamName(it);
+            _builder.append(_modelParamName_3, "\t\t");
+            _builder.append(".");
+            String _terName_1 = this._attributeExtension.getterName(attr_1);
+            _builder.append(_terName_1, "\t\t");
+            _builder.append("());");
             _builder.newLineIfNotEmpty();
           }
         }
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("statement.bind(\"");
-        String _lowerCase_7 = attribute_3.getName().toLowerCase();
-        _builder.append(_lowerCase_7, "\t\t");
-        _builder.append("\", ");
-        String _modelGetAttribute_2 = this._modelExtension.modelGetAttribute(it, attribute_3);
-        _builder.append(_modelGetAttribute_2, "\t\t");
-        _builder.append(" );");
-        _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("statement.execute();");
@@ -351,7 +347,7 @@ public class JDBI3Dao {
         String _firstUpper_1 = StringExtensions.toFirstUpper(attribute_3.getName());
         _builder.append(_firstUpper_1, "\t");
         _builder.append("(PersistenceHandle handle, ");
-        String _javaType = this._attributeExtension.javaType(attribute_3);
+        String _javaType = this._typeExtension.javaType(attribute_3);
         _builder.append(_javaType, "\t");
         _builder.append(" ");
         String _name_1 = attribute_3.getName();
@@ -361,21 +357,21 @@ public class JDBI3Dao {
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("Update statement = handle.getHandle().createUpdate(\"DELETE FROM ");
-        String _table_2 = this._modelExtension.table(it);
-        _builder.append(_table_2, "\t\t");
+        String _tableName_2 = this._typeExtension.tableName(it);
+        _builder.append(_tableName_2, "\t\t");
         _builder.append(" WHERE ");
+        String _lowerCase_7 = attribute_3.getName().toLowerCase();
+        _builder.append(_lowerCase_7, "\t\t");
+        _builder.append(" = :");
         String _lowerCase_8 = attribute_3.getName().toLowerCase();
         _builder.append(_lowerCase_8, "\t\t");
-        _builder.append(" = :");
-        String _lowerCase_9 = attribute_3.getName().toLowerCase();
-        _builder.append(_lowerCase_9, "\t\t");
         _builder.append("\");");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("statement.bind(\"");
-        String _lowerCase_10 = attribute_3.getName().toLowerCase();
-        _builder.append(_lowerCase_10, "\t\t");
+        String _lowerCase_9 = attribute_3.getName().toLowerCase();
+        _builder.append(_lowerCase_9, "\t\t");
         _builder.append("\", ");
         String _name_2 = attribute_3.getName();
         _builder.append(_name_2, "\t\t");
@@ -391,13 +387,13 @@ public class JDBI3Dao {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("public ");
-        String _modelName_2 = this._modelExtension.modelName(it);
-        _builder.append(_modelName_2, "\t");
+        String _modelClassNameWithPackage_2 = this._typeExtension.modelClassNameWithPackage(it);
+        _builder.append(_modelClassNameWithPackage_2, "\t");
         _builder.append(" selectBy");
         String _firstUpper_2 = StringExtensions.toFirstUpper(attribute_3.getName());
         _builder.append(_firstUpper_2, "\t");
         _builder.append("(PersistenceHandle handle, ");
-        String _javaType_1 = this._attributeExtension.javaType(attribute_3);
+        String _javaType_1 = this._typeExtension.javaType(attribute_3);
         _builder.append(_javaType_1, "\t");
         _builder.append(" ");
         String _name_3 = attribute_3.getName();
@@ -407,8 +403,8 @@ public class JDBI3Dao {
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("Optional<");
-        String _modelName_3 = this._modelExtension.modelName(it);
-        _builder.append(_modelName_3, "\t\t");
+        String _modelClassNameWithPackage_3 = this._typeExtension.modelClassNameWithPackage(it);
+        _builder.append(_modelClassNameWithPackage_3, "\t\t");
         _builder.append("> optional = handle.getHandle().createQuery(\"SELECT ");
         {
           EList<Attribute> _attributes_5 = it.getAttributes();
@@ -419,26 +415,26 @@ public class JDBI3Dao {
             } else {
               _builder.appendImmediate(", ", "\t\t");
             }
-            String _lowerCase_11 = attr_2.getName().toLowerCase();
-            _builder.append(_lowerCase_11, "\t\t");
+            String _lowerCase_10 = attr_2.getName().toLowerCase();
+            _builder.append(_lowerCase_10, "\t\t");
           }
         }
         _builder.append(" FROM ");
-        String _table_3 = this._modelExtension.table(it);
-        _builder.append(_table_3, "\t\t");
+        String _tableName_3 = this._typeExtension.tableName(it);
+        _builder.append(_tableName_3, "\t\t");
         _builder.append(" WHERE ");
+        String _lowerCase_11 = attribute_3.getName().toLowerCase();
+        _builder.append(_lowerCase_11, "\t\t");
+        _builder.append(" = :");
         String _lowerCase_12 = attribute_3.getName().toLowerCase();
         _builder.append(_lowerCase_12, "\t\t");
-        _builder.append(" = :");
-        String _lowerCase_13 = attribute_3.getName().toLowerCase();
-        _builder.append(_lowerCase_13, "\t\t");
         _builder.append("\")");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t\t");
         _builder.append(".bind(\"");
-        String _lowerCase_14 = attribute_3.getName().toLowerCase();
-        _builder.append(_lowerCase_14, "\t\t\t");
+        String _lowerCase_13 = attribute_3.getName().toLowerCase();
+        _builder.append(_lowerCase_13, "\t\t\t");
         _builder.append("\", ");
         String _name_4 = attribute_3.getName();
         _builder.append(_name_4, "\t\t\t");
@@ -447,7 +443,7 @@ public class JDBI3Dao {
         _builder.append("\t");
         _builder.append("\t\t");
         _builder.append(".map(new ");
-        String _modelMapper = this._modelExtension.modelMapper(it);
+        String _modelMapper = this._typeExtension.modelMapper(it);
         _builder.append(_modelMapper, "\t\t\t");
         _builder.append("())");
         _builder.newLineIfNotEmpty();
@@ -467,16 +463,16 @@ public class JDBI3Dao {
     _builder.append("\t");
     _builder.newLine();
     {
-      int _length = ((Object[])Conversions.unwrapArray(this._modelExtension.allPrimaryKeyAttributes(it), Object.class)).length;
+      int _length = ((Object[])Conversions.unwrapArray(this._commonExtension.allPrimaryKeyAttributes(it), Object.class)).length;
       boolean _greaterThan = (_length > 0);
       if (_greaterThan) {
         _builder.append("\t");
         _builder.append("public ");
-        String _modelName_4 = this._modelExtension.modelName(it);
-        _builder.append(_modelName_4, "\t");
+        String _modelClassNameWithPackage_4 = this._typeExtension.modelClassNameWithPackage(it);
+        _builder.append(_modelClassNameWithPackage_4, "\t");
         _builder.append(" selectByPrimaryKey(PersistenceHandle handle, ");
         {
-          List<Attribute> _allPrimaryKeyAttributes = this._modelExtension.allPrimaryKeyAttributes(it);
+          List<Attribute> _allPrimaryKeyAttributes = this._commonExtension.allPrimaryKeyAttributes(it);
           boolean _hasElements_4 = false;
           for(final Attribute attribute_4 : _allPrimaryKeyAttributes) {
             if (!_hasElements_4) {
@@ -484,7 +480,7 @@ public class JDBI3Dao {
             } else {
               _builder.appendImmediate(", ", "\t");
             }
-            String _javaType_2 = this._attributeExtension.javaType(attribute_4);
+            String _javaType_2 = this._typeExtension.javaType(attribute_4);
             _builder.append(_javaType_2, "\t");
             _builder.append(" ");
             String _name_5 = attribute_4.getName();
@@ -496,8 +492,8 @@ public class JDBI3Dao {
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("Optional<");
-        String _modelName_5 = this._modelExtension.modelName(it);
-        _builder.append(_modelName_5, "\t\t");
+        String _modelClassNameWithPackage_5 = this._typeExtension.modelClassNameWithPackage(it);
+        _builder.append(_modelClassNameWithPackage_5, "\t\t");
         _builder.append("> optional = handle.getHandle().createQuery(\"SELECT ");
         {
           EList<Attribute> _attributes_6 = it.getAttributes();
@@ -508,16 +504,16 @@ public class JDBI3Dao {
             } else {
               _builder.appendImmediate(", ", "\t\t");
             }
-            String _lowerCase_15 = attr_3.getName().toLowerCase();
-            _builder.append(_lowerCase_15, "\t\t");
+            String _lowerCase_14 = attr_3.getName().toLowerCase();
+            _builder.append(_lowerCase_14, "\t\t");
           }
         }
         _builder.append(" FROM ");
-        String _table_4 = this._modelExtension.table(it);
-        _builder.append(_table_4, "\t\t");
+        String _tableName_4 = this._typeExtension.tableName(it);
+        _builder.append(_tableName_4, "\t\t");
         _builder.append(" WHERE ");
         {
-          List<Attribute> _allPrimaryKeyAttributes_1 = this._modelExtension.allPrimaryKeyAttributes(it);
+          List<Attribute> _allPrimaryKeyAttributes_1 = this._commonExtension.allPrimaryKeyAttributes(it);
           boolean _hasElements_6 = false;
           for(final Attribute attribute_5 : _allPrimaryKeyAttributes_1) {
             if (!_hasElements_6) {
@@ -525,23 +521,23 @@ public class JDBI3Dao {
             } else {
               _builder.appendImmediate(" AND ", "\t\t");
             }
+            String _lowerCase_15 = attribute_5.getName().toLowerCase();
+            _builder.append(_lowerCase_15, "\t\t");
+            _builder.append(" = :");
             String _lowerCase_16 = attribute_5.getName().toLowerCase();
             _builder.append(_lowerCase_16, "\t\t");
-            _builder.append(" = :");
-            String _lowerCase_17 = attribute_5.getName().toLowerCase();
-            _builder.append(_lowerCase_17, "\t\t");
           }
         }
         _builder.append("\")");
         _builder.newLineIfNotEmpty();
         {
-          List<Attribute> _allPrimaryKeyAttributes_2 = this._modelExtension.allPrimaryKeyAttributes(it);
+          List<Attribute> _allPrimaryKeyAttributes_2 = this._commonExtension.allPrimaryKeyAttributes(it);
           for(final Attribute attribute_6 : _allPrimaryKeyAttributes_2) {
             _builder.append("\t");
             _builder.append("\t\t");
             _builder.append(".bind(\"");
-            String _lowerCase_18 = attribute_6.getName().toLowerCase();
-            _builder.append(_lowerCase_18, "\t\t\t");
+            String _lowerCase_17 = attribute_6.getName().toLowerCase();
+            _builder.append(_lowerCase_17, "\t\t\t");
             _builder.append("\", ");
             String _name_6 = attribute_6.getName();
             _builder.append(_name_6, "\t\t\t");
@@ -552,7 +548,7 @@ public class JDBI3Dao {
         _builder.append("\t");
         _builder.append("\t\t");
         _builder.append(".map(new ");
-        String _modelMapper_1 = this._modelExtension.modelMapper(it);
+        String _modelMapper_1 = this._typeExtension.modelMapper(it);
         _builder.append(_modelMapper_1, "\t\t\t");
         _builder.append("())");
         _builder.newLineIfNotEmpty();
@@ -576,8 +572,8 @@ public class JDBI3Dao {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("String sql = \"SELECT count(*) FROM ");
-    String _table_5 = this._modelExtension.table(it);
-    _builder.append(_table_5, "\t\t");
+    String _tableName_5 = this._typeExtension.tableName(it);
+    _builder.append(_tableName_5, "\t\t");
     _builder.append("\";");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -622,8 +618,8 @@ public class JDBI3Dao {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public List<");
-    String _modelName_6 = this._modelExtension.modelName(it);
-    _builder.append(_modelName_6, "\t");
+    String _modelClassNameWithPackage_6 = this._typeExtension.modelClassNameWithPackage(it);
+    _builder.append(_modelClassNameWithPackage_6, "\t");
     _builder.append("> selectAll(PersistenceHandle handle) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -637,18 +633,18 @@ public class JDBI3Dao {
         } else {
           _builder.appendImmediate(", ", "\t\t");
         }
-        String _lowerCase_19 = attr_4.getName().toLowerCase();
-        _builder.append(_lowerCase_19, "\t\t");
+        String _lowerCase_18 = attr_4.getName().toLowerCase();
+        _builder.append(_lowerCase_18, "\t\t");
       }
     }
     _builder.append(" FROM ");
-    String _table_6 = this._modelExtension.table(it);
-    _builder.append(_table_6, "\t\t");
+    String _tableName_6 = this._typeExtension.tableName(it);
+    _builder.append(_tableName_6, "\t\t");
     _builder.append("\")");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
     _builder.append(".map(new ");
-    String _modelMapper_2 = this._modelExtension.modelMapper(it);
+    String _modelMapper_2 = this._typeExtension.modelMapper(it);
     _builder.append(_modelMapper_2, "\t\t\t");
     _builder.append("())");
     _builder.newLineIfNotEmpty();
@@ -664,8 +660,8 @@ public class JDBI3Dao {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("Update statement = handle.getHandle().createUpdate(\"TRUNCATE TABLE ");
-    String _table_7 = this._modelExtension.table(it);
-    _builder.append(_table_7, "\t\t");
+    String _tableName_7 = this._typeExtension.tableName(it);
+    _builder.append(_tableName_7, "\t\t");
     _builder.append(" CASCADE\");");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -698,10 +694,10 @@ public class JDBI3Dao {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("public class ");
-    String _modelDao = this._modelExtension.modelDao(it);
+    String _modelDao = this._typeExtension.modelDao(it);
     _builder.append(_modelDao);
     _builder.append(" extends ");
-    String _abstractModelDao = this._modelExtension.abstractModelDao(it);
+    String _abstractModelDao = this._typeExtension.abstractModelDao(it);
     _builder.append(_abstractModelDao);
     _builder.append(" {");
     _builder.newLineIfNotEmpty();
@@ -715,5 +711,13 @@ public class JDBI3Dao {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     return _builder;
+  }
+
+  public String modelAttributeSqlValue(final Model it, final Attribute attribute) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append(":");
+    String _lowerCase = attribute.getName().toLowerCase();
+    _builder.append(_lowerCase);
+    return _builder.toString();
   }
 }

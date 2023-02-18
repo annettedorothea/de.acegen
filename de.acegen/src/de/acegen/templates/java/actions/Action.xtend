@@ -23,17 +23,10 @@ import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AttributeExtension
-import de.acegen.extensions.java.JavaHttpServerExtension
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.java.TypeExtension
 import javax.inject.Inject
 
 class Action {
-
-	@Inject
-	extension ModelExtension
-
-	@Inject
-	extension JavaHttpServerExtension
 
 	@Inject
 	extension AttributeExtension
@@ -41,13 +34,17 @@ class Action {
 	@Inject
 	extension CommonExtension
 	
+	@Inject
+	extension TypeExtension
+	
 	def dispatch generateAbstractActionFile(HttpServerAceWrite it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «httpServer.getName».actions;
+		package «httpServer.actionPackageName»;
 		
 		import java.time.LocalDateTime;
 		
+		import de.acegen.Data;
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.ICommand;
 		import de.acegen.IDaoProvider;
@@ -56,13 +53,12 @@ class Action {
 		import de.acegen.PersistenceConnection;
 		import de.acegen.WriteAction;
 
-		«getModel.dataImport»
 		import «commandNameWithPackage»;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 
-		public abstract class «abstractActionName» extends WriteAction<«model.dataParamType»> {
+		public abstract class «abstractActionName» extends WriteAction<«model.modelClassNameWithPackage»> {
 
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 
@@ -71,13 +67,13 @@ class Action {
 			}
 		
 			@Override
-			public ICommand<«model.dataParamType»> getCommand() {
+			public ICommand<«model.modelClassNameWithPackage»> getCommand() {
 				return new «commandName»(daoProvider, viewProvider, this.appConfiguration);
 			}
 			
 			«initActionDataFromSquishyDataProvider»		
 
-			public «getModel.dataParamType» initActionData(«getModel.dataParamType» data) {
+			public «model.dataWithGenericModel» initActionData(«model.dataWithGenericModel» data) {
 				return data;
 			}
 
@@ -91,7 +87,7 @@ class Action {
 	def dispatch generateAbstractActionFile(HttpServerAceRead it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «httpServer.getName».actions;
+		package «httpServer.actionPackageName»;
 		
 		import java.time.LocalDateTime;
 		
@@ -100,9 +96,9 @@ class Action {
 		
 		import org.apache.commons.lang3.StringUtils;
 		
+		import de.acegen.Data;
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.IDaoProvider;
-		import de.acegen.IDataContainer;
 		import de.acegen.ViewProvider;
 		import de.acegen.PersistenceConnection;
 		import de.acegen.PersistenceHandle;
@@ -110,11 +106,8 @@ class Action {
 		import de.acegen.ITimelineItem;
 		import de.acegen.SquishyDataProvider;
 		
-		«getModel.dataImport»
-		«getModel.dataClassImport»
-		
 		@SuppressWarnings("unused")
-		public abstract class «abstractActionName» extends ReadAction<«getModel.dataParamType»> {
+		public abstract class «abstractActionName» extends ReadAction<«model.modelClassNameWithPackage»> {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
@@ -122,11 +115,11 @@ class Action {
 				super("«actionNameWithPackage»", persistenceConnection, appConfiguration, daoProvider, viewProvider);
 			}
 		
-			protected abstract «getModel.dataParamType» loadDataForGetRequest(«getModel.dataParamType» data, PersistenceHandle readonlyHandle);
+			protected abstract «model.dataWithGenericModel» loadDataForGetRequest(«model.dataWithGenericModel» data, PersistenceHandle readonlyHandle);
 		
 			«initActionDataFromSquishyDataProvider»
 
-			public «getModel.dataParamType» initActionData(«getModel.dataParamType» data) {
+			public «model.dataWithGenericModel» initActionData(«model.dataWithGenericModel» data) {
 				return data;
 			}
 
@@ -139,7 +132,7 @@ class Action {
 	def generateInitialActionFile(HttpServerAce it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «httpServer.getName».actions;
+		package «httpServer.actionPackageName»;
 		
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.ViewProvider;
@@ -149,7 +142,7 @@ class Action {
 			import de.acegen.PersistenceHandle;
 		«ENDIF»
 		«IF model.allSquishyAttributes.size > 0 || getType.equals("GET")»
-			«getModel.dataImport»
+			import «model.modelClassNameWithPackage»;
 		«ENDIF»
 		
 		import org.slf4j.Logger;
@@ -167,17 +160,15 @@ class Action {
 		
 			«IF getType.equals("GET")»
 				@Override
-				protected «getModel.dataParamType» loadDataForGetRequest(«getModel.dataParamType» data, PersistenceHandle readonlyHandle) {
-					«getModel.interfaceWithPackage» testData = «getModel.dataNameWithPackage».generateTestData();
-					«FOR attribute: it.model.attributes»
-						data.«attribute.setterCall('''testData.«attribute.getterCall»''')»;
-					«ENDFOR»
+				protected «model.dataWithGenericModel» loadDataForGetRequest(«model.dataWithGenericModel» data, PersistenceHandle readonlyHandle) {
+					«model.modelClassNameWithPackage» testData = «model.modelClassNameWithPackage».generateTestData();
+					data.setModel(testData);
 					return data;
 				}
 			«ENDIF»
 			
 			«IF model.allSquishyAttributes.size > 0»
-				public «getModel.dataParamType» initActionData(«getModel.dataParamType» data) {
+				public «model.dataWithGenericModel» initActionData(«model.dataWithGenericModel» data) {
 					«FOR attribute: model.allSquishyAttributes»
 						// «attribute.name»
 					«ENDFOR»
@@ -196,7 +187,7 @@ class Action {
 		
 		package de.acegen;
 		
-		public abstract class Action<T extends IDataContainer> implements IAction<T> {
+		public abstract class Action<T extends AbstractModel> implements IAction<T> {
 		
 			protected String actionName;
 		
@@ -234,7 +225,7 @@ class Action {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		public abstract class ReadAction<T extends IDataContainer> extends Action<T> {
+		public abstract class ReadAction<T extends AbstractModel> extends Action<T> {
 		
 			static final Logger LOG = LoggerFactory.getLogger(ReadAction.class);
 			
@@ -250,11 +241,11 @@ class Action {
 				this.daoProvider = daoProvider;
 			}
 		
-			protected abstract T loadDataForGetRequest(T data, PersistenceHandle readonlyHandle);
+			protected abstract Data<T> loadDataForGetRequest(Data<T> data, PersistenceHandle readonlyHandle);
 			
-			protected abstract T initActionDataFromSquishyDataProvider(T data);
+			protected abstract Data<T> initActionDataFromSquishyDataProvider(Data<T> data);
 
-			public T apply(T data) {
+			public Data<T> apply(Data<T> data) {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
 				databaseHandle.beginTransaction();
 				try {
@@ -270,6 +261,7 @@ class Action {
 					if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {
 						data = initActionDataFromSquishyDataProvider(data);
 					}
+					data.freezeSystemTime();
 					data = this.loadDataForGetRequest(data, databaseHandle.getReadonlyHandle());
 					
 					databaseHandle.commitTransaction();
@@ -296,7 +288,7 @@ class Action {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		public abstract class WriteAction<T extends IDataContainer> extends Action<T> {
+		public abstract class WriteAction<T extends AbstractModel> extends Action<T> {
 		
 			static final Logger LOG = LoggerFactory.getLogger(WriteAction.class);
 			
@@ -314,11 +306,11 @@ class Action {
 				this.viewProvider = viewProvider;
 			}
 		
-			protected abstract T initActionDataFromSquishyDataProvider(T data);
+			protected abstract Data<T> initActionDataFromSquishyDataProvider(Data<T> data);
 
 			protected abstract ICommand<T> getCommand();
 		
-			public T apply(T data) {
+			public Data<T> apply(Data<T> data) {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
 				databaseHandle.beginTransaction();
 				try {
@@ -334,6 +326,7 @@ class Action {
 					if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {
 						data = initActionDataFromSquishyDataProvider(data);
 					}
+					data.freezeSystemTime();
 					
 					ICommand<T> command = this.getCommand();
 					data = command.execute(data, databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());
@@ -370,13 +363,13 @@ class Action {
 		
 		package de.acegen;
 		
-		public interface IAction<T> {
+		public interface IAction<T extends AbstractModel> {
 		
 			String getActionName();
 			
-		    T apply(T data);
+		    Data<T> apply(Data<T> data);
 		    
-		    T initActionData(T data);
+		    Data<T> initActionData(Data<T> data);
 		    
 		}
 		
@@ -392,23 +385,23 @@ class Action {
 	
 	private def initActionDataFromSquishyDataProvider(HttpServerAce it) '''
 		@Override
-		protected «model.dataParamType» initActionDataFromSquishyDataProvider(«model.dataParamType» data) {
+		protected «model.dataWithGenericModel» initActionDataFromSquishyDataProvider(«model.dataWithGenericModel» data) {
 			LocalDateTime systemTime = SquishyDataProvider.consumeSystemTime(data.getUuid());
 			if (systemTime != null) {
 				data.setSystemTime(systemTime);
 			}
-			«FOR attribute : getModel.allAttributes»
+			«FOR attribute : model.allAttributes»
 				«IF attribute.squishy»
-					String «attribute.name»Object = SquishyDataProvider.consumeValue(data.getUuid(), "«attribute.name»");
-					if («attribute.name»Object != null) {
+					String «attribute.propertyName»Object = SquishyDataProvider.consumeValue(data.getUuid(), "«attribute.propertyName»");
+					if («attribute.propertyName»Object != null) {
 						try {
-							«attribute.javaType» «attribute.name» = («attribute.javaType»)«attribute.name»Object;
-							data.«attribute.setterCall(attribute.name)»;
+							«attribute.javaType» «attribute.propertyName» = («attribute.javaType»)«attribute.propertyName»Object;
+							data.getModel().«attribute.setterName»(«attribute.propertyName»);
 						} catch (Exception x) {
-							LOG.warn("«attribute.name» is declared as squishy and failed to parse {} from SquishyDataProvider.", «attribute.name»Object);
+							LOG.warn("«attribute.propertyName» is declared as squishy and failed to parse {} from SquishyDataProvider.", «attribute.propertyName»Object);
 						}
 					} else {
-						LOG.warn("«attribute.name» is declared as squishy but no value was found in SquishyDataProvider.");
+						LOG.warn("«attribute.propertyName» is declared as squishy but no value was found in SquishyDataProvider.");
 					}
 				«ENDIF»
 			«ENDFOR»

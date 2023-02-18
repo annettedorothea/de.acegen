@@ -18,7 +18,7 @@
 package de.acegen.generator.java
 
 import de.acegen.aceGen.HttpServer
-import de.acegen.extensions.java.JavaHttpServerExtension
+import de.acegen.extensions.java.TypeExtension
 import de.acegen.generator.ACEOutputConfigurationProvider
 import de.acegen.templates.java.AppRegistration
 import javax.inject.Inject
@@ -30,7 +30,7 @@ class AppRegistrationGenerator {
 	AppRegistration appRegistration;
 
 	@Inject
-	extension JavaHttpServerExtension
+	extension TypeExtension
 
 	def void doGenerate(HttpServer httpServer, IFileSystemAccess2 fsa) {
 		if (httpServer.aceOperations.size > 0) {
