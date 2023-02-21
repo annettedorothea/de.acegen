@@ -83,7 +83,6 @@ class Scenario {
 			import «whenThenItem.whenBlock.action.responseDataNameWithPackage»;
 		«ENDFOR»
 		
-		//@SuppressWarnings("unused")
 		public class «name»Scenario extends Abstract«name»Scenario {
 		
 			«FOR whenThenItem : whenThen»
