@@ -125,8 +125,6 @@ public class Scenario {
       }
     }
     _builder.newLine();
-    _builder.append("//@SuppressWarnings(\"unused\")");
-    _builder.newLine();
     _builder.append("public class ");
     String _name_1 = it.getName();
     _builder.append(_name_1);
