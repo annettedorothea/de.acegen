@@ -165,8 +165,11 @@ class JavaGenerator {
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
 					command.generateInitialCommandFile(ace as HttpServerAceWrite, httpServer));
 			}
-			fsa.generateFile(httpServer.packageFolder + "/data/" + ace.responseDataName + fileExtension,
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generateResponseData(ace, httpServer));
+			if (ace.response.size > 0) {
+				fsa.generateFile(httpServer.packageFolder + "/data/" + ace.responseDataName + fileExtension,
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generateResponseData(ace, httpServer));
+				
+			}
 			if (ace.payload.size > 0) {
 				fsa.generateFile(httpServer.packageFolder + "/data/" + ace.payloadDataName + fileExtension,
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generatePayloadData(ace, httpServer));

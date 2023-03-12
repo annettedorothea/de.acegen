@@ -80,7 +80,7 @@ class Scenario {
 		package «java.getName».scenarios;
 		
 		«FOR whenThenItem : whenThen»
-			import «whenThenItem.whenBlock.action.responseDataNameWithPackage»;
+			«IF whenThenItem.whenBlock.action.response.size > 0» import «whenThenItem.whenBlock.action.responseDataNameWithPackage»;«ENDIF»
 		«ENDFOR»
 		
 		public class «name»Scenario extends Abstract«name»Scenario {
