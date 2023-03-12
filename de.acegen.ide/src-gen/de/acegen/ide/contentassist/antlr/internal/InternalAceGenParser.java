@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'GET'", "'set'", "'merge'", "'TextInput'", "'CheckBox'", "'Select'", "'PasswordInput'", "'Radio'", "'Button'", "'POST'", "'PUT'", "'DELETE'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'FormData'", "'true'", "'false'", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'scenarios'", "'('", "')'", "','", "'fromAppState'", "'call'", "'loading'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'{'", "'}'", "'options'", "'actions'", "'GIVEN'", "'AND'", "'WHEN'", "'THEN'", "'squishyValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'squishy'", "':'", "'expectedState'", "'verifications'", "'should'", "'be'", "'['", "']'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'extends'", "'x'", "'shouldBe'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'systemTime'", "'authorization'", "'references'", "'.'", "'json'", "'JSX'", "'async'", "'takeLatest'", "'noComponent'", "'List'", "'Tree'", "'group'", "'listId'", "'location'", "'storage'", "'fromParent'", "'exclude'", "'not'", "'Java'", "'C#'", "'Dropwizard'", "'NET6'", "'JDBI3'", "'EntityFramework'", "'Liquibase'", "'authorize'", "'multipartFormData'", "'NotNull'", "'queued'", "'persistent'", "'notNull'", "'null'", "'Unique'", "'PrimaryKey'", "'undefined'", "'-'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'GET'", "'set'", "'merge'", "'TextInput'", "'CheckBox'", "'Select'", "'PasswordInput'", "'Radio'", "'Button'", "'POST'", "'PUT'", "'DELETE'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'FormData'", "'true'", "'false'", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'scenarios'", "'('", "')'", "','", "'fromAppState'", "'call'", "'loading'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'{'", "'}'", "'options'", "'actions'", "'GIVEN'", "'AND'", "'WHEN'", "'THEN'", "'squishyValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'squishy'", "':'", "'expectedState'", "'verifications'", "'should'", "'be'", "'['", "']'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'extends'", "'x'", "'shouldBe'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'systemTime'", "'authorization'", "'references'", "'.'", "'json'", "'JSX'", "'async'", "'takeLatest'", "'noComponent'", "'List'", "'Tree'", "'group'", "'listId'", "'location'", "'storage'", "'fromParent'", "'exclude'", "'not'", "'Java'", "'C#'", "'Dropwizard'", "'dotnet'", "'JDBI3'", "'EntityFramework'", "'Liquibase'", "'authorize'", "'multipartFormData'", "'NotNull'", "'queued'", "'persistent'", "'notNull'", "'null'", "'Unique'", "'PrimaryKey'", "'undefined'", "'-'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -45756,29 +45756,29 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServer__DotnetAssignment_3"
-    // InternalAceGen.g:14739:1: rule__HttpServer__DotnetAssignment_3 : ( ( 'NET6' ) ) ;
+    // InternalAceGen.g:14739:1: rule__HttpServer__DotnetAssignment_3 : ( ( 'dotnet' ) ) ;
     public final void rule__HttpServer__DotnetAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:14743:1: ( ( ( 'NET6' ) ) )
-            // InternalAceGen.g:14744:2: ( ( 'NET6' ) )
+            // InternalAceGen.g:14743:1: ( ( ( 'dotnet' ) ) )
+            // InternalAceGen.g:14744:2: ( ( 'dotnet' ) )
             {
-            // InternalAceGen.g:14744:2: ( ( 'NET6' ) )
-            // InternalAceGen.g:14745:3: ( 'NET6' )
+            // InternalAceGen.g:14744:2: ( ( 'dotnet' ) )
+            // InternalAceGen.g:14745:3: ( 'dotnet' )
             {
-             before(grammarAccess.getHttpServerAccess().getDotnetNET6Keyword_3_0()); 
-            // InternalAceGen.g:14746:3: ( 'NET6' )
-            // InternalAceGen.g:14747:4: 'NET6'
+             before(grammarAccess.getHttpServerAccess().getDotnetDotnetKeyword_3_0()); 
+            // InternalAceGen.g:14746:3: ( 'dotnet' )
+            // InternalAceGen.g:14747:4: 'dotnet'
             {
-             before(grammarAccess.getHttpServerAccess().getDotnetNET6Keyword_3_0()); 
+             before(grammarAccess.getHttpServerAccess().getDotnetDotnetKeyword_3_0()); 
             match(input,106,FOLLOW_2); 
-             after(grammarAccess.getHttpServerAccess().getDotnetNET6Keyword_3_0()); 
+             after(grammarAccess.getHttpServerAccess().getDotnetDotnetKeyword_3_0()); 
 
             }
 
-             after(grammarAccess.getHttpServerAccess().getDotnetNET6Keyword_3_0()); 
+             after(grammarAccess.getHttpServerAccess().getDotnetDotnetKeyword_3_0()); 
 
             }
 

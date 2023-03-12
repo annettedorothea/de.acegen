@@ -205,17 +205,21 @@ public class JavaGenerator {
             ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
             this.command.generateInitialCommandFile(((HttpServerAceWrite) ace), httpServer));
         }
-        String _packageFolder_5 = this._typeExtension.packageFolder(httpServer);
-        String _plus_15 = (_packageFolder_5 + "/data/");
-        String _responseDataName = this._typeExtension.responseDataName(ace);
-        String _plus_16 = (_plus_15 + _responseDataName);
-        String _fileExtension_5 = this._typeExtension.fileExtension();
-        String _plus_17 = (_plus_16 + _fileExtension_5);
-        fsa.generateFile(_plus_17, 
-          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.data.generateResponseData(ace, httpServer));
-        int _size = ace.getPayload().size();
+        int _size = ace.getResponse().size();
         boolean _greaterThan = (_size > 0);
         if (_greaterThan) {
+          String _packageFolder_5 = this._typeExtension.packageFolder(httpServer);
+          String _plus_15 = (_packageFolder_5 + "/data/");
+          String _responseDataName = this._typeExtension.responseDataName(ace);
+          String _plus_16 = (_plus_15 + _responseDataName);
+          String _fileExtension_5 = this._typeExtension.fileExtension();
+          String _plus_17 = (_plus_16 + _fileExtension_5);
+          fsa.generateFile(_plus_17, 
+            ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.data.generateResponseData(ace, httpServer));
+        }
+        int _size_1 = ace.getPayload().size();
+        boolean _greaterThan_1 = (_size_1 > 0);
+        if (_greaterThan_1) {
           String _packageFolder_6 = this._typeExtension.packageFolder(httpServer);
           String _plus_18 = (_packageFolder_6 + "/data/");
           String _payloadDataName = this._typeExtension.payloadDataName(ace);

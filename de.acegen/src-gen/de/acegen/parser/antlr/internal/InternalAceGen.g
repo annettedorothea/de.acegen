@@ -2439,15 +2439,15 @@ ruleHttpServer returns [EObject current=null]
 		)?
 		(
 			(
-				lv_dotnet_3_0='NET6'
+				lv_dotnet_3_0='dotnet'
 				{
-					newLeafNode(lv_dotnet_3_0, grammarAccess.getHttpServerAccess().getDotnetNET6Keyword_3_0());
+					newLeafNode(lv_dotnet_3_0, grammarAccess.getHttpServerAccess().getDotnetDotnetKeyword_3_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getHttpServerRule());
 					}
-					setWithLastConsumed($current, "dotnet", lv_dotnet_3_0 != null, "NET6");
+					setWithLastConsumed($current, "dotnet", lv_dotnet_3_0 != null, "dotnet");
 				}
 			)
 		)?

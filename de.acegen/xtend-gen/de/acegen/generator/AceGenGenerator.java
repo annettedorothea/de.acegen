@@ -37,6 +37,9 @@ public class AceGenGenerator extends AbstractGenerator {
   @Inject
   private JavaGenerator javaGenerator;
 
+  @Inject
+  private CsGenerator csGenerator;
+
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
     if ((((resource != null) && (resource.getContents() != null)) && (resource.getContents().size() > 0))) {
       EObject _get = resource.getContents().get(0);
@@ -48,6 +51,10 @@ public class AceGenGenerator extends AbstractGenerator {
       } else {
         if (((project.getHttpServer() != null) && project.getHttpServer().isJava())) {
           this.javaGenerator.doGenerate(project.getHttpServer(), fsa);
+        } else {
+          if (((project.getHttpServer() != null) && project.getHttpServer().isCs())) {
+            this.csGenerator.doGenerate(project.getHttpServer(), fsa);
+          }
         }
       }
     }

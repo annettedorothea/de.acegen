@@ -782,7 +782,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         java?='Java'? 
 	 *         cs?='C#'? 
 	 *         dropwizard?='Dropwizard'? 
-	 *         dotnet?='NET6'? 
+	 *         dotnet?='dotnet'? 
 	 *         JDBI3?='JDBI3'? 
 	 *         EF?='EntityFramework'? 
 	 *         liquibase?='Liquibase'? 

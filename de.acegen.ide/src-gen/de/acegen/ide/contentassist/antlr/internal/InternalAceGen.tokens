@@ -30,7 +30,6 @@
 'Liquibase'=109
 'List'=94
 'Long'=28
-'NET6'=106
 'NotNull'=112
 'POST'=20
 'PUT'=21
@@ -55,6 +54,7 @@
 'call'=41
 'clientSystemTime'=57
 'delayInMillis'=46
+'dotnet'=106
 'exclude'=101
 'expectedState'=61
 'extends'=77

@@ -14742,13 +14742,13 @@ rule__HttpServer__DotnetAssignment_3
 	}
 :
 	(
-		{ before(grammarAccess.getHttpServerAccess().getDotnetNET6Keyword_3_0()); }
+		{ before(grammarAccess.getHttpServerAccess().getDotnetDotnetKeyword_3_0()); }
 		(
-			{ before(grammarAccess.getHttpServerAccess().getDotnetNET6Keyword_3_0()); }
-			'NET6'
-			{ after(grammarAccess.getHttpServerAccess().getDotnetNET6Keyword_3_0()); }
+			{ before(grammarAccess.getHttpServerAccess().getDotnetDotnetKeyword_3_0()); }
+			'dotnet'
+			{ after(grammarAccess.getHttpServerAccess().getDotnetDotnetKeyword_3_0()); }
 		)
-		{ after(grammarAccess.getHttpServerAccess().getDotnetNET6Keyword_3_0()); }
+		{ after(grammarAccess.getHttpServerAccess().getDotnetDotnetKeyword_3_0()); }
 	)
 ;
 finally {

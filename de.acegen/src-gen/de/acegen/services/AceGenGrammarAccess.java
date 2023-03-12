@@ -1605,7 +1605,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Assignment cDropwizardAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final Keyword cDropwizardDropwizardKeyword_2_0 = (Keyword)cDropwizardAssignment_2.eContents().get(0);
 		private final Assignment cDotnetAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cDotnetNET6Keyword_3_0 = (Keyword)cDotnetAssignment_3.eContents().get(0);
+		private final Keyword cDotnetDotnetKeyword_3_0 = (Keyword)cDotnetAssignment_3.eContents().get(0);
 		private final Assignment cJDBI3Assignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final Keyword cJDBI3JDBI3Keyword_4_0 = (Keyword)cJDBI3Assignment_4.eContents().get(0);
 		private final Assignment cEFAssignment_5 = (Assignment)cGroup.eContents().get(5);
@@ -1644,7 +1644,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//    java ?= 'Java'?
 		//    cs ?= 'C#'?
 		//    dropwizard ?= 'Dropwizard'?
-		//    dotnet ?= 'NET6'?
+		//    dotnet ?= 'dotnet'?
 		//    JDBI3 ?= 'JDBI3'?
 		//    EF ?= 'EntityFramework'?
 		//    liquibase ?= 'Liquibase'?
@@ -1661,7 +1661,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//java ?= 'Java'?
 		//cs ?= 'C#'?
 		//dropwizard ?= 'Dropwizard'?
-		//dotnet ?= 'NET6'?
+		//dotnet ?= 'dotnet'?
 		//JDBI3 ?= 'JDBI3'?
 		//EF ?= 'EntityFramework'?
 		//liquibase ?= 'Liquibase'?
@@ -1692,11 +1692,11 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//'Dropwizard'
 		public Keyword getDropwizardDropwizardKeyword_2_0() { return cDropwizardDropwizardKeyword_2_0; }
 		
-		//dotnet ?= 'NET6'?
+		//dotnet ?= 'dotnet'?
 		public Assignment getDotnetAssignment_3() { return cDotnetAssignment_3; }
 		
-		//'NET6'
-		public Keyword getDotnetNET6Keyword_3_0() { return cDotnetNET6Keyword_3_0; }
+		//'dotnet'
+		public Keyword getDotnetDotnetKeyword_3_0() { return cDotnetDotnetKeyword_3_0; }
 		
 		//JDBI3 ?= 'JDBI3'?
 		public Assignment getJDBI3Assignment_4() { return cJDBI3Assignment_4; }
@@ -4381,7 +4381,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    java ?= 'Java'?
 	//    cs ?= 'C#'?
 	//    dropwizard ?= 'Dropwizard'?
-	//    dotnet ?= 'NET6'?
+	//    dotnet ?= 'dotnet'?
 	//    JDBI3 ?= 'JDBI3'?
 	//    EF ?= 'EntityFramework'?
 	//    liquibase ?= 'Liquibase'?
