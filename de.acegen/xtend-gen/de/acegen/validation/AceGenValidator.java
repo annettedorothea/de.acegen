@@ -16,6 +16,7 @@
 package de.acegen.validation;
 
 import de.acegen.aceGen.AceGenPackage;
+import de.acegen.aceGen.HttpClientStateFunction;
 import de.acegen.aceGen.HttpServerAceRead;
 import org.eclipse.xtext.validation.Check;
 
@@ -33,6 +34,15 @@ public class AceGenValidator extends AbstractAceGenValidator {
     if (_equals) {
       this.warning("GET request should have a response", 
         AceGenPackage.Literals.HTTP_SERVER__NAME);
+    }
+  }
+
+  @Check
+  public void doNotSetExclusiveView(final HttpClientStateFunction httpClientStateFunction) {
+    boolean _isExclusiveView = httpClientStateFunction.getStateElement().isExclusiveView();
+    if (_isExclusiveView) {
+      this.warning("Do not set or merge an exclusive view, set or merge the direct child.", 
+        AceGenPackage.Literals.HTTP_CLIENT_STATE_FUNCTION__STATE_ELEMENT);
     }
   }
 }

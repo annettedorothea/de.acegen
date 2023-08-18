@@ -1008,7 +1008,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getClientAttribute_Group()
+  public EAttribute getClientAttribute_ExclusiveView()
   {
     return (EAttribute)clientAttributeEClass.getEStructuralFeatures().get(3);
   }
@@ -3289,7 +3289,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__NO_COMPONENT);
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__LIST);
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__TREE);
-    createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__GROUP);
+    createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__EXCLUSIVE_VIEW);
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__LIST_ID);
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__NAME);
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__LOCATION);
@@ -3646,7 +3646,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEAttribute(getClientAttribute_NoComponent(), ecorePackage.getEBoolean(), "noComponent", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getClientAttribute_List(), ecorePackage.getEBoolean(), "list", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getClientAttribute_Tree(), ecorePackage.getEBoolean(), "tree", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getClientAttribute_Group(), ecorePackage.getEBoolean(), "group", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientAttribute_ExclusiveView(), ecorePackage.getEBoolean(), "exclusiveView", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getClientAttribute_ListId(), ecorePackage.getEBoolean(), "listId", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getClientAttribute_Name(), ecorePackage.getEString(), "name", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getClientAttribute_Location(), ecorePackage.getEBoolean(), "location", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

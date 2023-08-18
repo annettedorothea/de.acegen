@@ -932,15 +932,15 @@ ruleClientAttribute returns [EObject current=null]
 		)?
 		(
 			(
-				lv_group_3_0='group'
+				lv_exclusiveView_3_0='exclusiveView'
 				{
-					newLeafNode(lv_group_3_0, grammarAccess.getClientAttributeAccess().getGroupGroupKeyword_3_0());
+					newLeafNode(lv_exclusiveView_3_0, grammarAccess.getClientAttributeAccess().getExclusiveViewExclusiveViewKeyword_3_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getClientAttributeRule());
 					}
-					setWithLastConsumed($current, "group", lv_group_3_0 != null, "group");
+					setWithLastConsumed($current, "exclusiveView", lv_exclusiveView_3_0 != null, "exclusiveView");
 				}
 			)
 		)?

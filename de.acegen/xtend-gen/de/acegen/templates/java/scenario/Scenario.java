@@ -117,10 +117,16 @@ public class Scenario {
     {
       EList<WhenThen> _whenThen = it.getWhenThen();
       for(final WhenThen whenThenItem : _whenThen) {
-        _builder.append("import ");
-        String _responseDataNameWithPackage = this._typeExtension.responseDataNameWithPackage(whenThenItem.getWhenBlock().getAction());
-        _builder.append(_responseDataNameWithPackage);
-        _builder.append(";");
+        {
+          int _size = whenThenItem.getWhenBlock().getAction().getResponse().size();
+          boolean _greaterThan = (_size > 0);
+          if (_greaterThan) {
+            _builder.append(" import ");
+            String _responseDataNameWithPackage = this._typeExtension.responseDataNameWithPackage(whenThenItem.getWhenBlock().getAction());
+            _builder.append(_responseDataNameWithPackage);
+            _builder.append(";");
+          }
+        }
         _builder.newLineIfNotEmpty();
       }
     }
@@ -149,9 +155,9 @@ public class Scenario {
             _builder.append(_name_3, "\t");
             _builder.append("(");
             {
-              int _size = whenThenItem_1.getWhenBlock().getAction().getResponse().size();
-              boolean _greaterThan = (_size > 0);
-              if (_greaterThan) {
+              int _size_1 = whenThenItem_1.getWhenBlock().getAction().getResponse().size();
+              boolean _greaterThan_1 = (_size_1 > 0);
+              if (_greaterThan_1) {
                 String _responseDataNameWithPackage_1 = this._typeExtension.responseDataNameWithPackage(whenThenItem_1.getWhenBlock().getAction());
                 _builder.append(_responseDataNameWithPackage_1, "\t");
                 _builder.append(" response");

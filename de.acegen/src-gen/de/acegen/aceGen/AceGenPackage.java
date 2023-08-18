@@ -472,13 +472,13 @@ public interface AceGenPackage extends EPackage
   int CLIENT_ATTRIBUTE__TREE = 2;
 
   /**
-   * The feature id for the '<em><b>Group</b></em>' attribute.
+   * The feature id for the '<em><b>Exclusive View</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__GROUP = 3;
+  int CLIENT_ATTRIBUTE__EXCLUSIVE_VIEW = 3;
 
   /**
    * The feature id for the '<em><b>List Id</b></em>' attribute.
@@ -3419,15 +3419,15 @@ public interface AceGenPackage extends EPackage
   EAttribute getClientAttribute_Tree();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isGroup <em>Group</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isExclusiveView <em>Exclusive View</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Group</em>'.
-   * @see de.acegen.aceGen.ClientAttribute#isGroup()
+   * @return the meta object for the attribute '<em>Exclusive View</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#isExclusiveView()
    * @see #getClientAttribute()
    * @generated
    */
-  EAttribute getClientAttribute_Group();
+  EAttribute getClientAttribute_ExclusiveView();
 
   /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isListId <em>List Id</em>}'.
@@ -5912,12 +5912,12 @@ public interface AceGenPackage extends EPackage
     EAttribute CLIENT_ATTRIBUTE__TREE = eINSTANCE.getClientAttribute_Tree();
 
     /**
-     * The meta object literal for the '<em><b>Group</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Exclusive View</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CLIENT_ATTRIBUTE__GROUP = eINSTANCE.getClientAttribute_Group();
+    EAttribute CLIENT_ATTRIBUTE__EXCLUSIVE_VIEW = eINSTANCE.getClientAttribute_ExclusiveView();
 
     /**
      * The meta object literal for the '<em><b>List Id</b></em>' attribute feature.

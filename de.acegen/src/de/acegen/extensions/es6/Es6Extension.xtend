@@ -45,10 +45,44 @@ class Es6Extension {
 	def String projectName(HttpClient it) '''«getName.toFirstUpper»'''
 
 	def String appStateFunction(HttpClientStateFunction it) '''(data) => {
+		«exclusiveViewValidation(stateElement)»
 		«stateElement.stateFunctionCall('''«stateFunctionType»''', "data")»
 	}'''
+	
+	private def parentIsExclusiveView(ClientAttribute it) {
+		var parent = eContainer;
+		if (parent !== null && parent instanceof ClientAttribute) {
+			val parentAttribute = parent as ClientAttribute
+			return parentAttribute.exclusiveView
+		}
+		return false
+	} 
+
+	private def exclusiveParentAsClientAttribute(ClientAttribute it) {
+		var parent = eContainer;
+		if (parent !== null && parent instanceof ClientAttribute) {
+			val parentAttribute = parent as ClientAttribute
+			if (parentAttribute.exclusiveView) {
+				return parentAttribute;
+			}
+		}
+	} 
+
+	private def exclusiveViewValidation(ClientAttribute it) '''
+		«FOR attribute: allParentAttributesExclusiveItem»
+			«IF attribute.parentIsExclusiveView»
+				if (AppState.get(«path(attribute.paramList)») === undefined) {
+					console.warn("path «path(attribute.paramList).replace('"', '\'')» does not match exclusive view «attribute.exclusiveParentAsClientAttribute.name» in AppState", AppState.get(«path(attribute.paramListExclusive)»));
+					return;
+				}
+			«ENDIF»
+		«ENDFOR»
+	'''
 
 	def stateFunctionCall(ClientAttribute it, String functionName, String data) '''
+		«IF parentIsExclusiveView && functionName != "get"»
+			AppState.set({«exclusiveParentAsClientAttribute.name»: {}}, «path(paramListExclusive)»);
+		«ENDIF»
 		AppState.«stateFunctionName(functionName)»(
 			«IF functionName != "get"»«data», «ENDIF»
 			«paramList.path»«IF functionName != "get" && attributes.size > 0 && !isList && !isTree», 
@@ -59,6 +93,14 @@ class Es6Extension {
 	private def List<String> paramList(ClientAttribute it) {
 		var paramList = new ArrayList<String>()
 		for (item : allParentAttributesInclusiveItem) {
+			paramList.add('''"«item.name»"''')
+		}
+		return paramList
+	}
+
+	private def List<String> paramListExclusive(ClientAttribute it) {
+		var paramList = new ArrayList<String>()
+		for (item : allParentAttributesExclusiveItem) {
 			paramList.add('''"«item.name»"''')
 		}
 		return paramList
@@ -79,6 +121,14 @@ class Es6Extension {
 	private def List<ClientAttribute> allParentAttributesInclusiveItem(ClientAttribute it) {
 		var attributes = new ArrayList<ClientAttribute>();
 		attributes.add(it);
+		return allParentAttributes(it,attributes);
+	}
+
+	private def List<ClientAttribute> allParentAttributesExclusiveItem(ClientAttribute it) {
+		return allParentAttributes(it, new ArrayList<ClientAttribute>());
+	}
+
+	private def List<ClientAttribute> allParentAttributes(ClientAttribute it, List<ClientAttribute> attributes) {
 		var parent = eContainer;
 		while (parent !== null) {
 			if (parent instanceof ClientAttribute) {

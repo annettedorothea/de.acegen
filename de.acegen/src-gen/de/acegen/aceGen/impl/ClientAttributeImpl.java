@@ -35,7 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isNoComponent <em>No Component</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isList <em>List</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isTree <em>Tree</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isGroup <em>Group</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isExclusiveView <em>Exclusive View</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isListId <em>List Id</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isLocation <em>Location</em>}</li>
@@ -112,24 +112,24 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
   protected boolean tree = TREE_EDEFAULT;
 
   /**
-   * The default value of the '{@link #isGroup() <em>Group</em>}' attribute.
+   * The default value of the '{@link #isExclusiveView() <em>Exclusive View</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isGroup()
+   * @see #isExclusiveView()
    * @generated
    * @ordered
    */
-  protected static final boolean GROUP_EDEFAULT = false;
+  protected static final boolean EXCLUSIVE_VIEW_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isGroup() <em>Group</em>}' attribute.
+   * The cached value of the '{@link #isExclusiveView() <em>Exclusive View</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isGroup()
+   * @see #isExclusiveView()
    * @generated
    * @ordered
    */
-  protected boolean group = GROUP_EDEFAULT;
+  protected boolean exclusiveView = EXCLUSIVE_VIEW_EDEFAULT;
 
   /**
    * The default value of the '{@link #isListId() <em>List Id</em>}' attribute.
@@ -383,9 +383,9 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
-  public boolean isGroup()
+  public boolean isExclusiveView()
   {
-    return group;
+    return exclusiveView;
   }
 
   /**
@@ -394,12 +394,12 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
-  public void setGroup(boolean newGroup)
+  public void setExclusiveView(boolean newExclusiveView)
   {
-    boolean oldGroup = group;
-    group = newGroup;
+    boolean oldExclusiveView = exclusiveView;
+    exclusiveView = newExclusiveView;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_ATTRIBUTE__GROUP, oldGroup, group));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_ATTRIBUTE__EXCLUSIVE_VIEW, oldExclusiveView, exclusiveView));
   }
 
   /**
@@ -631,8 +631,8 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return isList();
       case AceGenPackage.CLIENT_ATTRIBUTE__TREE:
         return isTree();
-      case AceGenPackage.CLIENT_ATTRIBUTE__GROUP:
-        return isGroup();
+      case AceGenPackage.CLIENT_ATTRIBUTE__EXCLUSIVE_VIEW:
+        return isExclusiveView();
       case AceGenPackage.CLIENT_ATTRIBUTE__LIST_ID:
         return isListId();
       case AceGenPackage.CLIENT_ATTRIBUTE__NAME:
@@ -675,8 +675,8 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_ATTRIBUTE__TREE:
         setTree((Boolean)newValue);
         return;
-      case AceGenPackage.CLIENT_ATTRIBUTE__GROUP:
-        setGroup((Boolean)newValue);
+      case AceGenPackage.CLIENT_ATTRIBUTE__EXCLUSIVE_VIEW:
+        setExclusiveView((Boolean)newValue);
         return;
       case AceGenPackage.CLIENT_ATTRIBUTE__LIST_ID:
         setListId((Boolean)newValue);
@@ -731,8 +731,8 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_ATTRIBUTE__TREE:
         setTree(TREE_EDEFAULT);
         return;
-      case AceGenPackage.CLIENT_ATTRIBUTE__GROUP:
-        setGroup(GROUP_EDEFAULT);
+      case AceGenPackage.CLIENT_ATTRIBUTE__EXCLUSIVE_VIEW:
+        setExclusiveView(EXCLUSIVE_VIEW_EDEFAULT);
         return;
       case AceGenPackage.CLIENT_ATTRIBUTE__LIST_ID:
         setListId(LIST_ID_EDEFAULT);
@@ -781,8 +781,8 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return list != LIST_EDEFAULT;
       case AceGenPackage.CLIENT_ATTRIBUTE__TREE:
         return tree != TREE_EDEFAULT;
-      case AceGenPackage.CLIENT_ATTRIBUTE__GROUP:
-        return group != GROUP_EDEFAULT;
+      case AceGenPackage.CLIENT_ATTRIBUTE__EXCLUSIVE_VIEW:
+        return exclusiveView != EXCLUSIVE_VIEW_EDEFAULT;
       case AceGenPackage.CLIENT_ATTRIBUTE__LIST_ID:
         return listId != LIST_ID_EDEFAULT;
       case AceGenPackage.CLIENT_ATTRIBUTE__NAME:
@@ -822,8 +822,8 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
     result.append(list);
     result.append(", tree: ");
     result.append(tree);
-    result.append(", group: ");
-    result.append(group);
+    result.append(", exclusiveView: ");
+    result.append(exclusiveView);
     result.append(", listId: ");
     result.append(listId);
     result.append(", name: ");

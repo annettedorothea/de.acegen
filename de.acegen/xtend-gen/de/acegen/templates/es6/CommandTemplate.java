@@ -1472,6 +1472,9 @@ public class CommandTemplate {
     _builder.append("\t\t\t");
     _builder.append("} else {");
     _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("postCall();");
+    _builder.newLine();
     _builder.append("\t\t\t    ");
     _builder.append("this.publishEvents(data).then(resolve);");
     _builder.newLine();

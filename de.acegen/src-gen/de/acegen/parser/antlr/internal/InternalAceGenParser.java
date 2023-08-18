@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalAceGenParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'JSX'", "'scenarios'", "'async'", "'('", "','", "')'", "'fromAppState'", "'call'", "'set'", "'loading'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'takeLatest'", "'merge'", "'noComponent'", "'List'", "'Tree'", "'group'", "'listId'", "'location'", "'storage'", "'fromParent'", "'{'", "'options'", "'actions'", "'}'", "'TextInput'", "'CheckBox'", "'Select'", "'PasswordInput'", "'Radio'", "'Button'", "'GIVEN'", "'AND'", "'WHEN'", "'THEN'", "'exclude'", "'squishyValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'squishy'", "':'", "'expectedState'", "'verifications'", "'should'", "'not'", "'be'", "'['", "']'", "'Java'", "'C#'", "'Dropwizard'", "'NET6'", "'JDBI3'", "'EntityFramework'", "'Liquibase'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'authorize'", "'multipartFormData'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'NotNull'", "'queued'", "'persistent'", "'extends'", "'x'", "'shouldBe'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'notNull'", "'null'", "'systemTime'", "'authorization'", "'Unique'", "'PrimaryKey'", "'references'", "'.'", "'POST'", "'PUT'", "'DELETE'", "'GET'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'FormData'", "'json'", "'undefined'", "'-'", "'true'", "'false'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'JSX'", "'scenarios'", "'async'", "'('", "','", "')'", "'fromAppState'", "'call'", "'set'", "'loading'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'takeLatest'", "'merge'", "'noComponent'", "'List'", "'Tree'", "'exclusiveView'", "'listId'", "'location'", "'storage'", "'fromParent'", "'{'", "'options'", "'actions'", "'}'", "'TextInput'", "'CheckBox'", "'Select'", "'PasswordInput'", "'Radio'", "'Button'", "'GIVEN'", "'AND'", "'WHEN'", "'THEN'", "'exclude'", "'squishyValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'squishy'", "':'", "'expectedState'", "'verifications'", "'should'", "'not'", "'be'", "'['", "']'", "'Java'", "'C#'", "'Dropwizard'", "'NET6'", "'JDBI3'", "'EntityFramework'", "'Liquibase'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'authorize'", "'multipartFormData'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'NotNull'", "'queued'", "'persistent'", "'extends'", "'x'", "'shouldBe'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'notNull'", "'null'", "'systemTime'", "'authorization'", "'Unique'", "'PrimaryKey'", "'references'", "'.'", "'POST'", "'PUT'", "'DELETE'", "'GET'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'FormData'", "'json'", "'undefined'", "'-'", "'true'", "'false'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -2322,14 +2322,14 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleClientAttribute"
-    // InternalAceGen.g:883:1: ruleClientAttribute returns [EObject current=null] : ( ( (lv_noComponent_0_0= 'noComponent' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_tree_2_0= 'Tree' ) )? ( (lv_group_3_0= 'group' ) )? ( (lv_listId_4_0= 'listId' ) )? ( (lv_name_5_0= RULE_ID ) ) ( (lv_location_6_0= 'location' ) )? ( (lv_storage_7_0= 'storage' ) )? ( (lv_fromParent_8_0= 'fromParent' ) )? ( (lv_uiElement_9_0= ruleUIElement ) )? (otherlv_10= '{' ( (lv_attributes_11_0= ruleClientAttribute ) )* (otherlv_12= 'options' ( (lv_options_13_0= RULE_STRING ) )* )? (otherlv_14= 'actions' otherlv_15= '{' ( (lv_actions_16_0= ruleUiAction ) )* otherlv_17= '}' )? otherlv_18= '}' )? ) ;
+    // InternalAceGen.g:883:1: ruleClientAttribute returns [EObject current=null] : ( ( (lv_noComponent_0_0= 'noComponent' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_tree_2_0= 'Tree' ) )? ( (lv_exclusiveView_3_0= 'exclusiveView' ) )? ( (lv_listId_4_0= 'listId' ) )? ( (lv_name_5_0= RULE_ID ) ) ( (lv_location_6_0= 'location' ) )? ( (lv_storage_7_0= 'storage' ) )? ( (lv_fromParent_8_0= 'fromParent' ) )? ( (lv_uiElement_9_0= ruleUIElement ) )? (otherlv_10= '{' ( (lv_attributes_11_0= ruleClientAttribute ) )* (otherlv_12= 'options' ( (lv_options_13_0= RULE_STRING ) )* )? (otherlv_14= 'actions' otherlv_15= '{' ( (lv_actions_16_0= ruleUiAction ) )* otherlv_17= '}' )? otherlv_18= '}' )? ) ;
     public final EObject ruleClientAttribute() throws RecognitionException {
         EObject current = null;
 
         Token lv_noComponent_0_0=null;
         Token lv_list_1_0=null;
         Token lv_tree_2_0=null;
-        Token lv_group_3_0=null;
+        Token lv_exclusiveView_3_0=null;
         Token lv_listId_4_0=null;
         Token lv_name_5_0=null;
         Token lv_location_6_0=null;
@@ -2353,11 +2353,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:889:2: ( ( ( (lv_noComponent_0_0= 'noComponent' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_tree_2_0= 'Tree' ) )? ( (lv_group_3_0= 'group' ) )? ( (lv_listId_4_0= 'listId' ) )? ( (lv_name_5_0= RULE_ID ) ) ( (lv_location_6_0= 'location' ) )? ( (lv_storage_7_0= 'storage' ) )? ( (lv_fromParent_8_0= 'fromParent' ) )? ( (lv_uiElement_9_0= ruleUIElement ) )? (otherlv_10= '{' ( (lv_attributes_11_0= ruleClientAttribute ) )* (otherlv_12= 'options' ( (lv_options_13_0= RULE_STRING ) )* )? (otherlv_14= 'actions' otherlv_15= '{' ( (lv_actions_16_0= ruleUiAction ) )* otherlv_17= '}' )? otherlv_18= '}' )? ) )
-            // InternalAceGen.g:890:2: ( ( (lv_noComponent_0_0= 'noComponent' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_tree_2_0= 'Tree' ) )? ( (lv_group_3_0= 'group' ) )? ( (lv_listId_4_0= 'listId' ) )? ( (lv_name_5_0= RULE_ID ) ) ( (lv_location_6_0= 'location' ) )? ( (lv_storage_7_0= 'storage' ) )? ( (lv_fromParent_8_0= 'fromParent' ) )? ( (lv_uiElement_9_0= ruleUIElement ) )? (otherlv_10= '{' ( (lv_attributes_11_0= ruleClientAttribute ) )* (otherlv_12= 'options' ( (lv_options_13_0= RULE_STRING ) )* )? (otherlv_14= 'actions' otherlv_15= '{' ( (lv_actions_16_0= ruleUiAction ) )* otherlv_17= '}' )? otherlv_18= '}' )? )
+            // InternalAceGen.g:889:2: ( ( ( (lv_noComponent_0_0= 'noComponent' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_tree_2_0= 'Tree' ) )? ( (lv_exclusiveView_3_0= 'exclusiveView' ) )? ( (lv_listId_4_0= 'listId' ) )? ( (lv_name_5_0= RULE_ID ) ) ( (lv_location_6_0= 'location' ) )? ( (lv_storage_7_0= 'storage' ) )? ( (lv_fromParent_8_0= 'fromParent' ) )? ( (lv_uiElement_9_0= ruleUIElement ) )? (otherlv_10= '{' ( (lv_attributes_11_0= ruleClientAttribute ) )* (otherlv_12= 'options' ( (lv_options_13_0= RULE_STRING ) )* )? (otherlv_14= 'actions' otherlv_15= '{' ( (lv_actions_16_0= ruleUiAction ) )* otherlv_17= '}' )? otherlv_18= '}' )? ) )
+            // InternalAceGen.g:890:2: ( ( (lv_noComponent_0_0= 'noComponent' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_tree_2_0= 'Tree' ) )? ( (lv_exclusiveView_3_0= 'exclusiveView' ) )? ( (lv_listId_4_0= 'listId' ) )? ( (lv_name_5_0= RULE_ID ) ) ( (lv_location_6_0= 'location' ) )? ( (lv_storage_7_0= 'storage' ) )? ( (lv_fromParent_8_0= 'fromParent' ) )? ( (lv_uiElement_9_0= ruleUIElement ) )? (otherlv_10= '{' ( (lv_attributes_11_0= ruleClientAttribute ) )* (otherlv_12= 'options' ( (lv_options_13_0= RULE_STRING ) )* )? (otherlv_14= 'actions' otherlv_15= '{' ( (lv_actions_16_0= ruleUiAction ) )* otherlv_17= '}' )? otherlv_18= '}' )? )
             {
-            // InternalAceGen.g:890:2: ( ( (lv_noComponent_0_0= 'noComponent' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_tree_2_0= 'Tree' ) )? ( (lv_group_3_0= 'group' ) )? ( (lv_listId_4_0= 'listId' ) )? ( (lv_name_5_0= RULE_ID ) ) ( (lv_location_6_0= 'location' ) )? ( (lv_storage_7_0= 'storage' ) )? ( (lv_fromParent_8_0= 'fromParent' ) )? ( (lv_uiElement_9_0= ruleUIElement ) )? (otherlv_10= '{' ( (lv_attributes_11_0= ruleClientAttribute ) )* (otherlv_12= 'options' ( (lv_options_13_0= RULE_STRING ) )* )? (otherlv_14= 'actions' otherlv_15= '{' ( (lv_actions_16_0= ruleUiAction ) )* otherlv_17= '}' )? otherlv_18= '}' )? )
-            // InternalAceGen.g:891:3: ( (lv_noComponent_0_0= 'noComponent' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_tree_2_0= 'Tree' ) )? ( (lv_group_3_0= 'group' ) )? ( (lv_listId_4_0= 'listId' ) )? ( (lv_name_5_0= RULE_ID ) ) ( (lv_location_6_0= 'location' ) )? ( (lv_storage_7_0= 'storage' ) )? ( (lv_fromParent_8_0= 'fromParent' ) )? ( (lv_uiElement_9_0= ruleUIElement ) )? (otherlv_10= '{' ( (lv_attributes_11_0= ruleClientAttribute ) )* (otherlv_12= 'options' ( (lv_options_13_0= RULE_STRING ) )* )? (otherlv_14= 'actions' otherlv_15= '{' ( (lv_actions_16_0= ruleUiAction ) )* otherlv_17= '}' )? otherlv_18= '}' )?
+            // InternalAceGen.g:890:2: ( ( (lv_noComponent_0_0= 'noComponent' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_tree_2_0= 'Tree' ) )? ( (lv_exclusiveView_3_0= 'exclusiveView' ) )? ( (lv_listId_4_0= 'listId' ) )? ( (lv_name_5_0= RULE_ID ) ) ( (lv_location_6_0= 'location' ) )? ( (lv_storage_7_0= 'storage' ) )? ( (lv_fromParent_8_0= 'fromParent' ) )? ( (lv_uiElement_9_0= ruleUIElement ) )? (otherlv_10= '{' ( (lv_attributes_11_0= ruleClientAttribute ) )* (otherlv_12= 'options' ( (lv_options_13_0= RULE_STRING ) )* )? (otherlv_14= 'actions' otherlv_15= '{' ( (lv_actions_16_0= ruleUiAction ) )* otherlv_17= '}' )? otherlv_18= '}' )? )
+            // InternalAceGen.g:891:3: ( (lv_noComponent_0_0= 'noComponent' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_tree_2_0= 'Tree' ) )? ( (lv_exclusiveView_3_0= 'exclusiveView' ) )? ( (lv_listId_4_0= 'listId' ) )? ( (lv_name_5_0= RULE_ID ) ) ( (lv_location_6_0= 'location' ) )? ( (lv_storage_7_0= 'storage' ) )? ( (lv_fromParent_8_0= 'fromParent' ) )? ( (lv_uiElement_9_0= ruleUIElement ) )? (otherlv_10= '{' ( (lv_attributes_11_0= ruleClientAttribute ) )* (otherlv_12= 'options' ( (lv_options_13_0= RULE_STRING ) )* )? (otherlv_14= 'actions' otherlv_15= '{' ( (lv_actions_16_0= ruleUiAction ) )* otherlv_17= '}' )? otherlv_18= '}' )?
             {
             // InternalAceGen.g:891:3: ( (lv_noComponent_0_0= 'noComponent' ) )?
             int alt27=2;
@@ -2458,7 +2458,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:933:3: ( (lv_group_3_0= 'group' ) )?
+            // InternalAceGen.g:933:3: ( (lv_exclusiveView_3_0= 'exclusiveView' ) )?
             int alt30=2;
             int LA30_0 = input.LA(1);
 
@@ -2467,20 +2467,20 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             }
             switch (alt30) {
                 case 1 :
-                    // InternalAceGen.g:934:4: (lv_group_3_0= 'group' )
+                    // InternalAceGen.g:934:4: (lv_exclusiveView_3_0= 'exclusiveView' )
                     {
-                    // InternalAceGen.g:934:4: (lv_group_3_0= 'group' )
-                    // InternalAceGen.g:935:5: lv_group_3_0= 'group'
+                    // InternalAceGen.g:934:4: (lv_exclusiveView_3_0= 'exclusiveView' )
+                    // InternalAceGen.g:935:5: lv_exclusiveView_3_0= 'exclusiveView'
                     {
-                    lv_group_3_0=(Token)match(input,34,FOLLOW_29); 
+                    lv_exclusiveView_3_0=(Token)match(input,34,FOLLOW_29); 
 
-                    					newLeafNode(lv_group_3_0, grammarAccess.getClientAttributeAccess().getGroupGroupKeyword_3_0());
+                    					newLeafNode(lv_exclusiveView_3_0, grammarAccess.getClientAttributeAccess().getExclusiveViewExclusiveViewKeyword_3_0());
                     				
 
                     					if (current==null) {
                     						current = createModelElement(grammarAccess.getClientAttributeRule());
                     					}
-                    					setWithLastConsumed(current, "group", lv_group_3_0 != null, "group");
+                    					setWithLastConsumed(current, "exclusiveView", lv_exclusiveView_3_0 != null, "exclusiveView");
                     				
 
                     }

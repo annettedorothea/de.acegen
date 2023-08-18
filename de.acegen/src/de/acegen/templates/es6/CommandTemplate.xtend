@@ -414,6 +414,7 @@ class CommandTemplate {
 					        reject(error);
 					    });
 					} else {
+						postCall();
 					    this.publishEvents(data).then(resolve);
 					}
 		        });

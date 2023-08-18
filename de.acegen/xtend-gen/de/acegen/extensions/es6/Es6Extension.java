@@ -65,6 +65,10 @@ public class Es6Extension {
     _builder.append("(data) => {");
     _builder.newLine();
     _builder.append("\t\t");
+    CharSequence _exclusiveViewValidation = this.exclusiveViewValidation(it.getStateElement());
+    _builder.append(_exclusiveViewValidation, "\t\t");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
     ClientAttribute _stateElement = it.getStateElement();
     StringConcatenation _builder_1 = new StringConcatenation();
     String _stateFunctionType = it.getStateFunctionType();
@@ -77,8 +81,78 @@ public class Es6Extension {
     return _builder.toString();
   }
 
+  private boolean parentIsExclusiveView(final ClientAttribute it) {
+    EObject parent = it.eContainer();
+    if (((parent != null) && (parent instanceof ClientAttribute))) {
+      final ClientAttribute parentAttribute = ((ClientAttribute) parent);
+      return parentAttribute.isExclusiveView();
+    }
+    return false;
+  }
+
+  private ClientAttribute exclusiveParentAsClientAttribute(final ClientAttribute it) {
+    EObject parent = it.eContainer();
+    if (((parent != null) && (parent instanceof ClientAttribute))) {
+      final ClientAttribute parentAttribute = ((ClientAttribute) parent);
+      boolean _isExclusiveView = parentAttribute.isExclusiveView();
+      if (_isExclusiveView) {
+        return parentAttribute;
+      }
+    }
+    return null;
+  }
+
+  private CharSequence exclusiveViewValidation(final ClientAttribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      List<ClientAttribute> _allParentAttributesExclusiveItem = this.allParentAttributesExclusiveItem(it);
+      for(final ClientAttribute attribute : _allParentAttributesExclusiveItem) {
+        {
+          boolean _parentIsExclusiveView = this.parentIsExclusiveView(attribute);
+          if (_parentIsExclusiveView) {
+            _builder.append("if (AppState.get(");
+            String _path = this.path(this.paramList(attribute));
+            _builder.append(_path);
+            _builder.append(") === undefined) {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("console.warn(\"path ");
+            String _replace = this.path(this.paramList(attribute)).replace("\"", "\'");
+            _builder.append(_replace, "\t");
+            _builder.append(" does not match exclusive view ");
+            String _name = this.exclusiveParentAsClientAttribute(attribute).getName();
+            _builder.append(_name, "\t");
+            _builder.append(" in AppState\", AppState.get(");
+            String _path_1 = this.path(this.paramListExclusive(attribute));
+            _builder.append(_path_1, "\t");
+            _builder.append("));");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("return;");
+            _builder.newLine();
+            _builder.append("}");
+            _builder.newLine();
+          }
+        }
+      }
+    }
+    return _builder;
+  }
+
   public CharSequence stateFunctionCall(final ClientAttribute it, final String functionName, final String data) {
     StringConcatenation _builder = new StringConcatenation();
+    {
+      if ((this.parentIsExclusiveView(it) && (!Objects.equal(functionName, "get")))) {
+        _builder.append("AppState.set({");
+        String _name = this.exclusiveParentAsClientAttribute(it).getName();
+        _builder.append(_name);
+        _builder.append(": {}}, ");
+        String _path = this.path(this.paramListExclusive(it));
+        _builder.append(_path);
+        _builder.append(");");
+        _builder.newLineIfNotEmpty();
+      }
+    }
     _builder.append("AppState.");
     String _stateFunctionName = this.stateFunctionName(it, functionName);
     _builder.append(_stateFunctionName);
@@ -94,8 +168,8 @@ public class Es6Extension {
     }
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
-    String _path = this.path(this.paramList(it));
-    _builder.append(_path, "\t");
+    String _path_1 = this.path(this.paramList(it));
+    _builder.append(_path_1, "\t");
     {
       if (((((!Objects.equal(functionName, "get")) && (it.getAttributes().size() > 0)) && (!it.isList())) && (!it.isTree()))) {
         _builder.append(", ");
@@ -112,8 +186,8 @@ public class Es6Extension {
               _builder.appendImmediate(", ", "\t");
             }
             _builder.append("\"");
-            String _name = attribute.getName();
-            _builder.append(_name, "\t");
+            String _name_1 = attribute.getName();
+            _builder.append(_name_1, "\t");
             _builder.append("\"");
           }
         }
@@ -130,6 +204,20 @@ public class Es6Extension {
     ArrayList<String> paramList = new ArrayList<String>();
     List<ClientAttribute> _allParentAttributesInclusiveItem = this.allParentAttributesInclusiveItem(it);
     for (final ClientAttribute item : _allParentAttributesInclusiveItem) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("\"");
+      String _name = item.getName();
+      _builder.append(_name);
+      _builder.append("\"");
+      paramList.add(_builder.toString());
+    }
+    return paramList;
+  }
+
+  private List<String> paramListExclusive(final ClientAttribute it) {
+    ArrayList<String> paramList = new ArrayList<String>();
+    List<ClientAttribute> _allParentAttributesExclusiveItem = this.allParentAttributesExclusiveItem(it);
+    for (final ClientAttribute item : _allParentAttributesExclusiveItem) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("\"");
       String _name = item.getName();
@@ -173,6 +261,15 @@ public class Es6Extension {
   private List<ClientAttribute> allParentAttributesInclusiveItem(final ClientAttribute it) {
     ArrayList<ClientAttribute> attributes = new ArrayList<ClientAttribute>();
     attributes.add(it);
+    return this.allParentAttributes(it, attributes);
+  }
+
+  private List<ClientAttribute> allParentAttributesExclusiveItem(final ClientAttribute it) {
+    ArrayList<ClientAttribute> _arrayList = new ArrayList<ClientAttribute>();
+    return this.allParentAttributes(it, _arrayList);
+  }
+
+  private List<ClientAttribute> allParentAttributes(final ClientAttribute it, final List<ClientAttribute> attributes) {
     EObject parent = it.eContainer();
     while ((parent != null)) {
       {

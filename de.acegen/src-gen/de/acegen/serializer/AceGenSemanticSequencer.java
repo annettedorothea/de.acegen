@@ -397,7 +397,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         noComponent?='noComponent'? 
 	 *         list?='List'? 
 	 *         tree?='Tree'? 
-	 *         group?='group'? 
+	 *         exclusiveView?='exclusiveView'? 
 	 *         listId?='listId'? 
 	 *         name=ID 
 	 *         location?='location'? 

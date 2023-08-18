@@ -594,8 +594,8 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cListListKeyword_1_0 = (Keyword)cListAssignment_1.eContents().get(0);
 		private final Assignment cTreeAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final Keyword cTreeTreeKeyword_2_0 = (Keyword)cTreeAssignment_2.eContents().get(0);
-		private final Assignment cGroupAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cGroupGroupKeyword_3_0 = (Keyword)cGroupAssignment_3.eContents().get(0);
+		private final Assignment cExclusiveViewAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cExclusiveViewExclusiveViewKeyword_3_0 = (Keyword)cExclusiveViewAssignment_3.eContents().get(0);
 		private final Assignment cListIdAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final Keyword cListIdListIdKeyword_4_0 = (Keyword)cListIdAssignment_4.eContents().get(0);
 		private final Assignment cNameAssignment_5 = (Assignment)cGroup.eContents().get(5);
@@ -628,7 +628,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//    noComponent ?= 'noComponent'?
 		//    list ?= 'List'?
 		//    tree ?= 'Tree'?
-		//    group ?= 'group'?
+		//    exclusiveView ?= 'exclusiveView'?
 		//    listId ?= 'listId'?
 		//    name = ID
 		//    location ?= 'location'?
@@ -648,7 +648,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//noComponent ?= 'noComponent'?
 		//list ?= 'List'?
 		//tree ?= 'Tree'?
-		//group ?= 'group'?
+		//exclusiveView ?= 'exclusiveView'?
 		//listId ?= 'listId'?
 		//name = ID
 		//location ?= 'location'?
@@ -682,11 +682,11 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//'Tree'
 		public Keyword getTreeTreeKeyword_2_0() { return cTreeTreeKeyword_2_0; }
 		
-		//group ?= 'group'?
-		public Assignment getGroupAssignment_3() { return cGroupAssignment_3; }
+		//exclusiveView ?= 'exclusiveView'?
+		public Assignment getExclusiveViewAssignment_3() { return cExclusiveViewAssignment_3; }
 		
-		//'group'
-		public Keyword getGroupGroupKeyword_3_0() { return cGroupGroupKeyword_3_0; }
+		//'exclusiveView'
+		public Keyword getExclusiveViewExclusiveViewKeyword_3_0() { return cExclusiveViewExclusiveViewKeyword_3_0; }
 		
 		//listId ?= 'listId'?
 		public Assignment getListIdAssignment_4() { return cListIdAssignment_4; }
@@ -4178,7 +4178,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    noComponent ?= 'noComponent'?
 	//    list ?= 'List'?
 	//    tree ?= 'Tree'?
-	//    group ?= 'group'?
+	//    exclusiveView ?= 'exclusiveView'?
 	//    listId ?= 'listId'?
 	//    name = ID
 	//    location ?= 'location'?

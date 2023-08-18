@@ -4185,9 +4185,9 @@ rule__ClientAttribute__Group__3__Impl
 	}
 :
 (
-	{ before(grammarAccess.getClientAttributeAccess().getGroupAssignment_3()); }
-	(rule__ClientAttribute__GroupAssignment_3)?
-	{ after(grammarAccess.getClientAttributeAccess().getGroupAssignment_3()); }
+	{ before(grammarAccess.getClientAttributeAccess().getExclusiveViewAssignment_3()); }
+	(rule__ClientAttribute__ExclusiveViewAssignment_3)?
+	{ after(grammarAccess.getClientAttributeAccess().getExclusiveViewAssignment_3()); }
 )
 ;
 finally {
@@ -13914,19 +13914,19 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ClientAttribute__GroupAssignment_3
+rule__ClientAttribute__ExclusiveViewAssignment_3
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getClientAttributeAccess().getGroupGroupKeyword_3_0()); }
+		{ before(grammarAccess.getClientAttributeAccess().getExclusiveViewExclusiveViewKeyword_3_0()); }
 		(
-			{ before(grammarAccess.getClientAttributeAccess().getGroupGroupKeyword_3_0()); }
-			'group'
-			{ after(grammarAccess.getClientAttributeAccess().getGroupGroupKeyword_3_0()); }
+			{ before(grammarAccess.getClientAttributeAccess().getExclusiveViewExclusiveViewKeyword_3_0()); }
+			'exclusiveView'
+			{ after(grammarAccess.getClientAttributeAccess().getExclusiveViewExclusiveViewKeyword_3_0()); }
 		)
-		{ after(grammarAccess.getClientAttributeAccess().getGroupGroupKeyword_3_0()); }
+		{ after(grammarAccess.getClientAttributeAccess().getExclusiveViewExclusiveViewKeyword_3_0()); }
 	)
 ;
 finally {

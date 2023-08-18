@@ -114,7 +114,7 @@ class JsxTemplate {
 			«IF hasComplexAttribute»
 				return <«componentName» {...props} «actionProps»>
 					«FOR attribute: attributes»
-						«attribute.renderChildContainer(attributes, it.isGroup())»
+						«attribute.renderChildContainer(attributes, exclusiveView)»
 					«ENDFOR»
 				</«componentName»> 
 			«ELSEIF tree»				

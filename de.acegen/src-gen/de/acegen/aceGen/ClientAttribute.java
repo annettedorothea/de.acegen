@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isNoComponent <em>No Component</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isList <em>List</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isTree <em>Tree</em>}</li>
- *   <li>{@link de.acegen.aceGen.ClientAttribute#isGroup <em>Group</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientAttribute#isExclusiveView <em>Exclusive View</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isListId <em>List Id</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isLocation <em>Location</em>}</li>
@@ -104,26 +104,26 @@ public interface ClientAttribute extends EObject
   void setTree(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Group</b></em>' attribute.
+   * Returns the value of the '<em><b>Exclusive View</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Group</em>' attribute.
-   * @see #setGroup(boolean)
-   * @see de.acegen.aceGen.AceGenPackage#getClientAttribute_Group()
+   * @return the value of the '<em>Exclusive View</em>' attribute.
+   * @see #setExclusiveView(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getClientAttribute_ExclusiveView()
    * @model
    * @generated
    */
-  boolean isGroup();
+  boolean isExclusiveView();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.ClientAttribute#isGroup <em>Group</em>}' attribute.
+   * Sets the value of the '{@link de.acegen.aceGen.ClientAttribute#isExclusiveView <em>Exclusive View</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Group</em>' attribute.
-   * @see #isGroup()
+   * @param value the new value of the '<em>Exclusive View</em>' attribute.
+   * @see #isExclusiveView()
    * @generated
    */
-  void setGroup(boolean value);
+  void setExclusiveView(boolean value);
 
   /**
    * Returns the value of the '<em><b>List Id</b></em>' attribute.

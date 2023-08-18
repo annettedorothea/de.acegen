@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'GET'", "'set'", "'merge'", "'TextInput'", "'CheckBox'", "'Select'", "'PasswordInput'", "'Radio'", "'Button'", "'POST'", "'PUT'", "'DELETE'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'FormData'", "'true'", "'false'", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'scenarios'", "'('", "')'", "','", "'fromAppState'", "'call'", "'loading'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'{'", "'}'", "'options'", "'actions'", "'GIVEN'", "'AND'", "'WHEN'", "'THEN'", "'squishyValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'squishy'", "':'", "'expectedState'", "'verifications'", "'should'", "'be'", "'['", "']'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'extends'", "'x'", "'shouldBe'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'systemTime'", "'authorization'", "'references'", "'.'", "'json'", "'JSX'", "'async'", "'takeLatest'", "'noComponent'", "'List'", "'Tree'", "'group'", "'listId'", "'location'", "'storage'", "'fromParent'", "'exclude'", "'not'", "'Java'", "'C#'", "'Dropwizard'", "'NET6'", "'JDBI3'", "'EntityFramework'", "'Liquibase'", "'authorize'", "'multipartFormData'", "'NotNull'", "'queued'", "'persistent'", "'notNull'", "'null'", "'Unique'", "'PrimaryKey'", "'undefined'", "'-'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'GET'", "'set'", "'merge'", "'TextInput'", "'CheckBox'", "'Select'", "'PasswordInput'", "'Radio'", "'Button'", "'POST'", "'PUT'", "'DELETE'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'FormData'", "'true'", "'false'", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'scenarios'", "'('", "')'", "','", "'fromAppState'", "'call'", "'loading'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'{'", "'}'", "'options'", "'actions'", "'GIVEN'", "'AND'", "'WHEN'", "'THEN'", "'squishyValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'squishy'", "':'", "'expectedState'", "'verifications'", "'should'", "'be'", "'['", "']'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'extends'", "'x'", "'shouldBe'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'systemTime'", "'authorization'", "'references'", "'.'", "'json'", "'JSX'", "'async'", "'takeLatest'", "'noComponent'", "'List'", "'Tree'", "'exclusiveView'", "'listId'", "'location'", "'storage'", "'fromParent'", "'exclude'", "'not'", "'Java'", "'C#'", "'Dropwizard'", "'NET6'", "'JDBI3'", "'EntityFramework'", "'Liquibase'", "'authorize'", "'multipartFormData'", "'NotNull'", "'queued'", "'persistent'", "'notNull'", "'null'", "'Unique'", "'PrimaryKey'", "'undefined'", "'-'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -13330,20 +13330,20 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ClientAttribute__Group__3__Impl"
-    // InternalAceGen.g:4182:1: rule__ClientAttribute__Group__3__Impl : ( ( rule__ClientAttribute__GroupAssignment_3 )? ) ;
+    // InternalAceGen.g:4182:1: rule__ClientAttribute__Group__3__Impl : ( ( rule__ClientAttribute__ExclusiveViewAssignment_3 )? ) ;
     public final void rule__ClientAttribute__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:4186:1: ( ( ( rule__ClientAttribute__GroupAssignment_3 )? ) )
-            // InternalAceGen.g:4187:1: ( ( rule__ClientAttribute__GroupAssignment_3 )? )
+            // InternalAceGen.g:4186:1: ( ( ( rule__ClientAttribute__ExclusiveViewAssignment_3 )? ) )
+            // InternalAceGen.g:4187:1: ( ( rule__ClientAttribute__ExclusiveViewAssignment_3 )? )
             {
-            // InternalAceGen.g:4187:1: ( ( rule__ClientAttribute__GroupAssignment_3 )? )
-            // InternalAceGen.g:4188:2: ( rule__ClientAttribute__GroupAssignment_3 )?
+            // InternalAceGen.g:4187:1: ( ( rule__ClientAttribute__ExclusiveViewAssignment_3 )? )
+            // InternalAceGen.g:4188:2: ( rule__ClientAttribute__ExclusiveViewAssignment_3 )?
             {
-             before(grammarAccess.getClientAttributeAccess().getGroupAssignment_3()); 
-            // InternalAceGen.g:4189:2: ( rule__ClientAttribute__GroupAssignment_3 )?
+             before(grammarAccess.getClientAttributeAccess().getExclusiveViewAssignment_3()); 
+            // InternalAceGen.g:4189:2: ( rule__ClientAttribute__ExclusiveViewAssignment_3 )?
             int alt44=2;
             int LA44_0 = input.LA(1);
 
@@ -13352,10 +13352,10 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             }
             switch (alt44) {
                 case 1 :
-                    // InternalAceGen.g:4189:3: rule__ClientAttribute__GroupAssignment_3
+                    // InternalAceGen.g:4189:3: rule__ClientAttribute__ExclusiveViewAssignment_3
                     {
                     pushFollow(FOLLOW_2);
-                    rule__ClientAttribute__GroupAssignment_3();
+                    rule__ClientAttribute__ExclusiveViewAssignment_3();
 
                     state._fsp--;
 
@@ -13365,7 +13365,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
             }
 
-             after(grammarAccess.getClientAttributeAccess().getGroupAssignment_3()); 
+             after(grammarAccess.getClientAttributeAccess().getExclusiveViewAssignment_3()); 
 
             }
 
@@ -43641,30 +43641,30 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ClientAttribute__TreeAssignment_2"
 
 
-    // $ANTLR start "rule__ClientAttribute__GroupAssignment_3"
-    // InternalAceGen.g:13917:1: rule__ClientAttribute__GroupAssignment_3 : ( ( 'group' ) ) ;
-    public final void rule__ClientAttribute__GroupAssignment_3() throws RecognitionException {
+    // $ANTLR start "rule__ClientAttribute__ExclusiveViewAssignment_3"
+    // InternalAceGen.g:13917:1: rule__ClientAttribute__ExclusiveViewAssignment_3 : ( ( 'exclusiveView' ) ) ;
+    public final void rule__ClientAttribute__ExclusiveViewAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:13921:1: ( ( ( 'group' ) ) )
-            // InternalAceGen.g:13922:2: ( ( 'group' ) )
+            // InternalAceGen.g:13921:1: ( ( ( 'exclusiveView' ) ) )
+            // InternalAceGen.g:13922:2: ( ( 'exclusiveView' ) )
             {
-            // InternalAceGen.g:13922:2: ( ( 'group' ) )
-            // InternalAceGen.g:13923:3: ( 'group' )
+            // InternalAceGen.g:13922:2: ( ( 'exclusiveView' ) )
+            // InternalAceGen.g:13923:3: ( 'exclusiveView' )
             {
-             before(grammarAccess.getClientAttributeAccess().getGroupGroupKeyword_3_0()); 
-            // InternalAceGen.g:13924:3: ( 'group' )
-            // InternalAceGen.g:13925:4: 'group'
+             before(grammarAccess.getClientAttributeAccess().getExclusiveViewExclusiveViewKeyword_3_0()); 
+            // InternalAceGen.g:13924:3: ( 'exclusiveView' )
+            // InternalAceGen.g:13925:4: 'exclusiveView'
             {
-             before(grammarAccess.getClientAttributeAccess().getGroupGroupKeyword_3_0()); 
+             before(grammarAccess.getClientAttributeAccess().getExclusiveViewExclusiveViewKeyword_3_0()); 
             match(input,96,FOLLOW_2); 
-             after(grammarAccess.getClientAttributeAccess().getGroupGroupKeyword_3_0()); 
+             after(grammarAccess.getClientAttributeAccess().getExclusiveViewExclusiveViewKeyword_3_0()); 
 
             }
 
-             after(grammarAccess.getClientAttributeAccess().getGroupGroupKeyword_3_0()); 
+             after(grammarAccess.getClientAttributeAccess().getExclusiveViewExclusiveViewKeyword_3_0()); 
 
             }
 
@@ -43683,7 +43683,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__ClientAttribute__GroupAssignment_3"
+    // $ANTLR end "rule__ClientAttribute__ExclusiveViewAssignment_3"
 
 
     // $ANTLR start "rule__ClientAttribute__ListIdAssignment_4"

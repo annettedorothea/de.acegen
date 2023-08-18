@@ -498,7 +498,7 @@ public class JsxTemplate {
           for(final ClientAttribute attribute : _attributes) {
             _builder.append("\t");
             _builder.append("\t");
-            CharSequence _renderChildContainer = this.renderChildContainer(attribute, it.getAttributes(), it.isGroup());
+            CharSequence _renderChildContainer = this.renderChildContainer(attribute, it.getAttributes(), it.isExclusiveView());
             _builder.append(_renderChildContainer, "\t\t");
             _builder.newLineIfNotEmpty();
           }
