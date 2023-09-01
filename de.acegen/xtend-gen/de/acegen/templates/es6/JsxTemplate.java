@@ -729,8 +729,7 @@ public class JsxTemplate {
       EList<ClientAttribute> _attributes = it.getAttributes();
       for(final ClientAttribute attribute : _attributes) {
         {
-          boolean _attributesContain = this._es6Extension.attributesContain(parentAttributes, attribute);
-          if (_attributesContain) {
+          if ((this._es6Extension.attributesContain(parentAttributes, attribute) && attribute.isFromParent())) {
             String _firstLower = StringExtensions.toFirstLower(attribute.getName());
             _builder.append(_firstLower);
             _builder.append("={props.");

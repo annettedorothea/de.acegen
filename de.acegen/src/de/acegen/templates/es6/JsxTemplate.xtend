@@ -156,7 +156,7 @@ class JsxTemplate {
 	
 	def storageAndLocationPart(ClientAttribute it) '''«FOR attribute: attributes»«IF attribute.storage || attribute.location»«attribute.name.toFirstLower»={«attribute.stateFunctionCall("get", "data")»} «ENDIF»«ENDFOR»'''
 	
-	def parentPart(ClientAttribute it, List<ClientAttribute> parentAttributes) '''«FOR attribute:attributes»«IF parentAttributes.attributesContain(attribute)»«attribute.name.toFirstLower»={props.«attribute.name.toFirstLower»} «ENDIF»«ENDFOR»'''
+	def parentPart(ClientAttribute it, List<ClientAttribute> parentAttributes) '''«FOR attribute:attributes»«IF parentAttributes.attributesContain(attribute) && attribute.fromParent»«attribute.name.toFirstLower»={props.«attribute.name.toFirstLower»} «ENDIF»«ENDFOR»'''
 	
 	def actionProps(ClientAttribute it) '''«FOR action:actions»«action.name»={«action.target.getName.toFirstLower»} «ENDFOR»'''
 	
