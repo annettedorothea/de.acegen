@@ -1,16 +1,16 @@
 /********************************************************************************
  * Copyright (c) 2020 Annette Pohl
- *
+ * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
- *
+ * 
  * This Source Code may also be made available under the following Secondary
  * Licenses when the conditions for such availability set forth in the Eclipse
  * Public License v. 2.0 are satisfied: GNU General Public License, version 2
  * with the GNU Classpath Exception which is available at
  * https://www.gnu.org/software/classpath/license.html.
- *
+ * 
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
@@ -23,6 +23,7 @@ import de.acegen.aceGen.AceGenPackage
 import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.AttributeAndValue
 import de.acegen.aceGen.AttributeParamRef
+import de.acegen.aceGen.ClientAttribute
 import de.acegen.aceGen.ClientScenario
 import de.acegen.aceGen.ClientThenBlock
 import de.acegen.aceGen.ClientWhenBlock
@@ -47,6 +48,7 @@ import de.acegen.aceGen.SelectByUniqueAttribute
 import de.acegen.aceGen.StateVerification
 import de.acegen.aceGen.ThenBlock
 import de.acegen.aceGen.WhenBlock
+import de.acegen.aceGen.impl.HttpClientStateFunctionImpl
 import de.acegen.extensions.CommonExtension
 import java.util.ArrayList
 import javax.inject.Inject
@@ -68,6 +70,12 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 	extension CommonExtension
 
 	override getScope(EObject context, EReference reference) {
+		if (context instanceof HttpClientStateFunctionImpl &&
+			reference == AceGenPackage.Literals.HTTP_CLIENT_STATE_FUNCTION__STATE_ELEMENT) {
+			val scope = super.getScope(context, reference)
+			val filtered = new FilteringScope(scope, [!(getEObjectOrProxy as ClientAttribute).fromParent])
+			return filtered;
+		}
 		if (context instanceof ClientWhenBlock && reference == AceGenPackage.Literals.INPUT_VALUE__INPUT) {
 			val clientWhenBlock = context as ClientWhenBlock;
 			return Scopes.scopeFor(clientWhenBlock.action.input)
@@ -116,7 +124,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 		if (context instanceof ClientWhenBlock && reference == AceGenPackage.Literals.SQUISHY_VALUE__ATTRIBUTE) {
 			val scope = super.getScope(context, reference)
 			val filtered = new ArrayList<Attribute>();
-			for(element: scope.allElements) {
+			for (element : scope.allElements) {
 				val attribute = EcoreUtil2.resolve(element.EObjectOrProxy, context) as Attribute
 				if (attribute.squishy) {
 					filtered.add(attribute)
@@ -260,18 +268,18 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 				if (isThen) {
 					var attr = new ArrayList<Attribute>();
 					for (clientWhenThenItem : scenario.clientWhenThen) {
-					if (clientWhenThenItem.whenBlock.action.serverCall !== null) {
-						val serverCall = clientWhenThenItem.whenBlock.action.serverCall
-						for (attributeRef : serverCall.payload) {
-							attr.add(attributeRef.attribute)
+						if (clientWhenThenItem.whenBlock.action.serverCall !== null) {
+							val serverCall = clientWhenThenItem.whenBlock.action.serverCall
+							for (attributeRef : serverCall.payload) {
+								attr.add(attributeRef.attribute)
+							}
+							for (attributeRef : serverCall.queryParams) {
+								attr.add(attributeRef.attribute)
+							}
+							for (attributeRef : serverCall.pathParams) {
+								attr.add(attributeRef.attribute)
+							}
 						}
-						for (attributeRef : serverCall.queryParams) {
-							attr.add(attributeRef.attribute)
-						}
-						for (attributeRef : serverCall.pathParams) {
-							attr.add(attributeRef.attribute)
-						}
-					}
 					}
 					return Scopes.scopeFor(attr);
 				}
