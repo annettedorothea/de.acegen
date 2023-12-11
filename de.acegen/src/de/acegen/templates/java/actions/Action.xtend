@@ -24,17 +24,13 @@ import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AttributeExtension
 import de.acegen.extensions.java.TypeExtension
-import javax.inject.Inject
 
 class Action {
 
-	@Inject
 	extension AttributeExtension
 
-	@Inject
 	extension CommonExtension
 	
-	@Inject
 	extension TypeExtension
 	
 	def dispatch generateAbstractActionFile(HttpServerAceWrite it, HttpServer httpServer) '''

@@ -5,7 +5,7 @@ import de.acegen.aceGen.HttpClient;
 import de.acegen.extensions.es6.Es6Extension;
 import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.templates.es6.JsxTemplate;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.IFileSystemAccess;
@@ -18,7 +18,6 @@ public class ReactGenerator {
   @Inject
   private JsxTemplate reactTemplate;
 
-  @Inject
   @Extension
   private Es6Extension _es6Extension;
 

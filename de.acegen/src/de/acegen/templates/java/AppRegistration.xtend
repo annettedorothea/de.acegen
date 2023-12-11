@@ -27,17 +27,13 @@ import de.acegen.aceGen.HttpServerViewFunction
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.TypeExtension
 import de.acegen.extensions.java.ViewExtension
-import javax.inject.Inject
 
 class AppRegistration {
 
-	@Inject
 	extension ViewExtension
 
-	@Inject
 	extension CommonExtension
 	
-	@Inject
 	extension TypeExtension
 	
 	def generateAppRegistration(HttpServer it) '''

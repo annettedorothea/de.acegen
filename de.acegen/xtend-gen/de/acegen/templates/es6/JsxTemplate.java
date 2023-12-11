@@ -8,7 +8,6 @@ import de.acegen.aceGen.UiAction;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.Es6Extension;
 import java.util.List;
-import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -17,11 +16,9 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class JsxTemplate {
-  @Inject
   @Extension
   private CommonExtension _commonExtension;
 
-  @Inject
   @Extension
   private Es6Extension _es6Extension;
 

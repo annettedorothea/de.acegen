@@ -18,11 +18,9 @@
 package de.acegen.templates.java.resources
 
 import de.acegen.extensions.CommonExtension
-import javax.inject.Inject
 
 class GetServerInfoResource {
 
-	@Inject
 	extension CommonExtension
 
 	def generate() '''

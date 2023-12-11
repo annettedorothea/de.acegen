@@ -30,10 +30,11 @@ HttpClient:
 		container = ClientAttribute
 	)?
 	('scenarios' (scenarios += ClientScenario)*)?
+	('models' (models += ClientModel)*)?
 ;
 
 HttpClientAce: 
-	(async ?= 'async')? name = ID  
+	(async ?= 'async')? name = ID ('<' model = [ClientModel|QualifiedName] '>')?
 		('(' input += Input (',' input += Input)* ')' )?
 		('fromAppState' '(' refs += FromAppStateRef (',' refs += FromAppStateRef)* ')' )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
@@ -88,6 +89,27 @@ ClientAttribute:
 		'}')?
 	'}')?
 ;
+
+ClientModelAttribute:
+	notNull ?= 'NotNull'? 
+	list ?= 'List'? 
+	noComponent ?= 'noComponent'? 
+	tree ?= 'Tree'? 
+	exclusiveView ?= 'exclusiveView'? 
+	listId ?= 'listId'? 
+	(type = ClientType | model = [ClientModel | QualifiedName])
+	name = ID 
+	location ?= 'location'? 
+	storage ?= 'storage'? 
+	fromParent ?= 'fromParent'? 
+;
+
+ClientModel:
+	name = ID ('extends' superModels+=[ClientModel|QualifiedName] (',' superModels+=[ClientModel|QualifiedName])* )? ('{'
+		attributes += ClientModelAttribute*
+	'}')?
+;
+
 
 UiAction: 
 	name = STRING target = [HttpClientAce | QualifiedName]
@@ -330,6 +352,7 @@ Authorization:
 	'authorization' username = STRING ':' password = STRING
 ;
 
+
 Attribute:
 	unique ?= 'Unique'? 
 	primaryKey ?= 'PrimaryKey'? 
@@ -355,6 +378,10 @@ ReadFunctionType:
 
 Type:
 	'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long' | 'FormData'
+;
+
+ClientType:
+	'Number' | 'String' | 'Boolean'
 ;
 
 JsonObject: JsonObjectAce | 'json' StringType;

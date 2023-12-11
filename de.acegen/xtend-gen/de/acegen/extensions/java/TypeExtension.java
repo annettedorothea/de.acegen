@@ -6,7 +6,6 @@ import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.Model;
-import javax.inject.Inject;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -14,7 +13,6 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class TypeExtension {
-  @Inject
   @Extension
   private EcoreExtension _ecoreExtension;
 

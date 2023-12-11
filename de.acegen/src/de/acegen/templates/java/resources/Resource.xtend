@@ -25,20 +25,15 @@ import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AttributeExtension
 import de.acegen.extensions.java.EcoreExtension
 import de.acegen.extensions.java.TypeExtension
-import javax.inject.Inject
 
 class Resource {
 
-	@Inject
 	extension EcoreExtension
 
-	@Inject
 	extension AttributeExtension
 
-	@Inject
 	extension TypeExtension
 
-	@Inject
 	extension CommonExtension
 	
 	def generate(HttpServerAce it, HttpServer httpServer, AuthUser authUser) '''

@@ -18,7 +18,6 @@ package de.acegen.templates.java.auth;
 import de.acegen.aceGen.Attribute;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AttributeExtension;
-import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -26,11 +25,9 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class AuthUser {
-  @Inject
   @Extension
   private AttributeExtension _attributeExtension;
 
-  @Inject
   @Extension
   private CommonExtension _commonExtension;
 

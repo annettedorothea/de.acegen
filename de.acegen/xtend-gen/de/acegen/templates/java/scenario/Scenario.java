@@ -54,7 +54,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionExtensions;
@@ -67,15 +66,12 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class Scenario {
-  @Inject
   @Extension
   private TypeExtension _typeExtension;
 
-  @Inject
   @Extension
   private AttributeExtension _attributeExtension;
 
-  @Inject
   @Extension
   private CommonExtension _commonExtension;
 

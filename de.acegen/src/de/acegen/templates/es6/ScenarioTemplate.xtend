@@ -8,14 +8,11 @@ import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.Es6Extension
 import java.util.ArrayList
 import java.util.List
-import javax.inject.Inject
 
 class ScenarioTemplate {
 	
-	@Inject
 	extension CommonExtension
 	
-	@Inject
 	extension Es6Extension
 
 	def generateScenarioUtils() '''

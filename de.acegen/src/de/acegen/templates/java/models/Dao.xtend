@@ -18,11 +18,9 @@
 package de.acegen.templates.java.models
 
 import de.acegen.extensions.CommonExtension
-import javax.inject.Inject
 
 class Dao {
 	
-	@Inject
 	extension CommonExtension
 	
 	def generateAceDao() '''

@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.HttpClient#isJsx <em>Jsx</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getContainer <em>Container</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getScenarios <em>Scenarios</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClient#getModels <em>Models</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getHttpClient()
@@ -118,5 +119,17 @@ public interface HttpClient extends EObject
    * @generated
    */
   EList<ClientScenario> getScenarios();
+
+  /**
+   * Returns the value of the '<em><b>Models</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.ClientModel}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Models</em>' containment reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClient_Models()
+   * @model containment="true"
+   * @generated
+   */
+  EList<ClientModel> getModels();
 
 } // HttpClient

@@ -16,13 +16,11 @@
 package de.acegen.templates.java.scenario;
 
 import de.acegen.extensions.CommonExtension;
-import javax.inject.Inject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
 public class YamlConfiguration {
-  @Inject
   @Extension
   private CommonExtension _commonExtension;
 

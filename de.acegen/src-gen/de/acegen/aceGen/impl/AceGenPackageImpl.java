@@ -13,6 +13,8 @@ import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.BooleanType;
 import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.ClientGivenRef;
+import de.acegen.aceGen.ClientModel;
+import de.acegen.aceGen.ClientModelAttribute;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
@@ -147,6 +149,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   private EClass clientAttributeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass clientModelAttributeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass clientModelEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -700,6 +716,17 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EReference getHttpClient_Models()
+  {
+    return (EReference)httpClientEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getHttpClientAce()
   {
     return httpClientAceEClass;
@@ -733,7 +760,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpClientAce_Input()
+  public EReference getHttpClientAce_Model()
   {
     return (EReference)httpClientAceEClass.getEStructuralFeatures().get(2);
   }
@@ -744,7 +771,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpClientAce_Refs()
+  public EReference getHttpClientAce_Input()
   {
     return (EReference)httpClientAceEClass.getEStructuralFeatures().get(3);
   }
@@ -755,7 +782,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpClientAce_ServerCall()
+  public EReference getHttpClientAce_Refs()
   {
     return (EReference)httpClientAceEClass.getEStructuralFeatures().get(4);
   }
@@ -766,7 +793,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpClientAce_LoadingIndicators()
+  public EReference getHttpClientAce_ServerCall()
   {
     return (EReference)httpClientAceEClass.getEStructuralFeatures().get(5);
   }
@@ -777,9 +804,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpClientAce_Outcomes()
+  public EReference getHttpClientAce_LoadingIndicators()
   {
     return (EReference)httpClientAceEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getHttpClientAce_Outcomes()
+  {
+    return (EReference)httpClientAceEClass.getEStructuralFeatures().get(7);
   }
 
   /**
@@ -1110,6 +1148,193 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   public EReference getClientAttribute_Actions()
   {
     return (EReference)clientAttributeEClass.getEStructuralFeatures().get(12);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getClientModelAttribute()
+  {
+    return clientModelAttributeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientModelAttribute_NotNull()
+  {
+    return (EAttribute)clientModelAttributeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientModelAttribute_List()
+  {
+    return (EAttribute)clientModelAttributeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientModelAttribute_NoComponent()
+  {
+    return (EAttribute)clientModelAttributeEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientModelAttribute_Tree()
+  {
+    return (EAttribute)clientModelAttributeEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientModelAttribute_ExclusiveView()
+  {
+    return (EAttribute)clientModelAttributeEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientModelAttribute_ListId()
+  {
+    return (EAttribute)clientModelAttributeEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientModelAttribute_Type()
+  {
+    return (EAttribute)clientModelAttributeEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getClientModelAttribute_Model()
+  {
+    return (EReference)clientModelAttributeEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientModelAttribute_Name()
+  {
+    return (EAttribute)clientModelAttributeEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientModelAttribute_Location()
+  {
+    return (EAttribute)clientModelAttributeEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientModelAttribute_Storage()
+  {
+    return (EAttribute)clientModelAttributeEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientModelAttribute_FromParent()
+  {
+    return (EAttribute)clientModelAttributeEClass.getEStructuralFeatures().get(11);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getClientModel()
+  {
+    return clientModelEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientModel_Name()
+  {
+    return (EAttribute)clientModelEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getClientModel_SuperModels()
+  {
+    return (EReference)clientModelEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getClientModel_Attributes()
+  {
+    return (EReference)clientModelEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -3254,10 +3479,12 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEAttribute(httpClientEClass, HTTP_CLIENT__JSX);
     createEReference(httpClientEClass, HTTP_CLIENT__CONTAINER);
     createEReference(httpClientEClass, HTTP_CLIENT__SCENARIOS);
+    createEReference(httpClientEClass, HTTP_CLIENT__MODELS);
 
     httpClientAceEClass = createEClass(HTTP_CLIENT_ACE);
     createEAttribute(httpClientAceEClass, HTTP_CLIENT_ACE__ASYNC);
     createEAttribute(httpClientAceEClass, HTTP_CLIENT_ACE__NAME);
+    createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__MODEL);
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__INPUT);
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__REFS);
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__SERVER_CALL);
@@ -3299,6 +3526,25 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(clientAttributeEClass, CLIENT_ATTRIBUTE__ATTRIBUTES);
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__OPTIONS);
     createEReference(clientAttributeEClass, CLIENT_ATTRIBUTE__ACTIONS);
+
+    clientModelAttributeEClass = createEClass(CLIENT_MODEL_ATTRIBUTE);
+    createEAttribute(clientModelAttributeEClass, CLIENT_MODEL_ATTRIBUTE__NOT_NULL);
+    createEAttribute(clientModelAttributeEClass, CLIENT_MODEL_ATTRIBUTE__LIST);
+    createEAttribute(clientModelAttributeEClass, CLIENT_MODEL_ATTRIBUTE__NO_COMPONENT);
+    createEAttribute(clientModelAttributeEClass, CLIENT_MODEL_ATTRIBUTE__TREE);
+    createEAttribute(clientModelAttributeEClass, CLIENT_MODEL_ATTRIBUTE__EXCLUSIVE_VIEW);
+    createEAttribute(clientModelAttributeEClass, CLIENT_MODEL_ATTRIBUTE__LIST_ID);
+    createEAttribute(clientModelAttributeEClass, CLIENT_MODEL_ATTRIBUTE__TYPE);
+    createEReference(clientModelAttributeEClass, CLIENT_MODEL_ATTRIBUTE__MODEL);
+    createEAttribute(clientModelAttributeEClass, CLIENT_MODEL_ATTRIBUTE__NAME);
+    createEAttribute(clientModelAttributeEClass, CLIENT_MODEL_ATTRIBUTE__LOCATION);
+    createEAttribute(clientModelAttributeEClass, CLIENT_MODEL_ATTRIBUTE__STORAGE);
+    createEAttribute(clientModelAttributeEClass, CLIENT_MODEL_ATTRIBUTE__FROM_PARENT);
+
+    clientModelEClass = createEClass(CLIENT_MODEL);
+    createEAttribute(clientModelEClass, CLIENT_MODEL__NAME);
+    createEReference(clientModelEClass, CLIENT_MODEL__SUPER_MODELS);
+    createEReference(clientModelEClass, CLIENT_MODEL__ATTRIBUTES);
 
     uiActionEClass = createEClass(UI_ACTION);
     createEAttribute(uiActionEClass, UI_ACTION__NAME);
@@ -3611,10 +3857,12 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEAttribute(getHttpClient_Jsx(), ecorePackage.getEBoolean(), "jsx", null, 0, 1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClient_Container(), this.getClientAttribute(), null, "container", null, 0, 1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClient_Scenarios(), this.getClientScenario(), null, "scenarios", null, 0, -1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getHttpClient_Models(), this.getClientModel(), null, "models", null, 0, -1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpClientAceEClass, HttpClientAce.class, "HttpClientAce", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getHttpClientAce_Async(), ecorePackage.getEBoolean(), "async", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getHttpClientAce_Name(), ecorePackage.getEString(), "name", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getHttpClientAce_Model(), this.getClientModel(), null, "model", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClientAce_Input(), this.getInput(), null, "input", null, 0, -1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClientAce_Refs(), this.getFromAppStateRef(), null, "refs", null, 0, -1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClientAce_ServerCall(), this.getHttpServerAce(), null, "serverCall", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3656,6 +3904,25 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getClientAttribute_Attributes(), this.getClientAttribute(), null, "attributes", null, 0, -1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getClientAttribute_Options(), ecorePackage.getEString(), "options", null, 0, -1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientAttribute_Actions(), this.getUiAction(), null, "actions", null, 0, -1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(clientModelAttributeEClass, ClientModelAttribute.class, "ClientModelAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getClientModelAttribute_NotNull(), ecorePackage.getEBoolean(), "notNull", null, 0, 1, ClientModelAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientModelAttribute_List(), ecorePackage.getEBoolean(), "list", null, 0, 1, ClientModelAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientModelAttribute_NoComponent(), ecorePackage.getEBoolean(), "noComponent", null, 0, 1, ClientModelAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientModelAttribute_Tree(), ecorePackage.getEBoolean(), "tree", null, 0, 1, ClientModelAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientModelAttribute_ExclusiveView(), ecorePackage.getEBoolean(), "exclusiveView", null, 0, 1, ClientModelAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientModelAttribute_ListId(), ecorePackage.getEBoolean(), "listId", null, 0, 1, ClientModelAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientModelAttribute_Type(), ecorePackage.getEString(), "type", null, 0, 1, ClientModelAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClientModelAttribute_Model(), this.getClientModel(), null, "model", null, 0, 1, ClientModelAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientModelAttribute_Name(), ecorePackage.getEString(), "name", null, 0, 1, ClientModelAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientModelAttribute_Location(), ecorePackage.getEBoolean(), "location", null, 0, 1, ClientModelAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientModelAttribute_Storage(), ecorePackage.getEBoolean(), "storage", null, 0, 1, ClientModelAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientModelAttribute_FromParent(), ecorePackage.getEBoolean(), "fromParent", null, 0, 1, ClientModelAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(clientModelEClass, ClientModel.class, "ClientModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getClientModel_Name(), ecorePackage.getEString(), "name", null, 0, 1, ClientModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClientModel_SuperModels(), this.getClientModel(), null, "superModels", null, 0, -1, ClientModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClientModel_Attributes(), this.getClientModelAttribute(), null, "attributes", null, 0, -1, ClientModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(uiActionEClass, UiAction.class, "UiAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getUiAction_Name(), ecorePackage.getEString(), "name", null, 0, 1, UiAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -19,7 +19,7 @@ import de.acegen.aceGen.HttpServer;
 import de.acegen.extensions.java.TypeExtension;
 import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.templates.java.AppRegistration;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.xbase.lib.Extension;
 
@@ -28,7 +28,6 @@ public class AppRegistrationGenerator {
   @Inject
   private AppRegistration appRegistration;
 
-  @Inject
   @Extension
   private TypeExtension _typeExtension;
 

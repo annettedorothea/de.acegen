@@ -1,18 +1,15 @@
 package de.acegen.templates.es6
 
 import de.acegen.aceGen.ClientAttribute
+import de.acegen.aceGen.HttpClient
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.Es6Extension
-import javax.inject.Inject
-import de.acegen.aceGen.HttpClient
 import java.util.List
 
 class JsxTemplate {
 	
-	@Inject
 	extension CommonExtension
 	
-	@Inject
 	extension Es6Extension
 	
 	def generateComponent(ClientAttribute it, String folderPrefix) '''

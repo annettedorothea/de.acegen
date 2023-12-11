@@ -19,19 +19,15 @@ package de.acegen.templates.java.models
 
 import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.java.AttributeExtension
-import javax.inject.Inject
-import de.acegen.extensions.java.TypeExtension
 import de.acegen.extensions.java.EcoreExtension
+import de.acegen.extensions.java.TypeExtension
 
 class Liquibase {
 	
-	@Inject
 	extension AttributeExtension
 	
-	@Inject
 	extension TypeExtension
 	
-	@Inject
 	extension EcoreExtension
 	
 	def generateMigration(de.acegen.aceGen.Model it, HttpServer httpServer) '''

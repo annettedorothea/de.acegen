@@ -136,6 +136,20 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.CLIENT_MODEL_ATTRIBUTE:
+      {
+        ClientModelAttribute clientModelAttribute = (ClientModelAttribute)theEObject;
+        T result = caseClientModelAttribute(clientModelAttribute);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.CLIENT_MODEL:
+      {
+        ClientModel clientModel = (ClientModel)theEObject;
+        T result = caseClientModel(clientModel);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.UI_ACTION:
       {
         UiAction uiAction = (UiAction)theEObject;
@@ -690,6 +704,38 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseClientAttribute(ClientAttribute object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Client Model Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Client Model Attribute</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseClientModelAttribute(ClientModelAttribute object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Client Model</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Client Model</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseClientModel(ClientModel object)
   {
     return null;
   }

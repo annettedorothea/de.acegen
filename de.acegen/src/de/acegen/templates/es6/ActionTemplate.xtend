@@ -24,16 +24,12 @@ import de.acegen.aceGen.HttpClientAce
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.AceExtension
 import de.acegen.extensions.es6.Es6Extension
-import javax.inject.Inject
 
 class ActionTemplate {
-	@Inject
 	extension AceExtension
 
-	@Inject
 	extension Es6Extension
 	
-	@Inject
 	extension CommonExtension
 	
 	def generateAbstractActionFile(HttpClientAce it, HttpClient es6) '''

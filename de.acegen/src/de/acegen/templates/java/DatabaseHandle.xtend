@@ -18,11 +18,9 @@
 package de.acegen.templates.java
 
 import de.acegen.extensions.CommonExtension
-import javax.inject.Inject
 
 class DatabaseHandle {
 	
-	@Inject
 	extension CommonExtension
 	
 	def generateDatabaseHandle() '''

@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#isAsync <em>Async</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getName <em>Name</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClientAce#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getInput <em>Input</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getRefs <em>Refs</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getServerCall <em>Server Call</em>}</li>
@@ -74,6 +75,28 @@ public interface HttpClientAce extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Model</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Model</em>' reference.
+   * @see #setModel(ClientModel)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClientAce_Model()
+   * @model
+   * @generated
+   */
+  ClientModel getModel();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.HttpClientAce#getModel <em>Model</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Model</em>' reference.
+   * @see #getModel()
+   * @generated
+   */
+  void setModel(ClientModel value);
 
   /**
    * Returns the value of the '<em><b>Input</b></em>' containment reference list.

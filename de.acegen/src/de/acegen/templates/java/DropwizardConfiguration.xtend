@@ -18,11 +18,9 @@
 package de.acegen.templates.java
 
 import de.acegen.extensions.CommonExtension
-import javax.inject.Inject
 
 class DropwizardConfiguration {
 
-	@Inject
 	extension CommonExtension
 
 	def generateCustomAppConfiguration() '''

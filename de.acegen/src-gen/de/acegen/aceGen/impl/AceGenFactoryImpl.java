@@ -74,6 +74,8 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.TRIGGERD_ACE_OPERATION: return createTriggerdAceOperation();
       case AceGenPackage.HTTP_CLIENT_STATE_FUNCTION: return createHttpClientStateFunction();
       case AceGenPackage.CLIENT_ATTRIBUTE: return createClientAttribute();
+      case AceGenPackage.CLIENT_MODEL_ATTRIBUTE: return createClientModelAttribute();
+      case AceGenPackage.CLIENT_MODEL: return createClientModel();
       case AceGenPackage.UI_ACTION: return createUiAction();
       case AceGenPackage.CLIENT_SCENARIO: return createClientScenario();
       case AceGenPackage.CLIENT_WHEN_THEN: return createClientWhenThen();
@@ -240,6 +242,30 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     ClientAttributeImpl clientAttribute = new ClientAttributeImpl();
     return clientAttribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ClientModelAttribute createClientModelAttribute()
+  {
+    ClientModelAttributeImpl clientModelAttribute = new ClientModelAttributeImpl();
+    return clientModelAttribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ClientModel createClientModel()
+  {
+    ClientModelImpl clientModel = new ClientModelImpl();
+    return clientModel;
   }
 
   /**

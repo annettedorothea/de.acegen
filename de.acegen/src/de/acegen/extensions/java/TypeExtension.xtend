@@ -5,11 +5,9 @@ import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerOutcome
 import de.acegen.aceGen.Model
-import javax.inject.Inject
 
 class TypeExtension {
 
-	@Inject
 	extension EcoreExtension;
 
 	def String dataPackageName(HttpServer it) '''«name».data'''

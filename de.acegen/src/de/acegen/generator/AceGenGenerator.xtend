@@ -20,11 +20,11 @@
 package de.acegen.generator
 
 import de.acegen.aceGen.Project
-import javax.inject.Inject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import jakarta.inject.Inject
 
 /**
  * Generates code from your model files on save.
@@ -33,12 +33,10 @@ import org.eclipse.xtext.generator.IGeneratorContext
  */
 class AceGenGenerator extends AbstractGenerator {
 
-	@Inject
-	Es6Generator es6Generator;
+	extension Es6Generator es6Generator;
 
 	@Inject
 	JavaGenerator javaGenerator;
-
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		if (resource !== null && resource.contents !== null && resource.contents.size > 0) {

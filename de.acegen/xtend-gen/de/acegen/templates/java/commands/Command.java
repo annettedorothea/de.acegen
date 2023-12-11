@@ -20,7 +20,6 @@ import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.TypeExtension;
-import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -28,11 +27,9 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class Command {
-  @Inject
   @Extension
   private CommonExtension _commonExtension;
 
-  @Inject
   @Extension
   private TypeExtension _typeExtension;
 

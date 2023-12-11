@@ -105,6 +105,24 @@ public interface AceGenFactory extends EFactory
   ClientAttribute createClientAttribute();
 
   /**
+   * Returns a new object of class '<em>Client Model Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Client Model Attribute</em>'.
+   * @generated
+   */
+  ClientModelAttribute createClientModelAttribute();
+
+  /**
+   * Returns a new object of class '<em>Client Model</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Client Model</em>'.
+   * @generated
+   */
+  ClientModel createClientModel();
+
+  /**
    * Returns a new object of class '<em>Ui Action</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

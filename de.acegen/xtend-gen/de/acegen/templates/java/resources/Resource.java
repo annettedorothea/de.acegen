@@ -26,7 +26,6 @@ import de.acegen.extensions.java.AttributeExtension;
 import de.acegen.extensions.java.EcoreExtension;
 import de.acegen.extensions.java.TypeExtension;
 import java.util.List;
-import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -34,19 +33,15 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class Resource {
-  @Inject
   @Extension
   private EcoreExtension _ecoreExtension;
 
-  @Inject
   @Extension
   private AttributeExtension _attributeExtension;
 
-  @Inject
   @Extension
   private TypeExtension _typeExtension;
 
-  @Inject
   @Extension
   private CommonExtension _commonExtension;
 

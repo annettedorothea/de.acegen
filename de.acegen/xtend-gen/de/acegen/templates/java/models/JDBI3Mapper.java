@@ -22,17 +22,14 @@ import de.acegen.aceGen.Model;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.TypeExtension;
 import java.util.List;
-import javax.inject.Inject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
 public class JDBI3Mapper {
-  @Inject
   @Extension
   private TypeExtension _typeExtension;
 
-  @Inject
   @Extension
   private CommonExtension _commonExtension;
 

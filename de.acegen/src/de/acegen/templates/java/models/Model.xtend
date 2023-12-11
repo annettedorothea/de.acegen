@@ -21,17 +21,13 @@ import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AttributeExtension
 import de.acegen.extensions.java.TypeExtension
-import javax.inject.Inject
 
 class Model {
 	
-	@Inject
 	extension AttributeExtension
 	
-	@Inject
 	extension CommonExtension
 	
-	@Inject
 	extension TypeExtension
 	
 	def generateAbstractModel() '''

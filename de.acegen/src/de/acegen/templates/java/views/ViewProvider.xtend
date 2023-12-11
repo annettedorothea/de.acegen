@@ -18,11 +18,9 @@
 package de.acegen.templates.java.views
 
 import de.acegen.extensions.CommonExtension
-import javax.inject.Inject
 
 class ViewProvider {
 
-	@Inject
 	extension CommonExtension
 	
 	def generateViewProvider() '''

@@ -21,11 +21,9 @@ package de.acegen.extensions.java
 
 import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.Model
-import javax.inject.Inject
 
 class AttributeExtension {
 
-	@Inject
 	extension TypeExtension;
 	
 	def String propertyName(Attribute it) {return name.toFirstLower} 

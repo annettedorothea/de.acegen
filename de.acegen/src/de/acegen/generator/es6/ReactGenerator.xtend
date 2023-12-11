@@ -5,16 +5,15 @@ import de.acegen.aceGen.HttpClient
 import de.acegen.extensions.es6.Es6Extension
 import de.acegen.generator.ACEOutputConfigurationProvider
 import de.acegen.templates.es6.JsxTemplate
-import javax.inject.Inject
-import org.eclipse.xtext.generator.IFileSystemAccess2
+import jakarta.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
+import org.eclipse.xtext.generator.IFileSystemAccess2
 
 class ReactGenerator {
 
 	@Inject
 	JsxTemplate reactTemplate;
 
-	@Inject
 	extension Es6Extension
 
 	def void doGenerate(HttpClient httpClient, IFileSystemAccess2 fsa) {

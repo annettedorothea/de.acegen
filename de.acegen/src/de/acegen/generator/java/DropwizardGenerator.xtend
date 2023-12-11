@@ -29,7 +29,7 @@ import de.acegen.templates.java.resources.GetServerInfoResource
 import de.acegen.templates.java.resources.Resource
 import de.acegen.templates.java.resources.SquishyDataProviderResource
 import de.acegen.templates.java.views.QueuedView
-import javax.inject.Inject
+import jakarta.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess2
 
 class DropwizardGenerator {
@@ -61,7 +61,6 @@ class DropwizardGenerator {
 	@Inject
 	QueuedView queuedView;
 
-	@Inject
 	extension TypeExtension
 
 

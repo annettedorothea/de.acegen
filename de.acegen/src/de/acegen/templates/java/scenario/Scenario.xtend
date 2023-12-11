@@ -46,17 +46,13 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.ArrayList
 import java.util.List
-import javax.inject.Inject
 
 class Scenario {
 
-	@Inject
 	extension TypeExtension
 
-	@Inject
 	extension AttributeExtension
 
-	@Inject
 	extension CommonExtension
 
 	int index;

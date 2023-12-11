@@ -52,7 +52,6 @@ import de.acegen.aceGen.WhenThen;
 import de.acegen.aceGen.impl.HttpClientStateFunctionImpl;
 import de.acegen.extensions.CommonExtension;
 import java.util.ArrayList;
-import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -71,7 +70,6 @@ import org.eclipse.xtext.xbase.lib.Extension;
  */
 @SuppressWarnings("all")
 public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
-  @Inject
   @Extension
   private CommonExtension _commonExtension;
 
