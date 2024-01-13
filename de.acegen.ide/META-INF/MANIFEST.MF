@@ -4,7 +4,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: de.acegen.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-19
 Bundle-Vendor: Annette Pohl
-Bundle-Version: 1.15.0.qualifier
+Bundle-Version: 1.16.0.qualifier
 Bundle-SymbolicName: de.acegen.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.acegen,
