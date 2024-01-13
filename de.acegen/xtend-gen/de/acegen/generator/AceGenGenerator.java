@@ -17,7 +17,7 @@ package de.acegen.generator;
 
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.Project;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.generator.AbstractGenerator;

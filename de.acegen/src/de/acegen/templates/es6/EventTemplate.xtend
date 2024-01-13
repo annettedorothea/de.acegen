@@ -23,7 +23,7 @@ import de.acegen.aceGen.HttpClient
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.AceExtension
 import de.acegen.extensions.es6.Es6Extension
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class EventTemplate {
 	

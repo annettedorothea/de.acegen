@@ -2,28 +2,19 @@
 <feature
       id="de.acegen.feature"
       label="AceGen Feature "
-      version="1.15.0.qualifier"
+      version="1.16.0.qualifier"
       provider-name="Annette Pohl">
 
    <plugin
          id="de.acegen"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="de.acegen.ide"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="de.acegen.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
 </feature>

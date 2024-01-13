@@ -19,7 +19,7 @@ package de.acegen.templates.java.auth
 
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AttributeExtension
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class AuthUser {
 

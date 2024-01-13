@@ -8,7 +8,7 @@ import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.Es6Extension
 import java.util.ArrayList
 import java.util.List
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class ScenarioTemplate {
 	

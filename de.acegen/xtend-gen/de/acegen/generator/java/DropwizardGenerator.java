@@ -29,7 +29,7 @@ import de.acegen.templates.java.resources.GetServerInfoResource;
 import de.acegen.templates.java.resources.Resource;
 import de.acegen.templates.java.resources.SquishyDataProviderResource;
 import de.acegen.templates.java.views.QueuedView;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.xbase.lib.Extension;

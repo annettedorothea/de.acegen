@@ -16,7 +16,7 @@
 package de.acegen.templates.java.resources;
 
 import de.acegen.extensions.CommonExtension;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 

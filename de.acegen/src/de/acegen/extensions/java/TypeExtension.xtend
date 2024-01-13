@@ -5,7 +5,7 @@ import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerOutcome
 import de.acegen.aceGen.Model
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class TypeExtension {
 

@@ -27,7 +27,7 @@ import de.acegen.aceGen.HttpServerViewFunction
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.TypeExtension
 import de.acegen.extensions.java.ViewExtension
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class AppRegistration {
 

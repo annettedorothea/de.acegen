@@ -21,7 +21,7 @@ package de.acegen.templates.es6
 
 import de.acegen.aceGen.HttpClient
 import de.acegen.extensions.CommonExtension
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class AceTemplate {
 	

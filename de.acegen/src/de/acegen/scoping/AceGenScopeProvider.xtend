@@ -50,8 +50,8 @@ import de.acegen.aceGen.ThenBlock
 import de.acegen.aceGen.WhenBlock
 import de.acegen.aceGen.impl.HttpClientStateFunctionImpl
 import de.acegen.extensions.CommonExtension
+import jakarta.inject.Inject
 import java.util.ArrayList
-import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.EcoreUtil2

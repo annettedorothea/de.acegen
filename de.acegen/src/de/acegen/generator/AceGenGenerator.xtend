@@ -20,7 +20,7 @@
 package de.acegen.generator
 
 import de.acegen.aceGen.Project
-import javax.inject.Inject
+import jakarta.inject.Inject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2

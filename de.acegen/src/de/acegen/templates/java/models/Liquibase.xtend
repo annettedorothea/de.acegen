@@ -19,7 +19,7 @@ package de.acegen.templates.java.models
 
 import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.java.AttributeExtension
-import javax.inject.Inject
+import jakarta.inject.Inject
 import de.acegen.extensions.java.TypeExtension
 import de.acegen.extensions.java.EcoreExtension
 

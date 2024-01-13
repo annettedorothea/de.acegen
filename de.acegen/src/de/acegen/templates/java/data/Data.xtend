@@ -21,7 +21,7 @@ import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AttributeExtension
-import javax.inject.Inject
+import jakarta.inject.Inject
 import de.acegen.extensions.java.TypeExtension
 
 class Data {

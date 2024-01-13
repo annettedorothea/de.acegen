@@ -17,7 +17,7 @@ package de.acegen.ui;
 
 import com.google.inject.Binder;
 import de.acegen.generator.ACEOutputConfigurationProvider;
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
 import org.eclipse.xtext.generator.IOutputConfigurationProvider;

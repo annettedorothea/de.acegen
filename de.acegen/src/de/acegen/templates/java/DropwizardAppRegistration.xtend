@@ -19,7 +19,7 @@ package de.acegen.templates.java
 
 import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.CommonExtension
-import javax.inject.Inject
+import jakarta.inject.Inject
 import de.acegen.extensions.java.TypeExtension
 
 class DropwizardAppRegistration {

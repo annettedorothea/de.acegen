@@ -18,7 +18,7 @@
 package de.acegen.templates.java.models
 
 import de.acegen.extensions.CommonExtension
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class Dao {
 	

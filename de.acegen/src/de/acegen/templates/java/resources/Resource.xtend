@@ -25,7 +25,7 @@ import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AttributeExtension
 import de.acegen.extensions.java.EcoreExtension
 import de.acegen.extensions.java.TypeExtension
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class Resource {
 

@@ -23,10 +23,10 @@ import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.HttpClientAce
 import de.acegen.aceGen.HttpClientOutcome
 import de.acegen.aceGen.HttpClientStateFunction
+import de.acegen.extensions.java.EcoreExtension
+import jakarta.inject.Inject
 import java.util.ArrayList
 import java.util.List
-import javax.inject.Inject
-import de.acegen.extensions.java.EcoreExtension
 
 class AceExtension {
 

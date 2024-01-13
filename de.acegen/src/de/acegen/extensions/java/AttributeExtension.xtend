@@ -21,7 +21,7 @@ package de.acegen.extensions.java
 
 import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.Model
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class AttributeExtension {
 

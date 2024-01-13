@@ -27,7 +27,7 @@ import de.acegen.templates.es6.ActionTemplate
 import de.acegen.templates.es6.CommandTemplate
 import de.acegen.templates.es6.EventTemplate
 import de.acegen.templates.es6.ScenarioTemplate
-import javax.inject.Inject
+import jakarta.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import de.acegen.generator.es6.ReactGenerator

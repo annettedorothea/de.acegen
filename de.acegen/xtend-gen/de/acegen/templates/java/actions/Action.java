@@ -23,9 +23,9 @@ import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AttributeExtension;
 import de.acegen.extensions.java.TypeExtension;
+import jakarta.inject.Inject;
 import java.util.Arrays;
 import java.util.List;
-import javax.inject.Inject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 

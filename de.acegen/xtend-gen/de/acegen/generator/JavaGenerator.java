@@ -46,7 +46,7 @@ import de.acegen.templates.java.scenario.Scenario;
 import de.acegen.templates.java.scenario.YamlConfiguration;
 import de.acegen.templates.java.views.View;
 import de.acegen.templates.java.views.ViewProvider;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.xbase.lib.Extension;

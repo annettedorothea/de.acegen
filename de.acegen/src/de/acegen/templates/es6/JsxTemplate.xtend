@@ -3,7 +3,7 @@ package de.acegen.templates.es6
 import de.acegen.aceGen.ClientAttribute
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.Es6Extension
-import javax.inject.Inject
+import jakarta.inject.Inject
 import de.acegen.aceGen.HttpClient
 import java.util.List
 

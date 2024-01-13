@@ -21,7 +21,7 @@ import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.TypeExtension
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class JDBI3Mapper {
 

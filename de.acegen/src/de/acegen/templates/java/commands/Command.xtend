@@ -21,7 +21,7 @@ import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.TypeExtension
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class Command {
 

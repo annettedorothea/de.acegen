@@ -18,7 +18,7 @@
 package de.acegen.templates.java.views
 
 import de.acegen.extensions.CommonExtension
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class ViewProvider {
 

@@ -26,7 +26,7 @@ import de.acegen.extensions.es6.AceExtension
 import de.acegen.extensions.es6.Es6Extension
 import de.acegen.extensions.java.AttributeExtension
 import de.acegen.extensions.java.EcoreExtension
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class CommandTemplate {
 	@Inject
