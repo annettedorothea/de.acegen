@@ -1,9 +1,11 @@
 package de.acegen.templates.java.views
 
 import de.acegen.extensions.CommonExtension
+import javax.inject.Inject
 
 class QueuedView {
 
+	@Inject
 	extension CommonExtension
 
 	def generate() '''

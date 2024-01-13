@@ -18,9 +18,11 @@
 package de.acegen.templates.java
 
 import de.acegen.extensions.CommonExtension
+import javax.inject.Inject
 
 class DropwizardResource {
 
+	@Inject
 	extension CommonExtension
 
 	def generateDropwizardResource() '''

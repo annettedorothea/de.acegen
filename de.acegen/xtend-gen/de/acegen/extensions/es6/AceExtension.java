@@ -24,6 +24,7 @@ import de.acegen.aceGen.TriggerdAceOperation;
 import de.acegen.extensions.java.EcoreExtension;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -33,6 +34,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class AceExtension {
+  @Inject
   @Extension
   private EcoreExtension _ecoreExtension;
 

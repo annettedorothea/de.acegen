@@ -5,7 +5,6 @@ package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.ClientAttribute;
-import de.acegen.aceGen.ClientModel;
 import de.acegen.aceGen.FromAppStateRef;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
@@ -39,7 +38,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#isAsync <em>Async</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getInput <em>Input</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getRefs <em>Refs</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getServerCall <em>Server Call</em>}</li>
@@ -90,16 +88,6 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getModel() <em>Model</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getModel()
-   * @generated
-   * @ordered
-   */
-  protected ClientModel model;
 
   /**
    * The cached value of the '{@link #getInput() <em>Input</em>}' containment reference list.
@@ -220,51 +208,6 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
     name = newName;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT_ACE__NAME, oldName, name));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ClientModel getModel()
-  {
-    if (model != null && model.eIsProxy())
-    {
-      InternalEObject oldModel = (InternalEObject)model;
-      model = (ClientModel)eResolveProxy(oldModel);
-      if (model != oldModel)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.HTTP_CLIENT_ACE__MODEL, oldModel, model));
-      }
-    }
-    return model;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ClientModel basicGetModel()
-  {
-    return model;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setModel(ClientModel newModel)
-  {
-    ClientModel oldModel = model;
-    model = newModel;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT_ACE__MODEL, oldModel, model));
   }
 
   /**
@@ -406,9 +349,6 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         return isAsync();
       case AceGenPackage.HTTP_CLIENT_ACE__NAME:
         return getName();
-      case AceGenPackage.HTTP_CLIENT_ACE__MODEL:
-        if (resolve) return getModel();
-        return basicGetModel();
       case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
         return getInput();
       case AceGenPackage.HTTP_CLIENT_ACE__REFS:
@@ -440,9 +380,6 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__NAME:
         setName((String)newValue);
-        return;
-      case AceGenPackage.HTTP_CLIENT_ACE__MODEL:
-        setModel((ClientModel)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
         getInput().clear();
@@ -483,9 +420,6 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
       case AceGenPackage.HTTP_CLIENT_ACE__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case AceGenPackage.HTTP_CLIENT_ACE__MODEL:
-        setModel((ClientModel)null);
-        return;
       case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
         getInput().clear();
         return;
@@ -519,8 +453,6 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         return async != ASYNC_EDEFAULT;
       case AceGenPackage.HTTP_CLIENT_ACE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case AceGenPackage.HTTP_CLIENT_ACE__MODEL:
-        return model != null;
       case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
         return input != null && !input.isEmpty();
       case AceGenPackage.HTTP_CLIENT_ACE__REFS:

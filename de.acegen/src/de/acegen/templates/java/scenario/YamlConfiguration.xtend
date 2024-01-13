@@ -18,9 +18,11 @@
 package de.acegen.templates.java.scenario
 
 import de.acegen.extensions.CommonExtension
+import javax.inject.Inject
 
 class YamlConfiguration {
 	
+	@Inject
 	extension CommonExtension
 	
 	def generateYamlConfiguration() '''

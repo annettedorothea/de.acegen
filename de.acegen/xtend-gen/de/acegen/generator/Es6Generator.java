@@ -26,7 +26,7 @@ import de.acegen.templates.es6.ActionTemplate;
 import de.acegen.templates.es6.CommandTemplate;
 import de.acegen.templates.es6.EventTemplate;
 import de.acegen.templates.es6.ScenarioTemplate;
-import jakarta.inject.Inject;
+import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
@@ -49,9 +49,11 @@ public class Es6Generator {
   @Inject
   private ScenarioTemplate scenarioTemplate;
 
+  @Inject
   @Extension
   private AceExtension _aceExtension;
 
+  @Inject
   @Extension
   private Es6Extension _es6Extension;
 

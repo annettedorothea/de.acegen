@@ -22,13 +22,17 @@ import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AttributeExtension
 import de.acegen.extensions.java.TypeExtension
+import javax.inject.Inject
 
 class JDBI3Dao {
 	
+	@Inject
 	extension AttributeExtension
 	
+	@Inject
 	extension TypeExtension
 	
+	@Inject
 	extension CommonExtension
 	
 	def generateAbstractJdbiDao(de.acegen.aceGen.Model it, HttpServer httpServer) '''

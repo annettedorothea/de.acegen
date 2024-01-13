@@ -17,11 +17,13 @@
 
 package de.acegen.templates.java
 
-import de.acegen.aceGen.AuthUser
 import de.acegen.extensions.CommonExtension
+import javax.inject.Inject
+import de.acegen.aceGen.AuthUser
 
 class DropwizardApp {
 
+	@Inject
 	extension CommonExtension
 
 	def generate(AuthUser authUser) '''

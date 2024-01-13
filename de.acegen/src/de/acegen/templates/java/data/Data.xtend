@@ -21,14 +21,18 @@ import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AttributeExtension
+import javax.inject.Inject
 import de.acegen.extensions.java.TypeExtension
 
 class Data {
 
+	@Inject
 	extension AttributeExtension
 	
+	@Inject
 	extension CommonExtension
 	
+	@Inject
 	extension TypeExtension
 
 	def generateResponseData(HttpServerAce it, HttpServer httpServer) '''

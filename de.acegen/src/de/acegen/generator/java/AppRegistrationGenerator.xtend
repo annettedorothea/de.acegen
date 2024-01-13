@@ -21,14 +21,15 @@ import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.java.TypeExtension
 import de.acegen.generator.ACEOutputConfigurationProvider
 import de.acegen.templates.java.AppRegistration
+import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess2
-import jakarta.inject.Inject
 
 class AppRegistrationGenerator {
 
 	@Inject
 	AppRegistration appRegistration;
 
+	@Inject
 	extension TypeExtension
 
 	def void doGenerate(HttpServer httpServer, IFileSystemAccess2 fsa) {

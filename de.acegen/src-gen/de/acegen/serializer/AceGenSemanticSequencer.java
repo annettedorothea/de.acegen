@@ -13,8 +13,6 @@ import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.BooleanType;
 import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.ClientGivenRef;
-import de.acegen.aceGen.ClientModel;
-import de.acegen.aceGen.ClientModelAttribute;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
@@ -114,12 +112,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.CLIENT_GIVEN_REF:
 				sequence_ClientGivenRef(context, (ClientGivenRef) semanticObject); 
-				return; 
-			case AceGenPackage.CLIENT_MODEL:
-				sequence_ClientModel(context, (ClientModel) semanticObject); 
-				return; 
-			case AceGenPackage.CLIENT_MODEL_ATTRIBUTE:
-				sequence_ClientModelAttribute(context, (ClientModelAttribute) semanticObject); 
 				return; 
 			case AceGenPackage.CLIENT_SCENARIO:
 				sequence_ClientScenario(context, (ClientScenario) semanticObject); 
@@ -440,46 +432,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	/**
 	 * <pre>
 	 * Contexts:
-	 *     ClientModelAttribute returns ClientModelAttribute
-	 *
-	 * Constraint:
-	 *     (
-	 *         notNull?='NotNull'? 
-	 *         list?='List'? 
-	 *         noComponent?='noComponent'? 
-	 *         tree?='Tree'? 
-	 *         exclusiveView?='exclusiveView'? 
-	 *         listId?='listId'? 
-	 *         (type=ClientType | model=[ClientModel|QualifiedName]) 
-	 *         name=ID 
-	 *         location?='location'? 
-	 *         storage?='storage'? 
-	 *         fromParent?='fromParent'?
-	 *     )
-	 * </pre>
-	 */
-	protected void sequence_ClientModelAttribute(ISerializationContext context, ClientModelAttribute semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * <pre>
-	 * Contexts:
-	 *     ClientModel returns ClientModel
-	 *
-	 * Constraint:
-	 *     (name=ID (superModels+=[ClientModel|QualifiedName] superModels+=[ClientModel|QualifiedName]*)? attributes+=ClientModelAttribute*)
-	 * </pre>
-	 */
-	protected void sequence_ClientModel(ISerializationContext context, ClientModel semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * <pre>
-	 * Contexts:
 	 *     ClientScenario returns ClientScenario
 	 *
 	 * Constraint:
@@ -653,7 +605,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (
 	 *         async?='async'? 
 	 *         name=ID 
-	 *         model=[ClientModel|QualifiedName]? 
 	 *         (input+=Input input+=Input*)? 
 	 *         (refs+=FromAppStateRef refs+=FromAppStateRef*)? 
 	 *         serverCall=[HttpServerAce|QualifiedName]? 
@@ -710,7 +661,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpClient returns HttpClient
 	 *
 	 * Constraint:
-	 *     (name=QualifiedName aceOperations+=HttpClientAce* (jsx?='JSX'? container=ClientAttribute)? scenarios+=ClientScenario* models+=ClientModel*)
+	 *     (name=QualifiedName aceOperations+=HttpClientAce* (jsx?='JSX'? container=ClientAttribute)? scenarios+=ClientScenario*)
 	 * </pre>
 	 */
 	protected void sequence_HttpClient(ISerializationContext context, HttpClient semanticObject) {

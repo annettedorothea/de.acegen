@@ -26,17 +26,22 @@ import de.acegen.extensions.es6.AceExtension
 import de.acegen.extensions.es6.Es6Extension
 import de.acegen.extensions.java.AttributeExtension
 import de.acegen.extensions.java.EcoreExtension
+import javax.inject.Inject
 
 class CommandTemplate {
-
+	@Inject
 	extension AceExtension
 
+	@Inject
 	extension CommonExtension
 	
+	@Inject
 	extension Es6Extension
 	
+	@Inject
 	extension EcoreExtension
 
+	@Inject
 	extension AttributeExtension
 	
 	def boolean hasEventOutcome(HttpClientAce it) {

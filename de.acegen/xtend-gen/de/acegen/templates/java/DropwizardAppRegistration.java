@@ -19,16 +19,18 @@ import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.TypeExtension;
-import jakarta.inject.Inject;
+import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
 public class DropwizardAppRegistration {
+  @Inject
   @Extension
   private CommonExtension _commonExtension;
 
+  @Inject
   @Extension
   private TypeExtension _typeExtension;
 

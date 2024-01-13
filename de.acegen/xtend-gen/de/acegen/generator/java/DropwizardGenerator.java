@@ -29,7 +29,7 @@ import de.acegen.templates.java.resources.GetServerInfoResource;
 import de.acegen.templates.java.resources.Resource;
 import de.acegen.templates.java.resources.SquishyDataProviderResource;
 import de.acegen.templates.java.views.QueuedView;
-import jakarta.inject.Inject;
+import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -63,6 +63,7 @@ public class DropwizardGenerator {
   @Inject
   private QueuedView queuedView;
 
+  @Inject
   @Extension
   private TypeExtension _typeExtension;
 

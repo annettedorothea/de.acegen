@@ -5,7 +5,6 @@ package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.ClientAttribute;
-import de.acegen.aceGen.ClientModel;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
@@ -39,7 +38,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#isJsx <em>Jsx</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getContainer <em>Container</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getScenarios <em>Scenarios</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getModels <em>Models</em>}</li>
  * </ul>
  *
  * @generated
@@ -115,16 +113,6 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @ordered
    */
   protected EList<ClientScenario> scenarios;
-
-  /**
-   * The cached value of the '{@link #getModels() <em>Models</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getModels()
-   * @generated
-   * @ordered
-   */
-  protected EList<ClientModel> models;
 
   /**
    * <!-- begin-user-doc -->
@@ -283,21 +271,6 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public EList<ClientModel> getModels()
-  {
-    if (models == null)
-    {
-      models = new EObjectContainmentEList<ClientModel>(ClientModel.class, this, AceGenPackage.HTTP_CLIENT__MODELS);
-    }
-    return models;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
@@ -308,8 +281,6 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return basicSetContainer(null, msgs);
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         return ((InternalEList<?>)getScenarios()).basicRemove(otherEnd, msgs);
-      case AceGenPackage.HTTP_CLIENT__MODELS:
-        return ((InternalEList<?>)getModels()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -334,8 +305,6 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return getContainer();
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         return getScenarios();
-      case AceGenPackage.HTTP_CLIENT__MODELS:
-        return getModels();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -368,10 +337,6 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         getScenarios().clear();
         getScenarios().addAll((Collection<? extends ClientScenario>)newValue);
         return;
-      case AceGenPackage.HTTP_CLIENT__MODELS:
-        getModels().clear();
-        getModels().addAll((Collection<? extends ClientModel>)newValue);
-        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -401,9 +366,6 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         getScenarios().clear();
         return;
-      case AceGenPackage.HTTP_CLIENT__MODELS:
-        getModels().clear();
-        return;
     }
     super.eUnset(featureID);
   }
@@ -428,8 +390,6 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return container != null;
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         return scenarios != null && !scenarios.isEmpty();
-      case AceGenPackage.HTTP_CLIENT__MODELS:
-        return models != null && !models.isEmpty();
     }
     return super.eIsSet(featureID);
   }

@@ -22,18 +22,22 @@ import de.acegen.aceGen.HttpClientStateFunction;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.AceExtension;
 import de.acegen.extensions.es6.Es6Extension;
+import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
 public class EventTemplate {
+  @Inject
   @Extension
   private AceExtension _aceExtension;
 
+  @Inject
   @Extension
   private Es6Extension _es6Extension;
 
+  @Inject
   @Extension
   private CommonExtension _commonExtension;
 

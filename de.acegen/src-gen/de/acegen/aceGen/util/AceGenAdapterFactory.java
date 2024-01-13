@@ -121,16 +121,6 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createClientAttributeAdapter();
       }
       @Override
-      public Adapter caseClientModelAttribute(ClientModelAttribute object)
-      {
-        return createClientModelAttributeAdapter();
-      }
-      @Override
-      public Adapter caseClientModel(ClientModel object)
-      {
-        return createClientModelAdapter();
-      }
-      @Override
       public Adapter caseUiAction(UiAction object)
       {
         return createUiActionAdapter();
@@ -558,36 +548,6 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createClientAttributeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ClientModelAttribute <em>Client Model Attribute</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.ClientModelAttribute
-   * @generated
-   */
-  public Adapter createClientModelAttributeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ClientModel <em>Client Model</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.ClientModel
-   * @generated
-   */
-  public Adapter createClientModelAdapter()
   {
     return null;
   }

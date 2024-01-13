@@ -21,12 +21,16 @@ import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.TypeExtension
+import javax.inject.Inject
 
 class JDBI3Mapper {
 
+	@Inject
 	extension TypeExtension
 	
+	@Inject
 	extension CommonExtension
+	
 
 	def generate(de.acegen.aceGen.Model it, HttpServer httpServer) '''
 		«copyright»

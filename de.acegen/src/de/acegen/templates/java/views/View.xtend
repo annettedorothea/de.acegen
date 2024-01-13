@@ -22,13 +22,17 @@ import de.acegen.aceGen.HttpServerView
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.TypeExtension
 import de.acegen.extensions.java.ViewExtension
+import javax.inject.Inject
 
 class View {
 	
+	@Inject
 	extension ViewExtension
 
+	@Inject
 	extension TypeExtension
 
+	@Inject
 	extension CommonExtension
 	
 	def generateView(HttpServerView it, HttpServer java) '''

@@ -26,6 +26,7 @@ import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.TypeExtension;
 import de.acegen.extensions.java.ViewExtension;
 import java.util.Arrays;
+import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -33,12 +34,15 @@ import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
 public class AppRegistration {
+  @Inject
   @Extension
   private ViewExtension _viewExtension;
 
+  @Inject
   @Extension
   private CommonExtension _commonExtension;
 
+  @Inject
   @Extension
   private TypeExtension _typeExtension;
 

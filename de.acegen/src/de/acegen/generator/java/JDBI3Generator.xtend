@@ -22,7 +22,7 @@ import de.acegen.extensions.java.TypeExtension
 import de.acegen.generator.ACEOutputConfigurationProvider
 import de.acegen.templates.java.models.JDBI3Dao
 import de.acegen.templates.java.models.JDBI3Mapper
-import jakarta.inject.Inject
+import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess2
 
 class JDBI3Generator {
@@ -33,6 +33,7 @@ class JDBI3Generator {
 	@Inject
 	JDBI3Mapper jdbi3Mapper;
 
+	@Inject
 	extension TypeExtension
 
 	def void doGenerate(HttpServer httpServer, IFileSystemAccess2 fsa) {

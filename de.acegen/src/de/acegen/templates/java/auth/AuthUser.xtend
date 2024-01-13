@@ -19,11 +19,14 @@ package de.acegen.templates.java.auth
 
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AttributeExtension
+import javax.inject.Inject
 
 class AuthUser {
 
+	@Inject
 	extension AttributeExtension
 
+	@Inject
 	extension CommonExtension
 	
 	def generateAuthUser(de.acegen.aceGen.AuthUser it) '''

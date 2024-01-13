@@ -31,6 +31,7 @@ import de.acegen.extensions.es6.Es6Extension;
 import de.acegen.extensions.java.AttributeExtension;
 import de.acegen.extensions.java.EcoreExtension;
 import java.util.List;
+import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -39,18 +40,23 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class CommandTemplate {
+  @Inject
   @Extension
   private AceExtension _aceExtension;
 
+  @Inject
   @Extension
   private CommonExtension _commonExtension;
 
+  @Inject
   @Extension
   private Es6Extension _es6Extension;
 
+  @Inject
   @Extension
   private EcoreExtension _ecoreExtension;
 
+  @Inject
   @Extension
   private AttributeExtension _attributeExtension;
 

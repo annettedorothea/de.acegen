@@ -18,9 +18,11 @@
 package de.acegen.templates.java.events
 
 import de.acegen.extensions.CommonExtension
+import javax.inject.Inject
 
 class Event {
 
+	@Inject
 	extension CommonExtension
 	
 	def generateEvent() '''

@@ -22,15 +22,15 @@ package de.acegen.generator
 import de.acegen.aceGen.HttpClient
 import de.acegen.extensions.es6.AceExtension
 import de.acegen.extensions.es6.Es6Extension
-import de.acegen.generator.es6.ReactGenerator
 import de.acegen.templates.es6.AceTemplate
 import de.acegen.templates.es6.ActionTemplate
 import de.acegen.templates.es6.CommandTemplate
 import de.acegen.templates.es6.EventTemplate
 import de.acegen.templates.es6.ScenarioTemplate
-import jakarta.inject.Inject
+import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IFileSystemAccess2
+import de.acegen.generator.es6.ReactGenerator
 
 class Es6Generator {
 	
@@ -49,8 +49,10 @@ class Es6Generator {
 	@Inject
 	ScenarioTemplate scenarioTemplate;
 
+	@Inject
 	extension AceExtension
 
+	@Inject
 	extension Es6Extension
 	
 	@Inject

@@ -18,9 +18,11 @@
 package de.acegen.templates.java.resources
 
 import de.acegen.extensions.CommonExtension
+import javax.inject.Inject
 
 class SquishyDataProviderResource {
 
+	@Inject
 	extension CommonExtension
 	
 	def generate() '''

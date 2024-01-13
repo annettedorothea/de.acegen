@@ -18,9 +18,11 @@
 package de.acegen.templates.java.scenario
 
 import de.acegen.extensions.CommonExtension
+import javax.inject.Inject
 
 class BaseScenario {
 
+	@Inject
 	extension CommonExtension
 	
 	def generateBaseScenario() '''

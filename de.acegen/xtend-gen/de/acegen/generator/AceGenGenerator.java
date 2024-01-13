@@ -17,13 +17,12 @@ package de.acegen.generator;
 
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.Project;
-import jakarta.inject.Inject;
+import javax.inject.Inject;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
-import org.eclipse.xtext.xbase.lib.Extension;
 
 /**
  * Generates code from your model files on save.
@@ -32,7 +31,7 @@ import org.eclipse.xtext.xbase.lib.Extension;
  */
 @SuppressWarnings("all")
 public class AceGenGenerator extends AbstractGenerator {
-  @Extension
+  @Inject
   private Es6Generator es6Generator;
 
   @Inject

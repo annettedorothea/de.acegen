@@ -51,6 +51,7 @@ import de.acegen.aceGen.WhenBlock
 import de.acegen.aceGen.impl.HttpClientStateFunctionImpl
 import de.acegen.extensions.CommonExtension
 import java.util.ArrayList
+import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.EcoreUtil2
@@ -65,6 +66,7 @@ import org.eclipse.xtext.scoping.impl.FilteringScope
  */
 class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 
+	@Inject
 	extension CommonExtension
 
 	override getScope(EObject context, EReference reference) {

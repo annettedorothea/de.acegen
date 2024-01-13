@@ -19,17 +19,18 @@ package de.acegen.templates.java
 
 import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.CommonExtension
+import javax.inject.Inject
 import de.acegen.extensions.java.TypeExtension
-import jakarta.inject.Inject
 
 class DropwizardAppRegistration {
 
+	@Inject
 	extension CommonExtension
 
+	@Inject
 	extension TypeExtension
 
-	@Inject
-	AppRegistration appRegistration;
+	@Inject AppRegistration appRegistration;
 
 	def generateAppRegistration(HttpServer it) '''
 		«copyright»

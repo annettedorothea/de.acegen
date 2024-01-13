@@ -21,11 +21,14 @@ import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.TypeExtension
+import javax.inject.Inject
 
 class Command {
 
+	@Inject
 	extension CommonExtension
 	
+	@Inject
 	extension TypeExtension
 	
 	def generateAbstractCommandFile(HttpServerAceWrite it, HttpServer java) '''

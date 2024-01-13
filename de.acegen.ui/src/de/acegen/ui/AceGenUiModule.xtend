@@ -19,9 +19,9 @@ package de.acegen.ui
 
 import com.google.inject.Binder
 import de.acegen.generator.ACEOutputConfigurationProvider
+import javax.inject.Singleton
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 import org.eclipse.xtext.generator.IOutputConfigurationProvider
-import jakarta.inject.Singleton
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
